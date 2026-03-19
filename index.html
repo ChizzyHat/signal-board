@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Page title shown in browser tab -->
   <title>Signal Board</title>
-  <!-- Fonts: DM Sans for UI text, JetBrains Mono for labels/counts -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     /* ── Reset & Base ── */
@@ -13,22 +11,20 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(145deg, #000000 0%, #000021 50%, #1D0129 100%);
+      background: linear-gradient(145deg, #0A0E17 0%, #111827 50%, #0D1321 100%);
       color: #F1F1F1;
       font-family: 'DM Sans', sans-serif;
       padding: 24px 28px;
-      /* Prevent rubber-banding on iPad */
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
 
-    /* ── Monospace utility class for labels and counts ── */
-    .mono {
-      font-family: 'JetBrains Mono', monospace;
-    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
 
     /* ── Header ── */
     .header { margin-bottom: 28px; }
+    .header-top { display: flex; align-items: baseline; gap: 12px; justify-content: space-between; }
+    .header-left { display: flex; align-items: baseline; gap: 12px; }
 
     .header h1 {
       font-size: 22px;
@@ -40,7 +36,139 @@
     .header .count {
       font-size: 12px;
       color: rgba(255,255,255,0.3);
-      margin-left: 12px;
+    }
+
+    /* ── Sync Status Indicator ── */
+    .sync-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.35);
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: transparent;
+      transition: all 0.2s;
+    }
+
+    .sync-status:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.6);
+    }
+
+    .sync-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── Settings Panel ── */
+    .settings-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .settings-panel {
+      background: #1A1F2E;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 28px;
+      width: 90%;
+      max-width: 480px;
+    }
+
+    .settings-panel h2 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .settings-panel label {
+      display: block;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      margin-top: 16px;
+    }
+
+    .settings-panel label:first-of-type { margin-top: 0; }
+
+    .settings-panel input[type="text"],
+    .settings-panel input[type="password"] {
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: #F1F1F1;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+    }
+
+    .settings-panel input:focus { border-color: rgba(255,255,255,0.3); }
+
+    .settings-hint {
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    .settings-hint a { color: #3B82F6; text-decoration: none; }
+    .settings-hint a:hover { text-decoration: underline; }
+
+    .settings-buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+      justify-content: flex-end;
+    }
+
+    .btn-secondary {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      padding: 8px 20px;
+      border-radius: 6px;
+      border: none;
+      background: #3B82F6;
+      color: #FFF;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+    }
+
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .settings-error {
+      color: #EF4444;
+      font-size: 12px;
+      margin-top: 12px;
+      font-family: 'JetBrains Mono', monospace;
     }
 
     /* ── Filter Pills ── */
@@ -66,7 +194,6 @@
       gap: 6px;
     }
 
-    /* Small colored dot inside each filter pill */
     .filter-dot {
       width: 7px;
       height: 7px;
@@ -74,7 +201,7 @@
       display: inline-block;
     }
 
-    /* ── Toolbar (sort + add/reset buttons) ── */
+    /* ── Toolbar ── */
     .toolbar {
       display: flex;
       justify-content: space-between;
@@ -95,7 +222,6 @@
       cursor: pointer;
     }
 
-    /* Highlighted state for active sort option */
     .sort-btn.active {
       background: rgba(255,255,255,0.1);
       color: #F1F1F1;
@@ -151,12 +277,10 @@
       padding: 12px 16px;
       background: rgba(255,255,255,0.03);
       border-radius: 8px;
-      /* Left border color is set dynamically via JS */
       border-left: 4px solid rgba(255,255,255,0.06);
       transition: all 0.2s ease;
     }
 
-    /* ── Account Name ── */
     .account-name {
       color: #F1F1F1;
       font-size: 14px;
@@ -168,7 +292,6 @@
       letter-spacing: 0.01em;
     }
 
-    /* Input shown when editing the account name */
     .name-input {
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.2);
@@ -181,10 +304,8 @@
       width: 100%;
     }
 
-    /* ── Signal Lights Row ── */
     .lights { display: flex; gap: 8px; align-items: center; }
 
-    /* Individual signal light (circle button) */
     .light {
       width: 28px;
       height: 28px;
@@ -196,7 +317,6 @@
       padding: 0;
     }
 
-    /* ── Next Step Input ── */
     .next-step {
       background: transparent;
       border: 1px solid transparent;
@@ -213,7 +333,6 @@
     .next-step:hover { border-color: rgba(255,255,255,0.08); }
     .next-step:focus { border-color: rgba(255,255,255,0.15); }
 
-    /* ── Delete Button ── */
     .delete-btn {
       background: transparent;
       border: none;
@@ -228,7 +347,6 @@
 
     .delete-btn:hover { color: #EF4444; }
 
-    /* ── Empty State ── */
     .empty {
       text-align: center;
       padding: 40px;
@@ -237,7 +355,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* ── Legend (bottom) ── */
+    /* ── Legend ── */
     .legend {
       margin-top: 32px;
       padding: 16px 0;
@@ -256,7 +374,6 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* Glowing dot in the legend */
     .legend-dot {
       width: 10px;
       height: 10px;
@@ -264,35 +381,28 @@
       display: inline-block;
     }
 
-    /* ── iPad / Mobile Responsive ── */
+    /* ── Mobile Responsive ── */
     @media (max-width: 768px) {
       body { padding: 16px; }
-
       .col-headers { display: none; }
-
       .account-row {
-        /* Stack vertically on small screens */
         grid-template-columns: 1fr;
         gap: 10px;
         padding: 14px 16px;
       }
-
-      /* Hide the accent spacer column on mobile */
       .account-row > div:first-child { display: none; }
-
       .lights { justify-content: flex-start; }
     }
   </style>
 </head>
 <body>
 
-<!-- The entire UI is rendered by JavaScript below -->
 <div id="app"></div>
 
 <script>
   // ──────────────────────────────────────────────
   // STATUS DEFINITIONS
-  // Each status answers: "Who has the ball?" + urgency level.
+  // Each status answers: "Who has the ball?" + urgency.
   // ──────────────────────────────────────────────
   const STATUSES = [
     { id: "on_me", label: "On Me", color: "#F59E0B", description: "I need to act" },
@@ -303,28 +413,11 @@
     { id: "cruising", label: "Cruising", color: "#10B981", description: "Active, no action needed" },
   ];
 
-  // Priority order for sorting: most urgent first
+  // Priority order for sorting (most urgent first)
   const STATUS_PRIORITY = ["critical", "blocked", "on_me", "on_colleague", "on_customer", "cruising"];
 
   // ──────────────────────────────────────────────
-  // PERSISTENCE via localStorage
-  // All accounts are stored as a single JSON string.
-  // ──────────────────────────────────────────────
-  const STORAGE_KEY = "signal-board-accounts";
-
-  function loadAccounts() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch { return null; }
-  }
-
-  function saveAccounts(accounts) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(accounts));
-  }
-
-  // ──────────────────────────────────────────────
-  // SEED DATA — shown on first visit so it's not empty
+  // SEED DATA — shown on first visit
   // ──────────────────────────────────────────────
   const SEED = [
     { id: "1", name: "Acme Corp", status: "on_me", nextStep: "Send revised proposal by Friday", createdAt: Date.now() },
@@ -333,27 +426,202 @@
   ];
 
   // ──────────────────────────────────────────────
-  // APP STATE — simple mutable state + re-render pattern
+  // GITHUB SYNC ENGINE
+  // Reads/writes a data.json file in the user's repo
+  // using the GitHub Contents API. The personal access
+  // token is stored in localStorage (per device), but
+  // the actual data lives in the repo (shared).
+  // ──────────────────────────────────────────────
+
+  const LS_TOKEN = "sb-github-token";
+  const LS_REPO  = "sb-github-repo";
+  const LS_USER  = "sb-github-user";
+  const DATA_FILE = "data.json";
+
+  // The SHA of the current data.json in the repo.
+  // GitHub requires this to update an existing file.
+  let fileSha = null;
+
+  // Debounce timer so we don't commit on every keystroke
+  let saveTimer = null;
+
+  function getGitHubConfig() {
+    return {
+      token: localStorage.getItem(LS_TOKEN) || "",
+      repo:  localStorage.getItem(LS_REPO)  || "signal-board",
+      user:  localStorage.getItem(LS_USER)  || "",
+    };
+  }
+
+  function saveGitHubConfig(token, user, repo) {
+    localStorage.setItem(LS_TOKEN, token);
+    localStorage.setItem(LS_USER, user);
+    localStorage.setItem(LS_REPO, repo);
+  }
+
+  function isConfigured() {
+    const c = getGitHubConfig();
+    return c.token && c.user && c.repo;
+  }
+
+  // Fetch data.json from the GitHub repo
+  async function githubLoad() {
+    const { token, user, repo } = getGitHubConfig();
+    try {
+      const res = await fetch(
+        `https://api.github.com/repos/${user}/${repo}/contents/${DATA_FILE}`,
+        { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
+      );
+      if (res.status === 404) {
+        // File doesn't exist yet — we'll create it on first save
+        fileSha = null;
+        return null;
+      }
+      if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+      const json = await res.json();
+      // Remember the SHA so we can update the file later
+      fileSha = json.sha;
+      // Decode the base64 content
+      const decoded = atob(json.content.replace(/\n/g, ""));
+      return JSON.parse(decoded);
+    } catch (e) {
+      console.error("GitHub load error:", e);
+      return null;
+    }
+  }
+
+  // Write account data to data.json in the repo
+  async function githubSave(accounts) {
+    const { token, user, repo } = getGitHubConfig();
+    // Encode the data as base64 for the GitHub API
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(accounts, null, 2))));
+    const body = { message: "Update signal board data", content };
+    // Include the SHA if the file already exists (required for updates)
+    if (fileSha) body.sha = fileSha;
+
+    try {
+      const res = await fetch(
+        `https://api.github.com/repos/${user}/${repo}/contents/${DATA_FILE}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/vnd.github.v3+json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || `GitHub API ${res.status}`);
+      }
+      const json = await res.json();
+      // Update SHA to the new version
+      fileSha = json.content.sha;
+      return true;
+    } catch (e) {
+      console.error("GitHub save error:", e);
+      return false;
+    }
+  }
+
+  // Wait 1.5s of inactivity before pushing to GitHub
+  // so rapid edits don't create a commit per keystroke
+  function debouncedGithubSave(accounts) {
+    clearTimeout(saveTimer);
+    state.syncStatus = "saving";
+    render();
+    saveTimer = setTimeout(async () => {
+      const ok = await githubSave(accounts);
+      state.syncStatus = ok ? "synced" : "error";
+      state.lastSync = ok ? new Date() : state.lastSync;
+      render();
+    }, 1500);
+  }
+
+  // ──────────────────────────────────────────────
+  // LOCAL STORAGE (fast cache + offline fallback)
+  // ──────────────────────────────────────────────
+  const LS_ACCOUNTS = "signal-board-accounts";
+
+  function localLoad() {
+    try {
+      const raw = localStorage.getItem(LS_ACCOUNTS);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+
+  function localSave(accounts) {
+    localStorage.setItem(LS_ACCOUNTS, JSON.stringify(accounts));
+  }
+
+  // ──────────────────────────────────────────────
+  // APP STATE
   // ──────────────────────────────────────────────
   let state = {
-    accounts: loadAccounts() || SEED,
+    accounts: localLoad() || SEED,
     filter: "all",
     sortBy: "status",
-    editingId: null, // which account name is being edited
+    editingId: null,
+    showSettings: false,
+    syncStatus: "unknown",  // "unknown" | "synced" | "saving" | "error" | "offline"
+    lastSync: null,
+    settingsError: "",
+    loading: true,
   };
 
-  // Persist and re-render after every state change
+  // ──────────────────────────────────────────────
+  // PERSISTENCE: save locally + push to GitHub
+  // ──────────────────────────────────────────────
+  function persistAccounts() {
+    localSave(state.accounts);
+    if (isConfigured()) {
+      debouncedGithubSave(state.accounts);
+    }
+  }
+
   function update(changes) {
     Object.assign(state, changes);
-    saveAccounts(state.accounts);
+    persistAccounts();
+    render();
+  }
+
+  // ──────────────────────────────────────────────
+  // INITIAL LOAD: GitHub first, local fallback
+  // ──────────────────────────────────────────────
+  async function initialLoad() {
+    if (isConfigured()) {
+      state.syncStatus = "saving";
+      render();
+      const remote = await githubLoad();
+      if (remote) {
+        // Remote data found — use it and update local cache
+        state.accounts = remote;
+        localSave(remote);
+        state.syncStatus = "synced";
+        state.lastSync = new Date();
+      } else if (localLoad()) {
+        // No remote file yet — push local data up
+        state.accounts = localLoad();
+        await githubSave(state.accounts);
+        state.syncStatus = "synced";
+      } else {
+        state.accounts = SEED;
+        state.syncStatus = "synced";
+      }
+    } else {
+      // No GitHub config — local-only mode
+      state.accounts = localLoad() || SEED;
+      state.syncStatus = "offline";
+    }
+    state.loading = false;
     render();
   }
 
   // ──────────────────────────────────────────────
   // HELPERS
   // ──────────────────────────────────────────────
-
-  // Count how many accounts have each status (for the filter pills)
   function getCounts() {
     return STATUSES.reduce((acc, s) => {
       acc[s.id] = state.accounts.filter(a => a.status === s.id).length;
@@ -361,30 +629,26 @@
     }, {});
   }
 
-  // Filter accounts by the currently selected status
   function getFiltered() {
     if (state.filter === "all") return state.accounts;
     return state.accounts.filter(a => a.status === state.filter);
   }
 
-  // Sort accounts based on the active sort mode
   function getSorted(filtered) {
     return [...filtered].sort((a, b) => {
       if (state.sortBy === "status") {
-        // Sort by status priority; accounts with no status go to the bottom
         const ai = STATUS_PRIORITY.indexOf(a.status);
         const bi = STATUS_PRIORITY.indexOf(b.status);
         return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
       }
       if (state.sortBy === "alpha") return a.name.localeCompare(b.name);
-      return b.createdAt - a.createdAt; // newest first
+      return b.createdAt - a.createdAt;
     });
   }
 
   // ──────────────────────────────────────────────
   // ACCOUNT ACTIONS
   // ──────────────────────────────────────────────
-
   function addAccount() {
     state.accounts.unshift({
       id: Date.now().toString(),
@@ -393,7 +657,6 @@
       nextStep: "",
       createdAt: Date.now(),
     });
-    // Immediately put the new account into edit mode so user can type the name
     state.editingId = state.accounts[0].id;
     update({});
   }
@@ -406,7 +669,6 @@
   function setStatus(id, statusId) {
     const acct = state.accounts.find(a => a.id === id);
     if (acct) {
-      // Toggle: clicking the active status clears it; otherwise set the new one
       acct.status = acct.status === statusId ? null : statusId;
       update({});
     }
@@ -414,12 +676,12 @@
 
   function setNextStep(id, value) {
     const acct = state.accounts.find(a => a.id === id);
-    if (acct) { acct.nextStep = value; saveAccounts(state.accounts); }
+    if (acct) { acct.nextStep = value; persistAccounts(); }
   }
 
   function setName(id, value) {
     const acct = state.accounts.find(a => a.id === id);
-    if (acct && value.trim()) { acct.name = value.trim(); }
+    if (acct && value.trim()) acct.name = value.trim();
     state.editingId = null;
     update({});
   }
@@ -431,120 +693,238 @@
   }
 
   // ──────────────────────────────────────────────
-  // RENDER — builds the entire UI as an HTML string
-  // and attaches event listeners afterward.
+  // SETTINGS: connect / disconnect GitHub
+  // ──────────────────────────────────────────────
+  async function testAndSaveConfig(token, user, repo) {
+    try {
+      // Test the credentials by hitting the repo endpoint
+      const res = await fetch(
+        `https://api.github.com/repos/${user}/${repo}`,
+        { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
+      );
+      if (res.status === 401) return "Invalid token. Check that you copied it correctly.";
+      if (res.status === 404) return `Repo "${user}/${repo}" not found. Check the name and make sure the token has access.`;
+      if (!res.ok) return `GitHub returned an error (${res.status}). Try again.`;
+
+      // Credentials valid — save and sync
+      saveGitHubConfig(token, user, repo);
+      state.showSettings = false;
+      state.settingsError = "";
+      render();
+
+      // Push current data to the repo
+      await githubSave(state.accounts);
+      state.syncStatus = "synced";
+      state.lastSync = new Date();
+      render();
+      return null;
+    } catch (e) {
+      return "Network error. Check your connection.";
+    }
+  }
+
+  function disconnectGitHub() {
+    localStorage.removeItem(LS_TOKEN);
+    localStorage.removeItem(LS_USER);
+    localStorage.removeItem(LS_REPO);
+    fileSha = null;
+    state.syncStatus = "offline";
+    state.showSettings = false;
+    render();
+  }
+
+  // ──────────────────────────────────────────────
+  // RENDER — builds the full UI as HTML
   // ──────────────────────────────────────────────
   function render() {
     const counts = getCounts();
     const sorted = getSorted(getFiltered());
+    const cfg = getGitHubConfig();
+
+    // Map sync status to a dot color and label
+    const syncInfo = {
+      synced:  { dot: "#10B981", text: "Synced" },
+      saving:  { dot: "#F59E0B", text: "Syncing..." },
+      error:   { dot: "#EF4444", text: "Sync error" },
+      offline: { dot: "rgba(255,255,255,0.25)", text: "Local only" },
+      unknown: { dot: "rgba(255,255,255,0.25)", text: "..." },
+    }[state.syncStatus];
 
     const app = document.getElementById("app");
-    app.innerHTML = `
-      <!-- Header -->
-      <div class="header">
-        <h1>SIGNAL BOARD</h1>
-        <span class="mono count">${state.accounts.length} accounts</span>
 
-        <!-- Filter pills: click to filter by status -->
-        <div class="filters">
-          <button class="filter-pill" data-filter="all"
-            style="${state.filter === 'all' ? 'border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)' : ''}">
-            ALL ${state.accounts.length}
-          </button>
-          ${STATUSES.map(s => `
-            <button class="filter-pill" data-filter="${s.id}"
-              style="
+    // ── Build HTML string ──
+    let html = "";
+
+    // Settings modal (if open)
+    if (state.showSettings) {
+      html += `
+        <div class="settings-overlay" id="settingsOverlay">
+          <div class="settings-panel">
+            <h2>${isConfigured() ? "Sync Settings" : "Set Up Cross-Device Sync"}</h2>
+            ${isConfigured() ? `
+              <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;line-height:1.6">
+                Currently syncing to <strong style="color:#F1F1F1">${cfg.user}/${cfg.repo}</strong>
+              </p>
+              <div class="settings-buttons">
+                <button class="btn-secondary" id="settingsCancel">Close</button>
+                <button class="btn-secondary" id="disconnectBtn" style="border-color:#EF4444;color:#EF4444">Disconnect</button>
+              </div>
+            ` : `
+              <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.6">
+                Connect your GitHub repo so your board syncs across all your devices.
+              </p>
+              <label>GitHub Username</label>
+              <input type="text" id="inputUser" value="${cfg.user}" placeholder="chizzyhat" />
+              <label>Repository Name</label>
+              <input type="text" id="inputRepo" value="${cfg.repo}" placeholder="signal-board" />
+              <label>Personal Access Token</label>
+              <input type="password" id="inputToken" value="" placeholder="ghp_xxxxxxxxxxxx" />
+              <div class="settings-hint">
+                Create one at
+                <a href="https://github.com/settings/tokens/new?scopes=repo&description=Signal+Board" target="_blank">
+                  github.com/settings/tokens
+                </a>
+                — select the <strong>repo</strong> scope.
+              </div>
+              ${state.settingsError ? `<div class="settings-error">${state.settingsError}</div>` : ""}
+              <div class="settings-buttons">
+                <button class="btn-secondary" id="settingsCancel">Cancel</button>
+                <button class="btn-primary" id="settingsSave">Connect</button>
+              </div>
+            `}
+          </div>
+        </div>`;
+    }
+
+    // Loading state
+    if (state.loading) {
+      html += `<div class="empty" style="padding:80px">Loading...</div>`;
+    } else {
+      // Main dashboard
+      html += `
+        <div class="header">
+          <div class="header-top">
+            <div class="header-left">
+              <h1>SIGNAL BOARD</h1>
+              <span class="mono count">${state.accounts.length} accounts</span>
+            </div>
+            <button class="sync-status" id="syncBtn">
+              <span class="sync-dot" style="background:${syncInfo.dot};box-shadow:0 0 6px ${syncInfo.dot}66"></span>
+              ${syncInfo.text}
+            </button>
+          </div>
+          <div class="filters">
+            <button class="filter-pill" data-filter="all"
+              style="${state.filter === 'all' ? 'border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)' : ''}">
+              ALL ${state.accounts.length}
+            </button>
+            ${STATUSES.map(s => `
+              <button class="filter-pill" data-filter="${s.id}" style="
                 border-color: ${state.filter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
                 background: ${state.filter === s.id ? s.color + '22' : 'transparent'};
-                color: ${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}
-              ">
-              <span class="filter-dot" style="background:${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.15)'}"></span>
-              ${s.label.toUpperCase()} ${counts[s.id]}
-            </button>
-          `).join("")}
+                color: ${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}">
+                <span class="filter-dot" style="background:${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.15)'}"></span>
+                ${s.label.toUpperCase()} ${counts[s.id]}
+              </button>
+            `).join("")}
+          </div>
         </div>
-      </div>
 
-      <!-- Toolbar: sort options + add/reset buttons -->
-      <div class="toolbar">
-        <div class="sort-btns">
-          ${[{key:"status",label:"By Priority"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o => `
-            <button class="sort-btn ${state.sortBy === o.key ? 'active' : ''}" data-sort="${o.key}">${o.label}</button>
-          `).join("")}
+        <div class="toolbar">
+          <div class="sort-btns">
+            ${[{key:"status",label:"By Priority"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o => `
+              <button class="sort-btn ${state.sortBy === o.key ? 'active' : ''}" data-sort="${o.key}">${o.label}</button>
+            `).join("")}
+          </div>
+          <div class="action-btns">
+            <button class="btn-reset" id="resetBtn">RESET</button>
+            <button class="btn-add" id="addBtn">+ ADD ACCOUNT</button>
+          </div>
         </div>
-        <div class="action-btns">
-          <button class="btn-reset" id="resetBtn">RESET</button>
-          <button class="btn-add" id="addBtn">+ ADD ACCOUNT</button>
+
+        <div class="col-headers">
+          <div></div><div>Account</div><div>Status</div><div>Next Step</div><div></div>
         </div>
-      </div>
 
-      <!-- Column headers (hidden on mobile via CSS) -->
-      <div class="col-headers">
-        <div></div><div>Account</div><div>Status</div><div>Next Step</div><div></div>
-      </div>
-
-      <!-- Account rows -->
-      <div class="accounts">
-        ${sorted.length === 0 ? `
-          <div class="empty">${state.filter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts with this status.'}</div>
-        ` : sorted.map(acct => {
-          // Find the active status to color the left accent bar
-          const active = STATUSES.find(s => s.id === acct.status);
-          const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
-          const isEditing = state.editingId === acct.id;
-
-          return `
-            <div class="account-row" style="border-left-color:${borderColor}" data-id="${acct.id}">
-              <div></div>
-
-              <!-- Account name (or edit input) -->
-              ${isEditing ? `
-                <input class="name-input" data-name-input="${acct.id}" value="${acct.name}" />
-              ` : `
-                <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">${acct.name}</div>
-              `}
-
-              <!-- Signal lights -->
-              <div class="lights">
-                ${STATUSES.map(s => {
-                  const isActive = acct.status === s.id;
-                  return `
-                    <button class="light" data-light="${acct.id}:${s.id}"
+        <div class="accounts">
+          ${sorted.length === 0 ? `
+            <div class="empty">${state.filter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts with this status.'}</div>
+          ` : sorted.map(acct => {
+            const active = STATUSES.find(s => s.id === acct.status);
+            const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
+            const isEditing = state.editingId === acct.id;
+            return `
+              <div class="account-row" style="border-left-color:${borderColor}">
+                <div></div>
+                ${isEditing ? `
+                  <input class="name-input" data-name-input="${acct.id}" value="${acct.name}" />
+                ` : `
+                  <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">${acct.name}</div>
+                `}
+                <div class="lights">
+                  ${STATUSES.map(s => {
+                    const on = acct.status === s.id;
+                    return `<button class="light" data-light="${acct.id}:${s.id}"
                       title="${s.label}: ${s.description}"
                       style="
-                        border-color: ${isActive ? s.color : 'rgba(255,255,255,0.12)'};
-                        background: ${isActive
-                          ? `radial-gradient(circle at 40% 35%, rgba(255,255,255,0.4) 0%, transparent 60%), ${s.color}`
-                          : 'transparent'};
-                        box-shadow: ${isActive ? `0 0 12px ${s.color}88, 0 0 24px ${s.color}44, inset 0 -2px 4px rgba(0,0,0,0.3)` : 'none'};
-                      ">
-                    </button>`;
-                }).join("")}
-              </div>
+                        border-color:${on ? s.color : 'rgba(255,255,255,0.12)'};
+                        background:${on ? `radial-gradient(circle at 40% 35%, rgba(255,255,255,0.4) 0%, transparent 60%), ${s.color}` : 'transparent'};
+                        box-shadow:${on ? `0 0 12px ${s.color}88, 0 0 24px ${s.color}44, inset 0 -2px 4px rgba(0,0,0,0.3)` : 'none'};
+                      "></button>`;
+                  }).join("")}
+                </div>
+                <input class="next-step" data-nextstep="${acct.id}" value="${(acct.nextStep || '').replace(/"/g, '&quot;')}" placeholder="Next step..." />
+                <button class="delete-btn" data-delete="${acct.id}" title="Remove account">&times;</button>
+              </div>`;
+          }).join("")}
+        </div>
 
-              <!-- Next step text field -->
-              <input class="next-step" data-nextstep="${acct.id}" value="${acct.nextStep || ''}" placeholder="Next step..." />
+        <div class="legend">
+          ${STATUSES.map(s => `
+            <div class="legend-item">
+              <span class="legend-dot" style="background:${s.color};box-shadow:0 0 6px ${s.color}66"></span>
+              ${s.label} — ${s.description}
+            </div>
+          `).join("")}
+        </div>`;
+    }
 
-              <!-- Delete button -->
-              <button class="delete-btn" data-delete="${acct.id}" title="Remove account">&times;</button>
-            </div>`;
-        }).join("")}
-      </div>
-
-      <!-- Legend at the bottom of the page -->
-      <div class="legend">
-        ${STATUSES.map(s => `
-          <div class="legend-item">
-            <span class="legend-dot" style="background:${s.color};box-shadow:0 0 6px ${s.color}66"></span>
-            ${s.label} — ${s.description}
-          </div>
-        `).join("")}
-      </div>
-    `;
+    app.innerHTML = html;
 
     // ── Attach Event Listeners ──
 
-    // Filter pills
+    // Sync/settings button
+    const syncBtn = document.getElementById("syncBtn");
+    if (syncBtn) syncBtn.addEventListener("click", () => { state.showSettings = true; state.settingsError = ""; render(); });
+
+    // Settings cancel
+    const settingsCancel = document.getElementById("settingsCancel");
+    if (settingsCancel) settingsCancel.addEventListener("click", () => { state.showSettings = false; render(); });
+
+    // Disconnect
+    const disconnectBtn = document.getElementById("disconnectBtn");
+    if (disconnectBtn) disconnectBtn.addEventListener("click", disconnectGitHub);
+
+    // Click overlay background to close
+    const overlay = document.getElementById("settingsOverlay");
+    if (overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) { state.showSettings = false; render(); } });
+
+    // Save settings
+    const settingsSave = document.getElementById("settingsSave");
+    if (settingsSave) {
+      settingsSave.addEventListener("click", async () => {
+        const token = document.getElementById("inputToken").value.trim();
+        const user  = document.getElementById("inputUser").value.trim();
+        const repo  = document.getElementById("inputRepo").value.trim();
+        if (!token || !user || !repo) { state.settingsError = "All fields are required."; render(); return; }
+        settingsSave.disabled = true;
+        settingsSave.textContent = "Testing...";
+        const err = await testAndSaveConfig(token, user, repo);
+        if (err) { state.settingsError = err; render(); }
+      });
+    }
+
+    // Filters
     app.querySelectorAll("[data-filter]").forEach(btn => {
       btn.addEventListener("click", () => {
         const f = btn.dataset.filter;
@@ -552,34 +932,35 @@
       });
     });
 
-    // Sort buttons
+    // Sort
     app.querySelectorAll("[data-sort]").forEach(btn => {
       btn.addEventListener("click", () => update({ sortBy: btn.dataset.sort }));
     });
 
     // Add / Reset
-    document.getElementById("addBtn").addEventListener("click", addAccount);
-    document.getElementById("resetBtn").addEventListener("click", resetBoard);
+    const addBtn = document.getElementById("addBtn");
+    if (addBtn) addBtn.addEventListener("click", addAccount);
+    const resetBtn = document.getElementById("resetBtn");
+    if (resetBtn) resetBtn.addEventListener("click", resetBoard);
 
-    // Click account name to start editing
+    // Edit name
     app.querySelectorAll("[data-edit-name]").forEach(el => {
       el.addEventListener("click", () => {
         state.editingId = el.dataset.editName;
         render();
-        // Auto-focus and select the text in the name input
         const input = app.querySelector(`[data-name-input="${el.dataset.editName}"]`);
         if (input) { input.focus(); input.select(); }
       });
     });
 
-    // Name input: save on blur or Enter key
+    // Name input commit
     app.querySelectorAll("[data-name-input]").forEach(input => {
       const id = input.dataset.nameInput;
       input.addEventListener("blur", () => setName(id, input.value));
       input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
     });
 
-    // Signal light clicks: toggle status on/off
+    // Signal lights
     app.querySelectorAll("[data-light]").forEach(btn => {
       btn.addEventListener("click", () => {
         const [id, statusId] = btn.dataset.light.split(":");
@@ -587,26 +968,27 @@
       });
     });
 
-    // Next step input: save on blur
+    // Next step
     app.querySelectorAll("[data-nextstep]").forEach(input => {
       input.addEventListener("blur", () => setNextStep(input.dataset.nextstep, input.value));
       input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
     });
 
-    // Delete buttons
+    // Delete
     app.querySelectorAll("[data-delete]").forEach(btn => {
       btn.addEventListener("click", () => deleteAccount(btn.dataset.delete));
     });
 
-    // Auto-focus name input if we're in editing mode (e.g. after adding a new account)
+    // Auto-focus name input if editing
     if (state.editingId) {
       const input = app.querySelector(`[data-name-input="${state.editingId}"]`);
       if (input) { input.focus(); input.select(); }
     }
   }
 
-  // Initial render when the page loads
+  // ── Boot ──
   render();
+  initialLoad();
 </script>
 </body>
 </html>
