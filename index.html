@@ -171,7 +171,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
 
-    /* ── Filter Pills ── */
+    /* ── Filter Pills (status + solutions) ── */
     .filters {
       display: flex;
       gap: 6px;
@@ -199,6 +199,22 @@
       height: 7px;
       border-radius: 50%;
       display: inline-block;
+    }
+
+    /* ── Solution Tag Badges ── */
+    .solution-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+
+    .sol-tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all 0.15s;
+      border: 1px solid;
+      user-select: none;
     }
 
     /* ── Toolbar ── */
@@ -256,8 +272,8 @@
     /* ── Column Headers ── */
     .col-headers {
       display: grid;
-      grid-template-columns: 4px 180px auto 1fr 36px;
-      gap: 16px;
+      grid-template-columns: 32px 160px 70px auto 1fr 36px;
+      gap: 12px;
       padding: 0 16px 8px;
       font-size: 10px;
       font-family: 'JetBrains Mono', monospace;
@@ -271,15 +287,48 @@
 
     .account-row {
       display: grid;
-      grid-template-columns: 4px 180px auto 1fr 36px;
+      grid-template-columns: 32px 160px 70px auto 1fr 36px;
       align-items: center;
-      gap: 16px;
-      padding: 12px 16px;
+      gap: 12px;
+      padding: 10px 16px;
       background: rgba(255,255,255,0.03);
       border-radius: 8px;
       border-left: 4px solid rgba(255,255,255,0.06);
       transition: all 0.2s ease;
     }
+
+    /* ── Logo Thumbnail ── */
+    .logo-wrap {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .logo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* Placeholder icon when no logo is set */
+    .logo-placeholder {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .logo-wrap:hover .logo-placeholder { color: rgba(255,255,255,0.5); }
+
+    /* Hidden file input for logo upload */
+    .logo-file-input { display: none; }
 
     .account-name {
       color: #F1F1F1;
@@ -304,11 +353,11 @@
       width: 100%;
     }
 
-    .lights { display: flex; gap: 8px; align-items: center; }
+    .lights { display: flex; gap: 6px; align-items: center; }
 
     .light {
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       border: 2px solid rgba(255,255,255,0.12);
       background: transparent;
@@ -381,17 +430,91 @@
       display: inline-block;
     }
 
-    /* ── Mobile Responsive ── */
+    /* ── Logo Popup (domain entry for auto-fetch) ── */
+    .logo-popup {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      backdrop-filter: blur(4px);
+    }
+
+    .logo-popup-inner {
+      background: #1A1F2E;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 24px;
+      width: 90%;
+      max-width: 380px;
+    }
+
+    .logo-popup-inner h3 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .logo-popup-inner input {
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      color: #F1F1F1;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      margin-bottom: 8px;
+    }
+
+    .logo-popup-preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 12px 0;
+      min-height: 40px;
+    }
+
+    .logo-popup-preview img {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.06);
+      object-fit: contain;
+    }
+
+    .logo-popup-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+      margin-top: 16px;
+    }
+
+    /* ── Filter separator ── */
+    .filter-sep {
+      width: 1px;
+      height: 20px;
+      background: rgba(255,255,255,0.1);
+      margin: 0 4px;
+      align-self: center;
+    }
+
+    /* ── Mobile ── */
     @media (max-width: 768px) {
       body { padding: 16px; }
       .col-headers { display: none; }
       .account-row {
-        grid-template-columns: 1fr;
-        gap: 10px;
+        grid-template-columns: 32px 1fr;
+        gap: 8px;
         padding: 14px 16px;
       }
-      .account-row > div:first-child { display: none; }
-      .lights { justify-content: flex-start; }
+      .lights { grid-column: 1 / -1; }
+      .solution-tags { grid-column: 1 / -1; }
+      .next-step { grid-column: 1 / -1; }
+      .delete-btn { grid-column: 1 / -1; justify-self: end; }
     }
   </style>
 </head>
@@ -402,7 +525,6 @@
 <script>
   // ──────────────────────────────────────────────
   // STATUS DEFINITIONS
-  // Each status answers: "Who has the ball?" + urgency.
   // ──────────────────────────────────────────────
   const STATUSES = [
     { id: "on_me", label: "On Me", color: "#F59E0B", description: "I need to act" },
@@ -413,36 +535,36 @@
     { id: "cruising", label: "Cruising", color: "#10B981", description: "Active, no action needed" },
   ];
 
-  // Priority order for sorting (most urgent first)
   const STATUS_PRIORITY = ["critical", "blocked", "on_me", "on_colleague", "on_customer", "cruising"];
 
   // ──────────────────────────────────────────────
-  // SEED DATA — shown on first visit
+  // SOLUTION DEFINITIONS
+  // Each solution gets a distinct color for its tag badge.
+  // ──────────────────────────────────────────────
+  const SOLUTIONS = [
+    { id: "qms",    label: "QMS",    color: "#06B6D4" },  // cyan
+    { id: "evolve", label: "Evolve", color: "#A78BFA" },  // violet
+    { id: "iforms", label: "iForms", color: "#FB923C" },  // orange
+  ];
+
+  // ──────────────────────────────────────────────
+  // SEED DATA
   // ──────────────────────────────────────────────
   const SEED = [
-    { id: "1", name: "Acme Corp", status: "on_me", nextStep: "Send revised proposal by Friday", createdAt: Date.now() },
-    { id: "2", name: "GlobalTech", status: "on_customer", nextStep: "Waiting on signed SOW", createdAt: Date.now() },
-    { id: "3", name: "Pinnacle Inc", status: "cruising", nextStep: "", createdAt: Date.now() },
+    { id: "1", name: "Acme Corp", status: "on_me", nextStep: "Send revised proposal by Friday", solutions: ["qms"], logo: "", createdAt: Date.now() },
+    { id: "2", name: "GlobalTech", status: "on_customer", nextStep: "Waiting on signed SOW", solutions: ["evolve", "iforms"], logo: "", createdAt: Date.now() },
+    { id: "3", name: "Pinnacle Inc", status: "cruising", nextStep: "", solutions: ["qms", "evolve"], logo: "", createdAt: Date.now() },
   ];
 
   // ──────────────────────────────────────────────
   // GITHUB SYNC ENGINE
-  // Reads/writes a data.json file in the user's repo
-  // using the GitHub Contents API. The personal access
-  // token is stored in localStorage (per device), but
-  // the actual data lives in the repo (shared).
   // ──────────────────────────────────────────────
-
   const LS_TOKEN = "sb-github-token";
   const LS_REPO  = "sb-github-repo";
   const LS_USER  = "sb-github-user";
   const DATA_FILE = "data.json";
 
-  // The SHA of the current data.json in the repo.
-  // GitHub requires this to update an existing file.
   let fileSha = null;
-
-  // Debounce timer so we don't commit on every keystroke
   let saveTimer = null;
 
   function getGitHubConfig() {
@@ -464,7 +586,6 @@
     return c.token && c.user && c.repo;
   }
 
-  // Fetch data.json from the GitHub repo
   async function githubLoad() {
     const { token, user, repo } = getGitHubConfig();
     try {
@@ -472,16 +593,10 @@
         `https://api.github.com/repos/${user}/${repo}/contents/${DATA_FILE}`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
       );
-      if (res.status === 404) {
-        // File doesn't exist yet — we'll create it on first save
-        fileSha = null;
-        return null;
-      }
+      if (res.status === 404) { fileSha = null; return null; }
       if (!res.ok) throw new Error(`GitHub API ${res.status}`);
       const json = await res.json();
-      // Remember the SHA so we can update the file later
       fileSha = json.sha;
-      // Decode the base64 content
       const decoded = atob(json.content.replace(/\n/g, ""));
       return JSON.parse(decoded);
     } catch (e) {
@@ -490,13 +605,10 @@
     }
   }
 
-  // Write account data to data.json in the repo
   async function githubSave(accounts) {
     const { token, user, repo } = getGitHubConfig();
-    // Encode the data as base64 for the GitHub API
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(accounts, null, 2))));
     const body = { message: "Update signal board data", content };
-    // Include the SHA if the file already exists (required for updates)
     if (fileSha) body.sha = fileSha;
 
     try {
@@ -512,12 +624,8 @@
           body: JSON.stringify(body),
         }
       );
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || `GitHub API ${res.status}`);
-      }
+      if (!res.ok) throw new Error((await res.json()).message || `GitHub API ${res.status}`);
       const json = await res.json();
-      // Update SHA to the new version
       fileSha = json.content.sha;
       return true;
     } catch (e) {
@@ -526,8 +634,6 @@
     }
   }
 
-  // Wait 1.5s of inactivity before pushing to GitHub
-  // so rapid edits don't create a commit per keystroke
   function debouncedGithubSave(accounts) {
     clearTimeout(saveTimer);
     state.syncStatus = "saving";
@@ -541,14 +647,23 @@
   }
 
   // ──────────────────────────────────────────────
-  // LOCAL STORAGE (fast cache + offline fallback)
+  // LOCAL STORAGE FALLBACK
   // ──────────────────────────────────────────────
   const LS_ACCOUNTS = "signal-board-accounts";
 
   function localLoad() {
     try {
       const raw = localStorage.getItem(LS_ACCOUNTS);
-      return raw ? JSON.parse(raw) : null;
+      // Migrate old data: ensure every account has `solutions` and `logo` fields
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        return parsed.map(a => ({
+          ...a,
+          solutions: a.solutions || [],
+          logo: a.logo || "",
+        }));
+      }
+      return null;
     } catch { return null; }
   }
 
@@ -561,24 +676,27 @@
   // ──────────────────────────────────────────────
   let state = {
     accounts: localLoad() || SEED,
-    filter: "all",
+    filter: "all",             // status filter
+    solutionFilter: "all",     // solution filter
     sortBy: "status",
     editingId: null,
     showSettings: false,
-    syncStatus: "unknown",  // "unknown" | "synced" | "saving" | "error" | "offline"
+    syncStatus: "unknown",
     lastSync: null,
     settingsError: "",
     loading: true,
+    // Logo popup state
+    logoPopup: null,           // account ID being edited, or null
+    logoPreviewUrl: "",
+    logoDomain: "",
   };
 
   // ──────────────────────────────────────────────
-  // PERSISTENCE: save locally + push to GitHub
+  // PERSISTENCE
   // ──────────────────────────────────────────────
   function persistAccounts() {
     localSave(state.accounts);
-    if (isConfigured()) {
-      debouncedGithubSave(state.accounts);
-    }
+    if (isConfigured()) debouncedGithubSave(state.accounts);
   }
 
   function update(changes) {
@@ -587,22 +705,18 @@
     render();
   }
 
-  // ──────────────────────────────────────────────
-  // INITIAL LOAD: GitHub first, local fallback
-  // ──────────────────────────────────────────────
   async function initialLoad() {
     if (isConfigured()) {
       state.syncStatus = "saving";
       render();
       const remote = await githubLoad();
       if (remote) {
-        // Remote data found — use it and update local cache
-        state.accounts = remote;
-        localSave(remote);
+        // Migrate remote data to include new fields
+        state.accounts = remote.map(a => ({ ...a, solutions: a.solutions || [], logo: a.logo || "" }));
+        localSave(state.accounts);
         state.syncStatus = "synced";
         state.lastSync = new Date();
       } else if (localLoad()) {
-        // No remote file yet — push local data up
         state.accounts = localLoad();
         await githubSave(state.accounts);
         state.syncStatus = "synced";
@@ -611,7 +725,6 @@
         state.syncStatus = "synced";
       }
     } else {
-      // No GitHub config — local-only mode
       state.accounts = localLoad() || SEED;
       state.syncStatus = "offline";
     }
@@ -629,9 +742,24 @@
     }, {});
   }
 
+  function getSolCounts() {
+    return SOLUTIONS.reduce((acc, s) => {
+      acc[s.id] = state.accounts.filter(a => (a.solutions || []).includes(s.id)).length;
+      return acc;
+    }, {});
+  }
+
   function getFiltered() {
-    if (state.filter === "all") return state.accounts;
-    return state.accounts.filter(a => a.status === state.filter);
+    let list = state.accounts;
+    // Apply status filter
+    if (state.filter !== "all") {
+      list = list.filter(a => a.status === state.filter);
+    }
+    // Apply solution filter
+    if (state.solutionFilter !== "all") {
+      list = list.filter(a => (a.solutions || []).includes(state.solutionFilter));
+    }
+    return list;
   }
 
   function getSorted(filtered) {
@@ -655,6 +783,8 @@
       name: "New Account",
       status: null,
       nextStep: "",
+      solutions: [],
+      logo: "",
       createdAt: Date.now(),
     });
     state.editingId = state.accounts[0].id;
@@ -674,6 +804,20 @@
     }
   }
 
+  // Toggle a solution tag on/off for an account
+  function toggleSolution(id, solId) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct) return;
+    if (!acct.solutions) acct.solutions = [];
+    const idx = acct.solutions.indexOf(solId);
+    if (idx >= 0) {
+      acct.solutions.splice(idx, 1);  // remove
+    } else {
+      acct.solutions.push(solId);      // add
+    }
+    update({});
+  }
+
   function setNextStep(id, value) {
     const acct = state.accounts.find(a => a.id === id);
     if (acct) { acct.nextStep = value; persistAccounts(); }
@@ -689,30 +833,79 @@
   function resetBoard() {
     state.accounts = [...SEED];
     state.filter = "all";
+    state.solutionFilter = "all";
     update({});
   }
 
   // ──────────────────────────────────────────────
-  // SETTINGS: connect / disconnect GitHub
+  // LOGO HANDLING
+  // Uses logo.clearbit.com for auto-fetch by domain.
+  // Falls back to manual file upload.
+  // Stores the URL (not base64) to keep data small.
+  // ──────────────────────────────────────────────
+
+  function openLogoPopup(id) {
+    const acct = state.accounts.find(a => a.id === id);
+    state.logoPopup = id;
+    state.logoDomain = "";
+    state.logoPreviewUrl = acct?.logo || "";
+    render();
+  }
+
+  function closeLogoPopup() {
+    state.logoPopup = null;
+    render();
+  }
+
+  // Build logo URL from a domain string
+  function logoUrlFromDomain(domain) {
+    // Clean up: remove protocol, www, trailing slashes
+    domain = domain.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").trim();
+    if (!domain) return "";
+    return `https://logo.clearbit.com/${domain}`;
+  }
+
+  function saveLogo(id, url) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (acct) {
+      acct.logo = url;
+      update({});
+    }
+    closeLogoPopup();
+  }
+
+  function removeLogo(id) {
+    saveLogo(id, "");
+  }
+
+  // Handle manual file upload: convert to base64 data URL
+  function handleLogoUpload(id, file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      saveLogo(id, reader.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ──────────────────────────────────────────────
+  // SETTINGS
   // ──────────────────────────────────────────────
   async function testAndSaveConfig(token, user, repo) {
     try {
-      // Test the credentials by hitting the repo endpoint
       const res = await fetch(
         `https://api.github.com/repos/${user}/${repo}`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
       );
       if (res.status === 401) return "Invalid token. Check that you copied it correctly.";
       if (res.status === 404) return `Repo "${user}/${repo}" not found. Check the name and make sure the token has access.`;
-      if (!res.ok) return `GitHub returned an error (${res.status}). Try again.`;
+      if (!res.ok) return `GitHub returned an error (${res.status}).`;
 
-      // Credentials valid — save and sync
       saveGitHubConfig(token, user, repo);
       state.showSettings = false;
       state.settingsError = "";
       render();
 
-      // Push current data to the repo
       await githubSave(state.accounts);
       state.syncStatus = "synced";
       state.lastSync = new Date();
@@ -734,14 +927,14 @@
   }
 
   // ──────────────────────────────────────────────
-  // RENDER — builds the full UI as HTML
+  // RENDER
   // ──────────────────────────────────────────────
   function render() {
     const counts = getCounts();
+    const solCounts = getSolCounts();
     const sorted = getSorted(getFiltered());
     const cfg = getGitHubConfig();
 
-    // Map sync status to a dot color and label
     const syncInfo = {
       synced:  { dot: "#10B981", text: "Synced" },
       saving:  { dot: "#F59E0B", text: "Syncing..." },
@@ -751,11 +944,37 @@
     }[state.syncStatus];
 
     const app = document.getElementById("app");
-
-    // ── Build HTML string ──
     let html = "";
 
-    // Settings modal (if open)
+    // ── Logo Popup Modal ──
+    if (state.logoPopup) {
+      html += `
+        <div class="logo-popup" id="logoOverlay">
+          <div class="logo-popup-inner">
+            <h3>Set Company Logo</h3>
+            <p style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:12px">Enter the company's website domain to auto-fetch their logo, or upload an image.</p>
+            <input type="text" id="logoDomainInput" placeholder="e.g. acme.com" value="${state.logoDomain}" />
+            <div class="logo-popup-preview" id="logoPreviewArea">
+              ${state.logoPreviewUrl ? `<img src="${state.logoPreviewUrl}" onerror="this.style.display='none'" />` : ""}
+              <span style="font-size:11px;color:rgba(255,255,255,0.3)" id="logoPreviewHint">${state.logoPreviewUrl ? "Preview" : "Type a domain and press Enter"}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;margin:8px 0">
+              <span style="font-size:11px;color:rgba(255,255,255,0.3)">Or:</span>
+              <label style="font-size:12px;color:#3B82F6;cursor:pointer;margin:0;text-transform:none;letter-spacing:0">
+                Upload image
+                <input type="file" accept="image/*" class="logo-file-input" id="logoFileInput" />
+              </label>
+            </div>
+            <div class="logo-popup-actions">
+              ${state.logoPreviewUrl ? `<button class="btn-secondary" id="logoRemoveBtn" style="border-color:#EF4444;color:#EF4444;margin-right:auto">Remove</button>` : ""}
+              <button class="btn-secondary" id="logoCancelBtn">Cancel</button>
+              <button class="btn-primary" id="logoSaveBtn" ${state.logoPreviewUrl ? "" : "disabled"}>Save</button>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    // ── Settings Modal ──
     if (state.showSettings) {
       html += `
         <div class="settings-overlay" id="settingsOverlay">
@@ -783,8 +1002,7 @@
                 Create one at
                 <a href="https://github.com/settings/tokens/new?scopes=repo&description=Signal+Board" target="_blank">
                   github.com/settings/tokens
-                </a>
-                — select the <strong>repo</strong> scope.
+                </a> — select the <strong>repo</strong> scope.
               </div>
               ${state.settingsError ? `<div class="settings-error">${state.settingsError}</div>` : ""}
               <div class="settings-buttons">
@@ -796,11 +1014,10 @@
         </div>`;
     }
 
-    // Loading state
+    // ── Main Board ──
     if (state.loading) {
       html += `<div class="empty" style="padding:80px">Loading...</div>`;
     } else {
-      // Main dashboard
       html += `
         <div class="header">
           <div class="header-top">
@@ -813,6 +1030,8 @@
               ${syncInfo.text}
             </button>
           </div>
+
+          <!-- Status filter pills -->
           <div class="filters">
             <button class="filter-pill" data-filter="all"
               style="${state.filter === 'all' ? 'border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)' : ''}">
@@ -820,16 +1039,31 @@
             </button>
             ${STATUSES.map(s => `
               <button class="filter-pill" data-filter="${s.id}" style="
-                border-color: ${state.filter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
-                background: ${state.filter === s.id ? s.color + '22' : 'transparent'};
-                color: ${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}">
+                border-color:${state.filter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
+                background:${state.filter === s.id ? s.color + '22' : 'transparent'};
+                color:${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}">
                 <span class="filter-dot" style="background:${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.15)'}"></span>
                 ${s.label.toUpperCase()} ${counts[s.id]}
+              </button>
+            `).join("")}
+
+            <!-- Separator between status and solution filters -->
+            <div class="filter-sep"></div>
+
+            <!-- Solution filter pills -->
+            ${SOLUTIONS.map(s => `
+              <button class="filter-pill" data-sol-filter="${s.id}" style="
+                border-color:${state.solutionFilter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
+                background:${state.solutionFilter === s.id ? s.color + '22' : 'transparent'};
+                color:${solCounts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}">
+                <span class="filter-dot" style="background:${solCounts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.15)'}"></span>
+                ${s.label.toUpperCase()} ${solCounts[s.id]}
               </button>
             `).join("")}
           </div>
         </div>
 
+        <!-- Toolbar -->
         <div class="toolbar">
           <div class="sort-btns">
             ${[{key:"status",label:"By Priority"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o => `
@@ -842,25 +1076,49 @@
           </div>
         </div>
 
+        <!-- Column headers -->
         <div class="col-headers">
-          <div></div><div>Account</div><div>Status</div><div>Next Step</div><div></div>
+          <div></div><div>Account</div><div>Solutions</div><div>Status</div><div>Next Step</div><div></div>
         </div>
 
+        <!-- Account rows -->
         <div class="accounts">
           ${sorted.length === 0 ? `
-            <div class="empty">${state.filter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts with this status.'}</div>
+            <div class="empty">${state.filter === 'all' && state.solutionFilter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts match these filters.'}</div>
           ` : sorted.map(acct => {
             const active = STATUSES.find(s => s.id === acct.status);
             const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
             const isEditing = state.editingId === acct.id;
+            const sols = acct.solutions || [];
             return `
               <div class="account-row" style="border-left-color:${borderColor}">
-                <div></div>
+                <!-- Logo thumbnail -->
+                <div class="logo-wrap" data-logo="${acct.id}" title="Click to set logo">
+                  ${acct.logo
+                    ? `<img src="${acct.logo}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span class="logo-placeholder" style="display:none">+</span>`
+                    : `<span class="logo-placeholder">+</span>`}
+                </div>
+
+                <!-- Account name -->
                 ${isEditing ? `
                   <input class="name-input" data-name-input="${acct.id}" value="${acct.name}" />
                 ` : `
                   <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">${acct.name}</div>
                 `}
+
+                <!-- Solution tags: click to toggle -->
+                <div class="solution-tags">
+                  ${SOLUTIONS.map(s => {
+                    const on = sols.includes(s.id);
+                    return `<span class="sol-tag" data-sol="${acct.id}:${s.id}" style="
+                      background:${on ? s.color + '22' : 'transparent'};
+                      color:${on ? s.color : 'rgba(255,255,255,0.15)'};
+                      border-color:${on ? s.color + '66' : 'rgba(255,255,255,0.06)'};
+                    ">${s.label}</span>`;
+                  }).join("")}
+                </div>
+
+                <!-- Signal lights -->
                 <div class="lights">
                   ${STATUSES.map(s => {
                     const on = acct.status === s.id;
@@ -873,12 +1131,17 @@
                       "></button>`;
                   }).join("")}
                 </div>
+
+                <!-- Next step -->
                 <input class="next-step" data-nextstep="${acct.id}" value="${(acct.nextStep || '').replace(/"/g, '&quot;')}" placeholder="Next step..." />
+
+                <!-- Delete -->
                 <button class="delete-btn" data-delete="${acct.id}" title="Remove account">&times;</button>
               </div>`;
           }).join("")}
         </div>
 
+        <!-- Legend -->
         <div class="legend">
           ${STATUSES.map(s => `
             <div class="legend-item">
@@ -891,25 +1154,65 @@
 
     app.innerHTML = html;
 
-    // ── Attach Event Listeners ──
+    // ── Event Listeners ──
 
-    // Sync/settings button
+    // Logo popup
+    app.querySelectorAll("[data-logo]").forEach(el => {
+      el.addEventListener("click", () => openLogoPopup(el.dataset.logo));
+    });
+
+    const logoOverlay = document.getElementById("logoOverlay");
+    if (logoOverlay) logoOverlay.addEventListener("click", e => { if (e.target === logoOverlay) closeLogoPopup(); });
+
+    const logoCancelBtn = document.getElementById("logoCancelBtn");
+    if (logoCancelBtn) logoCancelBtn.addEventListener("click", closeLogoPopup);
+
+    const logoDomainInput = document.getElementById("logoDomainInput");
+    if (logoDomainInput) {
+      // As the user types a domain, show a live preview of the fetched logo
+      const updatePreview = () => {
+        const url = logoUrlFromDomain(logoDomainInput.value);
+        state.logoDomain = logoDomainInput.value;
+        state.logoPreviewUrl = url;
+        const area = document.getElementById("logoPreviewArea");
+        if (area && url) {
+          area.innerHTML = `<img src="${url}" onerror="this.style.display='none'" style="width:40px;height:40px;border-radius:6px;background:rgba(255,255,255,0.06);object-fit:contain" /><span style="font-size:11px;color:rgba(255,255,255,0.3)">Preview</span>`;
+          // Enable save button once we have a URL
+          const saveBtn = document.getElementById("logoSaveBtn");
+          if (saveBtn) saveBtn.disabled = false;
+        }
+      };
+      logoDomainInput.addEventListener("input", updatePreview);
+      logoDomainInput.addEventListener("keydown", e => { if (e.key === "Enter") updatePreview(); });
+      logoDomainInput.focus();
+    }
+
+    const logoSaveBtn = document.getElementById("logoSaveBtn");
+    if (logoSaveBtn) logoSaveBtn.addEventListener("click", () => saveLogo(state.logoPopup, state.logoPreviewUrl));
+
+    const logoRemoveBtn = document.getElementById("logoRemoveBtn");
+    if (logoRemoveBtn) logoRemoveBtn.addEventListener("click", () => removeLogo(state.logoPopup));
+
+    const logoFileInput = document.getElementById("logoFileInput");
+    if (logoFileInput) {
+      logoFileInput.addEventListener("change", e => {
+        if (e.target.files[0]) handleLogoUpload(state.logoPopup, e.target.files[0]);
+      });
+    }
+
+    // Sync / Settings
     const syncBtn = document.getElementById("syncBtn");
     if (syncBtn) syncBtn.addEventListener("click", () => { state.showSettings = true; state.settingsError = ""; render(); });
 
-    // Settings cancel
     const settingsCancel = document.getElementById("settingsCancel");
     if (settingsCancel) settingsCancel.addEventListener("click", () => { state.showSettings = false; render(); });
 
-    // Disconnect
     const disconnectBtn = document.getElementById("disconnectBtn");
     if (disconnectBtn) disconnectBtn.addEventListener("click", disconnectGitHub);
 
-    // Click overlay background to close
     const overlay = document.getElementById("settingsOverlay");
-    if (overlay) overlay.addEventListener("click", (e) => { if (e.target === overlay) { state.showSettings = false; render(); } });
+    if (overlay) overlay.addEventListener("click", e => { if (e.target === overlay) { state.showSettings = false; render(); } });
 
-    // Save settings
     const settingsSave = document.getElementById("settingsSave");
     if (settingsSave) {
       settingsSave.addEventListener("click", async () => {
@@ -924,11 +1227,19 @@
       });
     }
 
-    // Filters
+    // Status filters
     app.querySelectorAll("[data-filter]").forEach(btn => {
       btn.addEventListener("click", () => {
         const f = btn.dataset.filter;
         update({ filter: state.filter === f && f !== "all" ? "all" : f });
+      });
+    });
+
+    // Solution filters
+    app.querySelectorAll("[data-sol-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const f = btn.dataset.solFilter;
+        update({ solutionFilter: state.solutionFilter === f ? "all" : f });
       });
     });
 
@@ -968,6 +1279,14 @@
       });
     });
 
+    // Solution tags — click to toggle
+    app.querySelectorAll("[data-sol]").forEach(el => {
+      el.addEventListener("click", () => {
+        const [id, solId] = el.dataset.sol.split(":");
+        toggleSolution(id, solId);
+      });
+    });
+
     // Next step
     app.querySelectorAll("[data-nextstep]").forEach(input => {
       input.addEventListener("blur", () => setNextStep(input.dataset.nextstep, input.value));
@@ -979,7 +1298,7 @@
       btn.addEventListener("click", () => deleteAccount(btn.dataset.delete));
     });
 
-    // Auto-focus name input if editing
+    // Auto-focus name input
     if (state.editingId) {
       const input = app.querySelector(`[data-name-input="${state.editingId}"]`);
       if (input) { input.focus(); input.select(); }
