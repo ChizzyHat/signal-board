@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Page title shown in browser tab -->
+  <title>Signal Board</title>
+  <!-- Fonts: DM Sans for UI text, JetBrains Mono for labels/counts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(145deg, #0A0E17 0%, #111827 50%, #0D1321 100%);
+      color: #F1F1F1;
+      font-family: 'DM Sans', sans-serif;
+      padding: 24px 28px;
+      /* Prevent rubber-banding on iPad */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── Monospace utility class for labels and counts ── */
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Header ── */
+    .header { margin-bottom: 28px; }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      display: inline;
+    }
+
+    .header .count {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      margin-left: 12px;
+    }
+
+    /* ── Filter Pills ── */
+    .filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .filter-pill {
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: transparent;
+      color: rgba(255,255,255,0.6);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Small colored dot inside each filter pill */
+    .filter-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── Toolbar (sort + add/reset buttons) ── */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .sort-btns { display: flex; gap: 4px; }
+
+    .sort-btn {
+      padding: 4px 10px;
+      border-radius: 4px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.35);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+    }
+
+    /* Highlighted state for active sort option */
+    .sort-btn.active {
+      background: rgba(255,255,255,0.1);
+      color: #F1F1F1;
+    }
+
+    .action-btns { display: flex; gap: 8px; }
+
+    .btn-reset {
+      padding: 6px 14px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: transparent;
+      color: rgba(255,255,255,0.3);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+    }
+
+    .btn-add {
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: #F1F1F1;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+    }
+
+    /* ── Column Headers ── */
+    .col-headers {
+      display: grid;
+      grid-template-columns: 4px 180px auto 1fr 36px;
+      gap: 16px;
+      padding: 0 16px 8px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ── Account Rows ── */
+    .accounts { display: flex; flex-direction: column; gap: 4px; }
+
+    .account-row {
+      display: grid;
+      grid-template-columns: 4px 180px auto 1fr 36px;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      /* Left border color is set dynamically via JS */
+      border-left: 4px solid rgba(255,255,255,0.06);
+      transition: all 0.2s ease;
+    }
+
+    /* ── Account Name ── */
+    .account-name {
+      color: #F1F1F1;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      letter-spacing: 0.01em;
+    }
+
+    /* Input shown when editing the account name */
+    .name-input {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      color: #F1F1F1;
+      padding: 4px 8px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      width: 100%;
+    }
+
+    /* ── Signal Lights Row ── */
+    .lights { display: flex; gap: 8px; align-items: center; }
+
+    /* Individual signal light (circle button) */
+    .light {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.12);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      padding: 0;
+    }
+
+    /* ── Next Step Input ── */
+    .next-step {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: rgba(255,255,255,0.6);
+      padding: 4px 8px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+
+    .next-step:hover { border-color: rgba(255,255,255,0.08); }
+    .next-step:focus { border-color: rgba(255,255,255,0.15); }
+
+    /* ── Delete Button ── */
+    .delete-btn {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.2);
+      cursor: pointer;
+      font-size: 18px;
+      padding: 4px;
+      border-radius: 4px;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+
+    .delete-btn:hover { color: #EF4444; }
+
+    /* ── Empty State ── */
+    .empty {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.25);
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Legend (bottom) ── */
+    .legend {
+      margin-top: 32px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Glowing dot in the legend */
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* ── iPad / Mobile Responsive ── */
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+
+      .col-headers { display: none; }
+
+      .account-row {
+        /* Stack vertically on small screens */
+        grid-template-columns: 1fr;
+        gap: 10px;
+        padding: 14px 16px;
+      }
+
+      /* Hide the accent spacer column on mobile */
+      .account-row > div:first-child { display: none; }
+
+      .lights { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- The entire UI is rendered by JavaScript below -->
+<div id="app"></div>
+
+<script>
+  // ──────────────────────────────────────────────
+  // STATUS DEFINITIONS
+  // Each status answers: "Who has the ball?" + urgency level.
+  // ──────────────────────────────────────────────
+  const STATUSES = [
+    { id: "on_me", label: "On Me", color: "#F59E0B", description: "I need to act" },
+    { id: "on_colleague", label: "On Colleague", color: "#8B5CF6", description: "Waiting internally" },
+    { id: "on_customer", label: "On Customer", color: "#3B82F6", description: "Waiting on them" },
+    { id: "blocked", label: "Blocked", color: "#F97316", description: "Stuck / escalate" },
+    { id: "critical", label: "Critical", color: "#FF0040", description: "Urgent — drop everything" },
+    { id: "cruising", label: "Cruising", color: "#10B981", description: "Active, no action needed" },
+  ];
+
+  // Priority order for sorting: most urgent first
+  const STATUS_PRIORITY = ["critical", "blocked", "on_me", "on_colleague", "on_customer", "cruising"];
+
+  // ──────────────────────────────────────────────
+  // PERSISTENCE via localStorage
+  // All accounts are stored as a single JSON string.
+  // ──────────────────────────────────────────────
+  const STORAGE_KEY = "signal-board-accounts";
+
+  function loadAccounts() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch { return null; }
+  }
+
+  function saveAccounts(accounts) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(accounts));
+  }
+
+  // ──────────────────────────────────────────────
+  // SEED DATA — shown on first visit so it's not empty
+  // ──────────────────────────────────────────────
+  const SEED = [
+    { id: "1", name: "Acme Corp", status: "on_me", nextStep: "Send revised proposal by Friday", createdAt: Date.now() },
+    { id: "2", name: "GlobalTech", status: "on_customer", nextStep: "Waiting on signed SOW", createdAt: Date.now() },
+    { id: "3", name: "Pinnacle Inc", status: "cruising", nextStep: "", createdAt: Date.now() },
+  ];
+
+  // ──────────────────────────────────────────────
+  // APP STATE — simple mutable state + re-render pattern
+  // ──────────────────────────────────────────────
+  let state = {
+    accounts: loadAccounts() || SEED,
+    filter: "all",
+    sortBy: "status",
+    editingId: null, // which account name is being edited
+  };
+
+  // Persist and re-render after every state change
+  function update(changes) {
+    Object.assign(state, changes);
+    saveAccounts(state.accounts);
+    render();
+  }
+
+  // ──────────────────────────────────────────────
+  // HELPERS
+  // ──────────────────────────────────────────────
+
+  // Count how many accounts have each status (for the filter pills)
+  function getCounts() {
+    return STATUSES.reduce((acc, s) => {
+      acc[s.id] = state.accounts.filter(a => a.status === s.id).length;
+      return acc;
+    }, {});
+  }
+
+  // Filter accounts by the currently selected status
+  function getFiltered() {
+    if (state.filter === "all") return state.accounts;
+    return state.accounts.filter(a => a.status === state.filter);
+  }
+
+  // Sort accounts based on the active sort mode
+  function getSorted(filtered) {
+    return [...filtered].sort((a, b) => {
+      if (state.sortBy === "status") {
+        // Sort by status priority; accounts with no status go to the bottom
+        const ai = STATUS_PRIORITY.indexOf(a.status);
+        const bi = STATUS_PRIORITY.indexOf(b.status);
+        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+      }
+      if (state.sortBy === "alpha") return a.name.localeCompare(b.name);
+      return b.createdAt - a.createdAt; // newest first
+    });
+  }
+
+  // ──────────────────────────────────────────────
+  // ACCOUNT ACTIONS
+  // ──────────────────────────────────────────────
+
+  function addAccount() {
+    state.accounts.unshift({
+      id: Date.now().toString(),
+      name: "New Account",
+      status: null,
+      nextStep: "",
+      createdAt: Date.now(),
+    });
+    // Immediately put the new account into edit mode so user can type the name
+    state.editingId = state.accounts[0].id;
+    update({});
+  }
+
+  function deleteAccount(id) {
+    state.accounts = state.accounts.filter(a => a.id !== id);
+    update({});
+  }
+
+  function setStatus(id, statusId) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (acct) {
+      // Toggle: clicking the active status clears it; otherwise set the new one
+      acct.status = acct.status === statusId ? null : statusId;
+      update({});
+    }
+  }
+
+  function setNextStep(id, value) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (acct) { acct.nextStep = value; saveAccounts(state.accounts); }
+  }
+
+  function setName(id, value) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (acct && value.trim()) { acct.name = value.trim(); }
+    state.editingId = null;
+    update({});
+  }
+
+  function resetBoard() {
+    state.accounts = [...SEED];
+    state.filter = "all";
+    update({});
+  }
+
+  // ──────────────────────────────────────────────
+  // RENDER — builds the entire UI as an HTML string
+  // and attaches event listeners afterward.
+  // ──────────────────────────────────────────────
+  function render() {
+    const counts = getCounts();
+    const sorted = getSorted(getFiltered());
+
+    const app = document.getElementById("app");
+    app.innerHTML = `
+      <!-- Header -->
+      <div class="header">
+        <h1>SIGNAL BOARD</h1>
+        <span class="mono count">${state.accounts.length} accounts</span>
+
+        <!-- Filter pills: click to filter by status -->
+        <div class="filters">
+          <button class="filter-pill" data-filter="all"
+            style="${state.filter === 'all' ? 'border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)' : ''}">
+            ALL ${state.accounts.length}
+          </button>
+          ${STATUSES.map(s => `
+            <button class="filter-pill" data-filter="${s.id}"
+              style="
+                border-color: ${state.filter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
+                background: ${state.filter === s.id ? s.color + '22' : 'transparent'};
+                color: ${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}
+              ">
+              <span class="filter-dot" style="background:${counts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.15)'}"></span>
+              ${s.label.toUpperCase()} ${counts[s.id]}
+            </button>
+          `).join("")}
+        </div>
+      </div>
+
+      <!-- Toolbar: sort options + add/reset buttons -->
+      <div class="toolbar">
+        <div class="sort-btns">
+          ${[{key:"status",label:"By Priority"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o => `
+            <button class="sort-btn ${state.sortBy === o.key ? 'active' : ''}" data-sort="${o.key}">${o.label}</button>
+          `).join("")}
+        </div>
+        <div class="action-btns">
+          <button class="btn-reset" id="resetBtn">RESET</button>
+          <button class="btn-add" id="addBtn">+ ADD ACCOUNT</button>
+        </div>
+      </div>
+
+      <!-- Column headers (hidden on mobile via CSS) -->
+      <div class="col-headers">
+        <div></div><div>Account</div><div>Status</div><div>Next Step</div><div></div>
+      </div>
+
+      <!-- Account rows -->
+      <div class="accounts">
+        ${sorted.length === 0 ? `
+          <div class="empty">${state.filter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts with this status.'}</div>
+        ` : sorted.map(acct => {
+          // Find the active status to color the left accent bar
+          const active = STATUSES.find(s => s.id === acct.status);
+          const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
+          const isEditing = state.editingId === acct.id;
+
+          return `
+            <div class="account-row" style="border-left-color:${borderColor}" data-id="${acct.id}">
+              <div></div>
+
+              <!-- Account name (or edit input) -->
+              ${isEditing ? `
+                <input class="name-input" data-name-input="${acct.id}" value="${acct.name}" />
+              ` : `
+                <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">${acct.name}</div>
+              `}
+
+              <!-- Signal lights -->
+              <div class="lights">
+                ${STATUSES.map(s => {
+                  const isActive = acct.status === s.id;
+                  return `
+                    <button class="light" data-light="${acct.id}:${s.id}"
+                      title="${s.label}: ${s.description}"
+                      style="
+                        border-color: ${isActive ? s.color : 'rgba(255,255,255,0.12)'};
+                        background: ${isActive
+                          ? `radial-gradient(circle at 40% 35%, rgba(255,255,255,0.4) 0%, transparent 60%), ${s.color}`
+                          : 'transparent'};
+                        box-shadow: ${isActive ? `0 0 12px ${s.color}88, 0 0 24px ${s.color}44, inset 0 -2px 4px rgba(0,0,0,0.3)` : 'none'};
+                      ">
+                    </button>`;
+                }).join("")}
+              </div>
+
+              <!-- Next step text field -->
+              <input class="next-step" data-nextstep="${acct.id}" value="${acct.nextStep || ''}" placeholder="Next step..." />
+
+              <!-- Delete button -->
+              <button class="delete-btn" data-delete="${acct.id}" title="Remove account">&times;</button>
+            </div>`;
+        }).join("")}
+      </div>
+
+      <!-- Legend at the bottom of the page -->
+      <div class="legend">
+        ${STATUSES.map(s => `
+          <div class="legend-item">
+            <span class="legend-dot" style="background:${s.color};box-shadow:0 0 6px ${s.color}66"></span>
+            ${s.label} — ${s.description}
+          </div>
+        `).join("")}
+      </div>
+    `;
+
+    // ── Attach Event Listeners ──
+
+    // Filter pills
+    app.querySelectorAll("[data-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const f = btn.dataset.filter;
+        update({ filter: state.filter === f && f !== "all" ? "all" : f });
+      });
+    });
+
+    // Sort buttons
+    app.querySelectorAll("[data-sort]").forEach(btn => {
+      btn.addEventListener("click", () => update({ sortBy: btn.dataset.sort }));
+    });
+
+    // Add / Reset
+    document.getElementById("addBtn").addEventListener("click", addAccount);
+    document.getElementById("resetBtn").addEventListener("click", resetBoard);
+
+    // Click account name to start editing
+    app.querySelectorAll("[data-edit-name]").forEach(el => {
+      el.addEventListener("click", () => {
+        state.editingId = el.dataset.editName;
+        render();
+        // Auto-focus and select the text in the name input
+        const input = app.querySelector(`[data-name-input="${el.dataset.editName}"]`);
+        if (input) { input.focus(); input.select(); }
+      });
+    });
+
+    // Name input: save on blur or Enter key
+    app.querySelectorAll("[data-name-input]").forEach(input => {
+      const id = input.dataset.nameInput;
+      input.addEventListener("blur", () => setName(id, input.value));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+
+    // Signal light clicks: toggle status on/off
+    app.querySelectorAll("[data-light]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const [id, statusId] = btn.dataset.light.split(":");
+        setStatus(id, statusId);
+      });
+    });
+
+    // Next step input: save on blur
+    app.querySelectorAll("[data-nextstep]").forEach(input => {
+      input.addEventListener("blur", () => setNextStep(input.dataset.nextstep, input.value));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+
+    // Delete buttons
+    app.querySelectorAll("[data-delete]").forEach(btn => {
+      btn.addEventListener("click", () => deleteAccount(btn.dataset.delete));
+    });
+
+    // Auto-focus name input if we're in editing mode (e.g. after adding a new account)
+    if (state.editingId) {
+      const input = app.querySelector(`[data-name-input="${state.editingId}"]`);
+      if (input) { input.focus(); input.select(); }
+    }
+  }
+
+  // Initial render when the page loads
+  render();
+</script>
+</body>
+</html>
