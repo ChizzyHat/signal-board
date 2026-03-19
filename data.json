@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "Acme Corp",
+    "status": "on_colleague",
+    "nextStep": "Send revised proposal by Friday",
+    "createdAt": 1773952383089
+  },
+  {
+    "id": "2",
+    "name": "GlobalTech",
+    "status": "on_customer",
+    "nextStep": "Waiting on signed SOW",
+    "createdAt": 1773952383089
+  },
+  {
+    "id": "3",
+    "name": "Pinnacle Inc",
+    "status": "cruising",
+    "nextStep": "asdads",
+    "createdAt": 1773952383089
+  }
+]
