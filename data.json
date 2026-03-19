@@ -2,8 +2,8 @@
   {
     "id": "1773955587777",
     "name": "Progressive",
-    "status": null,
-    "nextStep": "",
+    "status": "critical",
+    "nextStep": "Must respond to risk assessment questions",
     "createdAt": 1773955587777
   },
   {
