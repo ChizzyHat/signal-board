@@ -8,7 +8,7 @@
   },
   {
     "id": "2",
-    "name": "GlobalTech",
+    "name": "Core",
     "status": "on_customer",
     "nextStep": "Waiting on signed SOW",
     "createdAt": 1773952383089
