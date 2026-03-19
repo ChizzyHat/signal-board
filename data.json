@@ -15,8 +15,8 @@
   },
   {
     "id": "3",
-    "name": "Pinnacle Inc",
-    "status": "cruising",
+    "name": "M&T Bank",
+    "status": "on_customer",
     "nextStep": "asdads",
     "createdAt": 1773952383089
   }
