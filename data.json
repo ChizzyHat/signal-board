@@ -4,7 +4,9 @@
     "name": "CVS",
     "status": null,
     "nextStep": "",
-    "solutions": [],
+    "solutions": [
+      "qms"
+    ],
     "logo": "",
     "createdAt": 1774025914478
   },
