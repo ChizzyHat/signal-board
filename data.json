@@ -78,7 +78,7 @@
   {
     "id": "2",
     "name": "Corebridge",
-    "status": "on_customer",
+    "status": "critical",
     "nextStep": "Security Assessment underway - Ken sent updated proposal to Matthew and Rexy - Phil needs to finish scoping PSO",
     "createdAt": 1773952383089,
     "solutions": [
