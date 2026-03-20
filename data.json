@@ -2,7 +2,7 @@
   {
     "id": "1774036447269",
     "name": "UPMC",
-    "status": null,
+    "status": "on_customer",
     "nextStep": "",
     "solutions": [
       "evolve"
