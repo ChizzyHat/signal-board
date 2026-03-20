@@ -2,7 +2,7 @@
   {
     "id": "1774036447269",
     "name": "UPMC",
-    "status": "on_customer",
+    "status": "blocked",
     "nextStep": "",
     "solutions": [
       "evolve"
