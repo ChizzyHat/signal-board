@@ -1,30 +1,47 @@
 [
   {
+    "id": "1774025914478",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1774025914478
+  },
+  {
     "id": "1773955587777",
     "name": "Progressive",
     "status": "critical",
     "nextStep": "Must respond to risk assessment questions",
-    "createdAt": 1773955587777
+    "createdAt": 1773955587777,
+    "solutions": [],
+    "logo": ""
   },
   {
     "id": "1",
     "name": "Florida Blue",
     "status": "on_customer",
     "nextStep": "Proposals (3 & 5-year) sent to Staci with SOW for assessment",
-    "createdAt": 1773952383089
+    "createdAt": 1773952383089,
+    "solutions": [],
+    "logo": ""
   },
   {
     "id": "2",
     "name": "Corebridge",
     "status": "on_customer",
     "nextStep": "Ken sent updated proposal to Matthew and Rexy - Phil needs to finish scoping PSO",
-    "createdAt": 1773952383089
+    "createdAt": 1773952383089,
+    "solutions": [],
+    "logo": ""
   },
   {
     "id": "3",
     "name": "M&T Bank",
     "status": "on_colleague",
     "nextStep": "Procurement has completed master agreement and 2 proposals - Mike to setup call with Dave to discuss which option to choose and PSO approach",
-    "createdAt": 1773952383089
+    "createdAt": 1773952383089,
+    "solutions": [],
+    "logo": ""
   }
 ]
