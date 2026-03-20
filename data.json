@@ -2,7 +2,7 @@
   {
     "id": "1774025914478",
     "name": "CVS",
-    "status": null,
+    "status": "on_me",
     "nextStep": "",
     "solutions": [
       "qms"
