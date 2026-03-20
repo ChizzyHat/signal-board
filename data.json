@@ -1,5 +1,14 @@
 [
   {
+    "id": "1774030747139",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1774030747139
+  },
+  {
     "id": "1774025914478",
     "name": "CVS",
     "status": "on_me",
