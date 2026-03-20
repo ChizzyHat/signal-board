@@ -13,7 +13,7 @@
   {
     "id": "1773955587777",
     "name": "Progressive",
-    "status": "critical",
+    "status": "on_customer",
     "nextStep": "Must respond to risk assessment questions",
     "createdAt": 1773955587777,
     "solutions": [],
