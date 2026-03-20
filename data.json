@@ -24,7 +24,7 @@
   {
     "id": "1774036443322",
     "name": "120Water",
-    "status": null,
+    "status": "on_colleague",
     "nextStep": "",
     "solutions": [
       "evolve"
