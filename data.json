@@ -1,5 +1,14 @@
 [
   {
+    "id": "1774276267735",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1774276267735
+  },
+  {
     "id": "1774036447269",
     "name": "UPMC",
     "status": "blocked",
