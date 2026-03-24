@@ -36,7 +36,7 @@
     "id": "1774036443322",
     "name": "120Water",
     "status": "on_me",
-    "nextStep": "Next steps is a demo by Nick",
+    "nextStep": "Get tenants in Evolve - meet with Dave re DC communications in Evolve",
     "solutions": [
       "evolve"
     ],
@@ -57,7 +57,7 @@
   {
     "id": "1774025914478",
     "name": "CVS",
-    "status": "blocked",
+    "status": "critical",
     "nextStep": "Complete slides for onsite",
     "solutions": [
       "qms",
