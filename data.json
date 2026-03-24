@@ -57,7 +57,7 @@
   {
     "id": "1774025914478",
     "name": "CVS",
-    "status": "critical",
+    "status": "on_customer",
     "nextStep": "Complete slides for onsite",
     "solutions": [
       "qms",
