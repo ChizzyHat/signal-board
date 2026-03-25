@@ -4,7 +4,9 @@
     "name": "Mutual of Omaha",
     "status": null,
     "nextStep": "Demo on 3/27. TCS Partnership - POC next",
-    "solutions": [],
+    "solutions": [
+      "qms"
+    ],
     "logo": "",
     "createdAt": 1774452509656
   },
