@@ -1,5 +1,14 @@
 [
   {
+    "id": "1774452146576",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1774452146576
+  },
+  {
     "id": "1774276267735",
     "name": "Chubb",
     "status": "on_customer",
