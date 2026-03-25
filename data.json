@@ -2,7 +2,7 @@
   {
     "id": "1774452509656",
     "name": "Mutual of Omaha",
-    "status": null,
+    "status": "on_colleague",
     "nextStep": "Demo on 3/27. TCS Partnership - POC next",
     "solutions": [
       "qms"
