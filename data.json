@@ -1,5 +1,14 @@
 [
   {
+    "id": "1774649392203",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1774649392204
+  },
+  {
     "id": "1774452509656",
     "name": "Mutual of Omaha",
     "status": "on_me",
