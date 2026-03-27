@@ -4,7 +4,9 @@
     "name": "Delta Dental of California",
     "status": "on_me",
     "nextStep": "Connect with QMS team on adding a sandbox environment.",
-    "solutions": [],
+    "solutions": [
+      "qms"
+    ],
     "logo": "",
     "createdAt": 1774649392204
   },
