@@ -1,5 +1,14 @@
 [
   {
+    "id": "1774886609905",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1774886609905
+  },
+  {
     "id": "1774649392203",
     "name": "Delta Dental of California",
     "status": "on_me",
