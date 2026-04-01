@@ -1,5 +1,14 @@
 [
   {
+    "id": "1775060449341",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1775060449341
+  },
+  {
     "id": "1774906261289",
     "name": "Allied World Insurance",
     "status": "on_colleague",
