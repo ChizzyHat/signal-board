@@ -184,7 +184,7 @@
     "id": "2",
     "name": "Corebridge",
     "status": "critical",
-    "nextStep": "Security Assessment underway - Ken sent updated proposal to Matthew and Rexy - Phil needs to finish scoping PSO - Pricing call on 3/25",
+    "nextStep": "Checked with Will Deacon on 4/1 regarding Security - Ken sent updated proposal to Matthew and Rexy - Phil needs to finish scoping PSO - Pricing call on 3/25",
     "createdAt": 1773952383089,
     "solutions": [
       "qms",
