@@ -1,5 +1,14 @@
 [
   {
+    "id": "1775060536297",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1775060536297
+  },
+  {
     "id": "1775060449341",
     "name": "Canada Life",
     "status": "on_colleague",
