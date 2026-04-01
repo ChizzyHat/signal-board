@@ -2,7 +2,7 @@
   {
     "id": "1775060449341",
     "name": "Canada Life",
-    "status": null,
+    "status": "on_colleague",
     "nextStep": "RFP - Not sure if this is Evolve or QMS?? iForms demo provided to CL in March",
     "solutions": [
       "evolve",
