@@ -1,5 +1,14 @@
 [
   {
+    "id": "1775161606235",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "logo": "",
+    "createdAt": 1775161606235
+  },
+  {
     "id": "1775150917809",
     "name": "Associa",
     "status": "on_colleague",
