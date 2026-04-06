@@ -2,7 +2,7 @@
   {
     "id": "1775510919757",
     "name": "Unqork",
-    "status": null,
+    "status": "blocked",
     "nextStep": "Get Renewal",
     "solutions": [
       "qms"
