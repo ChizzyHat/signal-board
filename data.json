@@ -3,7 +3,7 @@
     "id": "1775510919757",
     "name": "Unqork",
     "status": "critical",
-    "nextStep": "Get Renewal",
+    "nextStep": "Sent email to Jeff. Get Renewal",
     "solutions": [
       "qms"
     ],
