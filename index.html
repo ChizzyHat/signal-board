@@ -634,15 +634,39 @@
     }
   }
 
+  // Update only the sync indicator dot and label without rebuilding the whole DOM.
+  // This prevents the name input from being destroyed while the user is typing.
+  function updateSyncIndicator() {
+    const syncInfo = {
+      synced:  { dot: "#10B981", text: "Synced" },
+      saving:  { dot: "#F59E0B", text: "Syncing..." },
+      error:   { dot: "#EF4444", text: "Sync error" },
+      offline: { dot: "rgba(255,255,255,0.25)", text: "Local only" },
+      unknown: { dot: "rgba(255,255,255,0.25)", text: "..." },
+    }[state.syncStatus];
+
+    const btn = document.getElementById("syncBtn");
+    if (!btn || !syncInfo) return; // bail if the button isn't rendered yet
+
+    // Patch just the dot color and label text in place
+    const dot = btn.querySelector(".sync-dot");
+    if (dot) dot.style.background = syncInfo.dot;
+    const label = btn.querySelector(".sync-label");
+    if (label) label.textContent = syncInfo.text;
+  }
+
   function debouncedGithubSave(accounts) {
     clearTimeout(saveTimer);
     state.syncStatus = "saving";
-    render();
+    // Only touch the sync indicator — do NOT call render() here,
+    // as that would rebuild app.innerHTML and destroy any active input.
+    updateSyncIndicator();
     saveTimer = setTimeout(async () => {
       const ok = await githubSave(accounts);
       state.syncStatus = ok ? "synced" : "error";
       state.lastSync = ok ? new Date() : state.lastSync;
-      render();
+      // Same here — update the indicator only, not the full DOM.
+      updateSyncIndicator();
     }, 1500);
   }
 
@@ -1027,7 +1051,7 @@
             </div>
             <button class="sync-status" id="syncBtn">
               <span class="sync-dot" style="background:${syncInfo.dot};box-shadow:0 0 6px ${syncInfo.dot}66"></span>
-              ${syncInfo.text}
+              <span class="sync-label">${syncInfo.text}</span>
             </button>
           </div>
 
