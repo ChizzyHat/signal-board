@@ -180,7 +180,7 @@
   {
     "id": "1774030747139",
     "name": "Alabama DHS",
-    "status": "on_customer",
+    "status": "critical",
     "nextStep": " - Kevin sent annex to AL - Next step is setup meeting to start VPN",
     "solutions": [
       "qms"
