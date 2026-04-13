@@ -103,7 +103,7 @@
   {
     "id": "1774452509656",
     "name": "Mutual of Omaha",
-    "status": "blocked",
+    "status": "on_colleague",
     "nextStep": "Need to provide questions to TCS for generating pricing for Mutual of Omaha",
     "solutions": [
       "qms"
