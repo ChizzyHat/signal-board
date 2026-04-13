@@ -22,7 +22,7 @@
   {
     "id": "1775150917809",
     "name": "Associa",
-    "status": "on_colleague",
+    "status": "on_customer",
     "nextStep": "Impress team states Associa can stay on the cloud version for $200k. This could be part of a larger move to QMS.",
     "solutions": [
       "qms"
@@ -103,7 +103,7 @@
   {
     "id": "1774452509656",
     "name": "Mutual of Omaha",
-    "status": "on_me",
+    "status": "blocked",
     "nextStep": "Need to provide questions to TCS for generating pricing for Mutual of Omaha",
     "solutions": [
       "qms"
