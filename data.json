@@ -192,7 +192,7 @@
   {
     "id": "1774030747139",
     "name": "Alabama DHS",
-    "status": "stalled",
+    "status": "on_me",
     "nextStep": "Sent email to Sarita to Kevin - Kevin sent annex to AL - Next step is setup meeting to start VPN",
     "solutions": [
       "qms"
