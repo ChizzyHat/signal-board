@@ -527,15 +527,15 @@
   // STATUS DEFINITIONS
   // ──────────────────────────────────────────────
   const STATUSES = [
+    { id: "critical", label: "Critical", color: "#FF0040", description: "Urgent — drop everything" },
     { id: "on_me", label: "On Me", color: "#F59E0B", description: "I need to act" },
     { id: "on_colleague", label: "On Colleague", color: "#8B5CF6", description: "Waiting internally" },
     { id: "on_customer", label: "On Customer", color: "#3B82F6", description: "Waiting on them" },
-    { id: "blocked", label: "Blocked", color: "#F97316", description: "Stuck / escalate" },
-    { id: "critical", label: "Critical", color: "#FF0040", description: "Urgent — drop everything" },
+    { id: "stalled", label: "Stalled", color: "#FFFFFF", description: "Stuck / escalate" },
     { id: "cruising", label: "Cruising", color: "#10B981", description: "Active, no action needed" },
   ];
 
-  const STATUS_PRIORITY = ["critical", "on_me", "on_colleague", "on_customer", "blocked", "cruising"];
+  const STATUS_PRIORITY = ["critical", "on_me", "on_colleague", "on_customer", "stalled", "cruising"];
 
   // ──────────────────────────────────────────────
   // SOLUTION DEFINITIONS
