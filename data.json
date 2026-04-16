@@ -13,7 +13,7 @@
   {
     "id": "1776263767328",
     "name": "OneAmerica",
-    "status": "on_me",
+    "status": "critical",
     "nextStep": "RFP Issued - Currently with Rick to divvy up questions.",
     "solutions": [
       "qms",
