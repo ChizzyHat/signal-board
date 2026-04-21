@@ -204,7 +204,7 @@
     "id": "1774025914478",
     "name": "CVS",
     "status": "on_me",
-    "nextStep": "Get final response from Roman on RTO - Get forms from Aetna and dedicated environment",
+    "nextStep": "- Send RTO details to CVS - Clear up iForms requirements. Get final response from Roman on RTO - Get forms from Aetna and dedicated environment",
     "solutions": [
       "qms",
       "iforms"
