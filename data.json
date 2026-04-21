@@ -3,7 +3,7 @@
     "id": "1776784923342",
     "name": "California DMV",
     "status": "critical",
-    "nextStep": "Complete loss report",
+    "nextStep": "Complete loss report ",
     "solutions": [
       "qms"
     ],
