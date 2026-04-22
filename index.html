@@ -272,7 +272,8 @@
     /* ── Column Headers ── */
     .col-headers {
       display: grid;
-      grid-template-columns: 32px 160px 70px auto 1fr 36px;
+      /* rank | logo | name | solutions | stage | lights | next-step | delete */
+      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 36px;
       gap: 12px;
       padding: 0 16px 8px;
       font-size: 10px;
@@ -287,7 +288,8 @@
 
     .account-row {
       display: grid;
-      grid-template-columns: 32px 160px 70px auto 1fr 36px;
+      /* Must match .col-headers grid-template-columns above */
+      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 36px;
       align-items: center;
       gap: 12px;
       padding: 10px 16px;
@@ -354,6 +356,83 @@
     }
 
     .lights { display: flex; gap: 6px; align-items: center; }
+
+    /* ── Priority Rank Badge ──
+       Small editable number at the far left of each row.
+       Clicking it swaps to a tiny number input so the user can retype the rank. */
+    .rank-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      width: 36px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.55);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s;
+    }
+
+    .rank-badge.empty {
+      color: rgba(255,255,255,0.2);
+    }
+
+    .rank-badge:hover {
+      border-color: rgba(255,255,255,0.25);
+      color: #F1F1F1;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .rank-input {
+      width: 36px;
+      height: 24px;
+      padding: 0 4px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      color: #F1F1F1;
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 600;
+      text-align: center;
+      outline: none;
+      /* Hide the browser's number spinners — the rank is entered by typing */
+      -moz-appearance: textfield;
+    }
+    .rank-input::-webkit-outer-spin-button,
+    .rank-input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* ── Sales Stage Dropdown ──
+       Native <select> styled to match the dark theme. */
+    .stage-select {
+      width: 100%;
+      height: 26px;
+      padding: 0 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.7);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      cursor: pointer;
+      /* Let the left border color communicate which stage is selected */
+      border-left-width: 3px;
+    }
+
+    .stage-select:hover { border-color: rgba(255,255,255,0.25); }
+    .stage-select:focus { border-color: rgba(255,255,255,0.4); }
+
+    /* Dropdown options need an explicit dark background on most browsers */
+    .stage-select option { background: #1A1F2E; color: #F1F1F1; }
 
     .light {
       width: 26px;
@@ -507,10 +586,12 @@
       body { padding: 16px; }
       .col-headers { display: none; }
       .account-row {
-        grid-template-columns: 32px 1fr;
+        /* rank + logo on top row, name takes the rest; everything else stacks below */
+        grid-template-columns: 40px 32px 1fr;
         gap: 8px;
         padding: 14px 16px;
       }
+      .stage-select { grid-column: 1 / -1; }
       .lights { grid-column: 1 / -1; }
       .solution-tags { grid-column: 1 / -1; }
       .next-step { grid-column: 1 / -1; }
@@ -548,12 +629,30 @@
   ];
 
   // ──────────────────────────────────────────────
+  // SALES STAGE DEFINITIONS
+  // Stages 1–8 with short labels shown in dropdown and filter pills.
+  // Adjust labels to match your actual pipeline vocabulary.
+  // ──────────────────────────────────────────────
+  const SALES_STAGES = [
+    { id: 1, label: "1 — Qualification",     color: "#64748B" },
+    { id: 2, label: "2 — Validation",      color: "#0EA5E9" },
+    { id: 3, label: "3 — Design",    color: "#14B8A6" },
+    { id: 4, label: "4 — Negotiate",         color: "#84CC16" },
+    { id: 5, label: "5 — Procurement",     color: "#EAB308" },
+    { id: 6, label: "6 — Closed - Won",  color: "#F97316" },
+    { id: 7, label: "7 — Closed - Lost",       color: "#EC4899" },
+    { id: 8, label: "8 — Disqualified",   color: "#10B981" },
+  ];
+
+  // ──────────────────────────────────────────────
   // SEED DATA
+  // priority = manual rank within the status group (lower number = higher priority).
+  // stage = sales pipeline stage (1–8), or null if not set.
   // ──────────────────────────────────────────────
   const SEED = [
-    { id: "1", name: "Acme Corp", status: "on_me", nextStep: "Send revised proposal by Friday", solutions: ["qms"], logo: "", createdAt: Date.now() },
-    { id: "2", name: "GlobalTech", status: "on_customer", nextStep: "Waiting on signed SOW", solutions: ["evolve", "iforms"], logo: "", createdAt: Date.now() },
-    { id: "3", name: "Pinnacle Inc", status: "cruising", nextStep: "", solutions: ["qms", "evolve"], logo: "", createdAt: Date.now() },
+    { id: "1", name: "Acme Corp",    status: "on_me",        nextStep: "Send revised proposal by Friday", solutions: ["qms"],            stage: 5, priority: 1, logo: "", createdAt: Date.now() },
+    { id: "2", name: "GlobalTech",   status: "on_customer",  nextStep: "Waiting on signed SOW",           solutions: ["evolve","iforms"], stage: 7, priority: 1, logo: "", createdAt: Date.now() },
+    { id: "3", name: "Pinnacle Inc", status: "cruising",     nextStep: "",                                solutions: ["qms","evolve"],    stage: 3, priority: 1, logo: "", createdAt: Date.now() },
   ];
 
   // ──────────────────────────────────────────────
@@ -678,13 +777,16 @@
   function localLoad() {
     try {
       const raw = localStorage.getItem(LS_ACCOUNTS);
-      // Migrate old data: ensure every account has `solutions` and `logo` fields
+      // Migrate old data: ensure every account has the expected fields.
+      // Missing `stage` → null; missing `priority` → null (will be assigned on first render).
       if (raw) {
         const parsed = JSON.parse(raw);
         return parsed.map(a => ({
           ...a,
           solutions: a.solutions || [],
           logo: a.logo || "",
+          stage: a.stage ?? null,
+          priority: a.priority ?? null,
         }));
       }
       return null;
@@ -702,8 +804,10 @@
     accounts: localLoad() || SEED,
     filter: "all",             // status filter
     solutionFilter: "all",     // solution filter
+    stageFilter: "all",        // sales stage filter (1–8 or "all")
     sortBy: "status",
     editingId: null,
+    editingRankId: null,       // which account's rank badge is currently in input mode
     showSettings: false,
     syncStatus: "unknown",
     lastSync: null,
@@ -735,8 +839,14 @@
       render();
       const remote = await githubLoad();
       if (remote) {
-        // Migrate remote data to include new fields
-        state.accounts = remote.map(a => ({ ...a, solutions: a.solutions || [], logo: a.logo || "" }));
+        // Migrate remote data to include new fields (stage, priority, solutions, logo)
+        state.accounts = remote.map(a => ({
+          ...a,
+          solutions: a.solutions || [],
+          logo: a.logo || "",
+          stage: a.stage ?? null,
+          priority: a.priority ?? null,
+        }));
         localSave(state.accounts);
         state.syncStatus = "synced";
         state.lastSync = new Date();
@@ -773,6 +883,14 @@
     }, {});
   }
 
+  // Count of accounts at each sales stage (for filter pill badges)
+  function getStageCounts() {
+    return SALES_STAGES.reduce((acc, s) => {
+      acc[s.id] = state.accounts.filter(a => a.stage === s.id).length;
+      return acc;
+    }, {});
+  }
+
   function getFiltered() {
     let list = state.accounts;
     // Apply status filter
@@ -783,19 +901,96 @@
     if (state.solutionFilter !== "all") {
       list = list.filter(a => (a.solutions || []).includes(state.solutionFilter));
     }
+    // Apply stage filter (stageFilter is a number when active, or "all")
+    if (state.stageFilter !== "all") {
+      list = list.filter(a => a.stage === state.stageFilter);
+    }
     return list;
   }
 
   function getSorted(filtered) {
     return [...filtered].sort((a, b) => {
       if (state.sortBy === "status") {
+        // Primary sort: status priority (critical first, cruising last).
         const ai = STATUS_PRIORITY.indexOf(a.status);
         const bi = STATUS_PRIORITY.indexOf(b.status);
-        return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+        const statusDiff = (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+        if (statusDiff !== 0) return statusDiff;
+        // Secondary sort: manual priority rank within the same status group.
+        // Lower rank number = higher priority. Unranked (null) accounts sink to the bottom.
+        const ap = a.priority ?? Infinity;
+        const bp = b.priority ?? Infinity;
+        return ap - bp;
       }
       if (state.sortBy === "alpha") return a.name.localeCompare(b.name);
       return b.createdAt - a.createdAt;
     });
+  }
+
+  // ──────────────────────────────────────────────
+  // PRIORITY RANK MANAGEMENT
+  // Ranks are scoped per status group: accounts in "on_me" have their own
+  // 1..N sequence, accounts in "on_customer" have their own, etc.
+  // Any time we mutate a rank, we normalize the affected group so the
+  // sequence is always a contiguous 1..N with no gaps and no duplicates.
+  // ──────────────────────────────────────────────
+
+  // Normalize the priority sequence within a given status group.
+  // After this runs, accounts in that group are numbered 1..N in the order
+  // dictated by their current priority (nulls go to the end).
+  function normalizeGroup(statusId) {
+    if (!statusId) return; // skip accounts without a status — they don't participate in ranking
+    const group = state.accounts.filter(a => a.status === statusId);
+    // Sort by current priority; unranked (null) drop to the bottom.
+    group.sort((a, b) => (a.priority ?? Infinity) - (b.priority ?? Infinity));
+    // Reassign priorities as a clean 1..N sequence.
+    group.forEach((acct, i) => { acct.priority = i + 1; });
+  }
+
+  // Set an account's priority to a specific target rank within its status group.
+  // Other accounts in the same group shift to accommodate, like inserting
+  // a row in a spreadsheet. Clamps the target to the valid 1..N range.
+  function setPriority(id, targetRank) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct || !acct.status) return;
+
+    // Coerce to integer; ignore invalid input.
+    const target = parseInt(targetRank, 10);
+    if (isNaN(target) || target < 1) return;
+
+    // Make sure the group is clean before we start shuffling.
+    normalizeGroup(acct.status);
+
+    // Clamp the requested rank to the size of the group.
+    const group = state.accounts.filter(a => a.status === acct.status);
+    const clamped = Math.min(target, group.length);
+
+    // Temporarily park the target account outside the sequence so it doesn't
+    // collide with itself during renumbering.
+    acct.priority = 0;
+
+    // Walk the group in priority order (excluding the target account) and
+    // rebuild the sequence, inserting the target at the clamped position.
+    const others = group
+      .filter(a => a.id !== acct.id)
+      .sort((a, b) => a.priority - b.priority);
+
+    let rank = 1;
+    others.forEach(other => {
+      if (rank === clamped) rank++;      // leave a gap for the target
+      other.priority = rank++;
+    });
+    acct.priority = clamped;
+
+    update({});
+  }
+
+  // Assign a fresh priority to an account when it joins a new status group.
+  // New arrivals go to the bottom of the group.
+  function assignRankToBottom(acct) {
+    if (!acct.status) { acct.priority = null; return; }
+    const group = state.accounts.filter(a => a.status === acct.status && a.id !== acct.id);
+    acct.priority = group.length + 1;
   }
 
   // ──────────────────────────────────────────────
@@ -808,6 +1003,8 @@
       status: null,
       nextStep: "",
       solutions: [],
+      stage: null,
+      priority: null,   // assigned when the account gets a status
       logo: "",
       createdAt: Date.now(),
     });
@@ -816,16 +1013,46 @@
   }
 
   function deleteAccount(id) {
+    // Remember the deleted account's status so we can renumber its old group.
+    const acct = state.accounts.find(a => a.id === id);
+    const oldStatus = acct?.status;
     state.accounts = state.accounts.filter(a => a.id !== id);
+    // Close the gap left behind in the old status group.
+    if (oldStatus) normalizeGroup(oldStatus);
     update({});
   }
 
   function setStatus(id, statusId) {
     const acct = state.accounts.find(a => a.id === id);
-    if (acct) {
-      acct.status = acct.status === statusId ? null : statusId;
-      update({});
+    if (!acct) return;
+    const oldStatus = acct.status;
+    // Clicking the currently active light again clears the status (toggle-off behavior).
+    const newStatus = acct.status === statusId ? null : statusId;
+
+    acct.status = newStatus;
+
+    // Close up the old group so its ranks stay 1..N with no gap.
+    if (oldStatus && oldStatus !== newStatus) {
+      acct.priority = null;           // leaving the old group — drop old rank
+      normalizeGroup(oldStatus);
     }
+    // Give the account a fresh rank at the bottom of its new group.
+    if (newStatus && newStatus !== oldStatus) {
+      assignRankToBottom(acct);
+    }
+    // If status was cleared entirely, wipe the priority so it won't interfere later.
+    if (!newStatus) acct.priority = null;
+
+    update({});
+  }
+
+  // Set an account's sales stage. Null clears the stage.
+  function setStage(id, stageId) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct) return;
+    // Empty-string or "null" from the dropdown means "no stage set".
+    acct.stage = (stageId === "" || stageId === null) ? null : parseInt(stageId, 10);
+    update({});
   }
 
   // Toggle a solution tag on/off for an account
@@ -858,6 +1085,7 @@
     state.accounts = [...SEED];
     state.filter = "all";
     state.solutionFilter = "all";
+    state.stageFilter = "all";
     update({});
   }
 
@@ -956,6 +1184,7 @@
   function render() {
     const counts = getCounts();
     const solCounts = getSolCounts();
+    const stageCounts = getStageCounts();  // count per sales stage for filter pills
     const sorted = getSorted(getFiltered());
     const cfg = getGitHubConfig();
 
@@ -1084,6 +1313,20 @@
                 ${s.label.toUpperCase()} ${solCounts[s.id]}
               </button>
             `).join("")}
+
+            <!-- Separator between solution and stage filters -->
+            <div class="filter-sep"></div>
+
+            <!-- Sales Stage filter pills: compact, show stage number + count -->
+            ${SALES_STAGES.map(s => `
+              <button class="filter-pill" data-stage-filter="${s.id}" title="${s.label}" style="
+                border-color:${state.stageFilter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
+                background:${state.stageFilter === s.id ? s.color + '22' : 'transparent'};
+                color:${stageCounts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.25)'}">
+                <span class="filter-dot" style="background:${stageCounts[s.id] > 0 ? s.color : 'rgba(255,255,255,0.15)'}"></span>
+                S${s.id} ${stageCounts[s.id]}
+              </button>
+            `).join("")}
           </div>
         </div>
 
@@ -1102,7 +1345,7 @@
 
         <!-- Column headers -->
         <div class="col-headers">
-          <div></div><div>Account</div><div>Solutions</div><div>Status</div><div>Next Step</div><div></div>
+          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Stage</div><div>Status</div><div>Next Step</div><div></div>
         </div>
 
         <!-- Account rows -->
@@ -1113,9 +1356,22 @@
             const active = STATUSES.find(s => s.id === acct.status);
             const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
             const isEditing = state.editingId === acct.id;
+            const isEditingRank = state.editingRankId === acct.id;
             const sols = acct.solutions || [];
+            // Find the stage record (for color) if one is set
+            const stageRec = acct.stage ? SALES_STAGES.find(s => s.id === acct.stage) : null;
             return `
               <div class="account-row" style="border-left-color:${borderColor}">
+                <!-- Rank badge: click to edit; shows #N within status group, or "—" if unranked -->
+                ${isEditingRank ? `
+                  <input class="rank-input" type="number" min="1" data-rank-input="${acct.id}" value="${acct.priority || ''}" />
+                ` : `
+                  <div class="rank-badge ${acct.priority ? '' : 'empty'}" data-edit-rank="${acct.id}"
+                       title="${acct.status ? 'Click to change priority within ' + (active?.label || '') + ' group' : 'Set a status to enable priority ranking'}">
+                    ${acct.priority ? '#' + acct.priority : '—'}
+                  </div>
+                `}
+
                 <!-- Logo thumbnail -->
                 <div class="logo-wrap" data-logo="${acct.id}" title="Click to set logo">
                   ${acct.logo
@@ -1141,6 +1397,17 @@
                     ">${s.label}</span>`;
                   }).join("")}
                 </div>
+
+                <!-- Sales Stage dropdown -->
+                <select class="stage-select" data-stage="${acct.id}" style="
+                  border-left-color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.1)'};
+                  color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.4)'};
+                ">
+                  <option value="" ${!acct.stage ? 'selected' : ''}>— Stage —</option>
+                  ${SALES_STAGES.map(s => `
+                    <option value="${s.id}" ${acct.stage === s.id ? 'selected' : ''}>${s.label}</option>
+                  `).join("")}
+                </select>
 
                 <!-- Signal lights -->
                 <div class="lights">
@@ -1265,6 +1532,55 @@
         const f = btn.dataset.solFilter;
         update({ solutionFilter: state.solutionFilter === f ? "all" : f });
       });
+    });
+
+    // Sales Stage filters: click to filter by stage; click again to clear.
+    // Note: dataset values are strings, so we parseInt before storing.
+    app.querySelectorAll("[data-stage-filter]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const f = parseInt(btn.dataset.stageFilter, 10);
+        update({ stageFilter: state.stageFilter === f ? "all" : f });
+      });
+    });
+
+    // Sales Stage dropdowns on each row
+    app.querySelectorAll("[data-stage]").forEach(sel => {
+      sel.addEventListener("change", () => setStage(sel.dataset.stage, sel.value));
+    });
+
+    // Rank badge: click to switch to input mode
+    app.querySelectorAll("[data-edit-rank]").forEach(el => {
+      el.addEventListener("click", () => {
+        const id = el.dataset.editRank;
+        const acct = state.accounts.find(a => a.id === id);
+        // Only allow rank editing when the account has a status (otherwise ranking is meaningless).
+        if (!acct || !acct.status) return;
+        state.editingRankId = id;
+        render();
+      });
+    });
+
+    // Rank input: on blur or Enter, commit the new rank and re-sort the group
+    app.querySelectorAll("[data-rank-input]").forEach(input => {
+      const commit = () => {
+        const id = input.dataset.rankInput;
+        const val = input.value.trim();
+        state.editingRankId = null;
+        if (val === "") {
+          // Empty = cancel edit, no change
+          render();
+          return;
+        }
+        setPriority(id, val);  // setPriority calls update() which re-renders
+      };
+      input.addEventListener("blur", commit);
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter") input.blur();
+        if (e.key === "Escape") { state.editingRankId = null; render(); }
+      });
+      // Auto-focus and select the value when the input appears
+      input.focus();
+      input.select();
     });
 
     // Sort
