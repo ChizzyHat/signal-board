@@ -296,7 +296,7 @@
     "id": "3",
     "name": "M&T Bank",
     "status": "on_customer",
-    "nextStep": "Mike sent timeline. Procurement has completed master agreement and 2 proposals - Mike to setup call with Dave to discuss which option to choose and PSO approach",
+    "nextStep": "Sent Martin analysis. Mike sent timeline. Procurement has completed master agreement and 2 proposals - Mike to setup call with Dave to discuss which option to choose and PSO approach",
     "createdAt": 1773952383089,
     "solutions": [
       "qms"
