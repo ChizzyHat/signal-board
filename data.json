@@ -1,5 +1,16 @@
 [
   {
+    "id": "1777986105700",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "stage": null,
+    "priority": null,
+    "logo": "",
+    "createdAt": 1777986105700
+  },
+  {
     "id": "1777560503023",
     "name": "Quadient",
     "status": "critical",
