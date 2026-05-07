@@ -2,11 +2,11 @@
   {
     "id": "1778163370496",
     "name": "Berkley",
-    "status": null,
+    "status": "critical",
     "nextStep": "",
     "solutions": [],
     "stage": null,
-    "priority": null,
+    "priority": 3,
     "logo": "",
     "createdAt": 1778163370496
   },
