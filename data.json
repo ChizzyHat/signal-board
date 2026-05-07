@@ -4,7 +4,9 @@
     "name": "Western & Southern",
     "status": null,
     "nextStep": "",
-    "solutions": [],
+    "solutions": [
+      "qms"
+    ],
     "stage": null,
     "priority": null,
     "logo": "",
