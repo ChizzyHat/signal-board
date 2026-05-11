@@ -291,7 +291,7 @@
     "id": "1774025914478",
     "name": "CVS",
     "status": "critical",
-    "nextStep": "- Send RTO details to CVS - Clear up iForms requirements. Get final response from Roman on RTO - Get forms from Aetna and dedicated environment",
+    "nextStep": "QMS Presentation Thursday 5/11. - Send RTO details to CVS - Clear up iForms requirements. Get final response from Roman on RTO - Get forms from Aetna and dedicated environment",
     "solutions": [
       "qms",
       "iforms"
