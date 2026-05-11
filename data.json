@@ -1,5 +1,16 @@
 [
   {
+    "id": "1778531551490",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "stage": null,
+    "priority": null,
+    "logo": "",
+    "createdAt": 1778531551490
+  },
+  {
     "id": "1778176574028",
     "name": "Western & Southern",
     "status": "critical",
