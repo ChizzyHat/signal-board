@@ -1,5 +1,16 @@
 [
   {
+    "id": "1778764482351",
+    "name": "New Account",
+    "status": null,
+    "nextStep": "",
+    "solutions": [],
+    "stage": null,
+    "priority": null,
+    "logo": "",
+    "createdAt": 1778764482351
+  },
+  {
     "id": "1778531551490",
     "name": "Federal White Cement",
     "status": "critical",
