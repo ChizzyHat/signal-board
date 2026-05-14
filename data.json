@@ -227,7 +227,7 @@
     "id": "1774452509656",
     "name": "Mutual of Omaha",
     "status": "critical",
-    "nextStep": "Still in POC - Pricing provided. Waiting on TCS for update on next steps",
+    "nextStep": "Need order document for QMS. Still in POC - Pricing provided. Waiting on TCS for update on next steps",
     "solutions": [
       "qms"
     ],
