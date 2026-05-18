@@ -510,11 +510,11 @@
     "stage": 3,
     "priority": 1,
     "note": "Oshman and Calen doing review - Currently BCBS uses MS SQL. Sent email to Brett Chaphe to follow up on resources we need. Received signed SOW for QMS migration analysis - Need to coordinate with Martin. 4/1 - Responded to question about SOW scope. Proposals (3 & 5-year) sent to Staci with SOW for assessment on 3/19. Cyndi sent renewal quote on 3/24. Follow up by me on 3/30",
-    "nextActionDate": "",
+    "nextActionDate": "2026-05-22",
     "nextActionLabel": "Oshman and Calen doing review",
     "lastStatusChange": 1779135548438,
     "lastStageChange": 1779135548438,
-    "lastTouched": 1779138390390
+    "lastTouched": 1779138393300
   },
   {
     "id": "2",
