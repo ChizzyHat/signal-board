@@ -173,7 +173,7 @@
   {
     "id": "1775510919757",
     "name": "Unqork",
-    "status": "critical",
+    "status": "on_customer",
     "nextStep": "Odilon Nagay has reup order. Sent access to report on May 4th. Sent follow up to Dave Reed on 4/27. Sent email to Jeff 4/22. Get Renewal",
     "solutions": [
       "qms"
@@ -185,9 +185,9 @@
     "note": "Odilon Nagay has reup order. Sent access to report on May 4th. Sent follow up to Dave Reed on 4/27. Sent email to Jeff 4/22. Get Renewal",
     "nextActionDate": "",
     "nextActionLabel": "",
-    "lastStatusChange": 1779135548438,
+    "lastStatusChange": 1779135868711,
     "lastStageChange": 1779135548438,
-    "lastTouched": 1779135548438
+    "lastTouched": 1779135868711
   },
   {
     "id": "1775150917809",
