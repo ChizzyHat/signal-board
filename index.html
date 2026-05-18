@@ -84,7 +84,9 @@
       border-radius: 12px;
       padding: 28px;
       width: 90%;
-      max-width: 480px;
+      max-width: 520px;
+      max-height: 85vh;
+      overflow-y: auto;
     }
 
     .settings-panel h2 {
@@ -92,6 +94,26 @@
       font-weight: 700;
       margin-bottom: 16px;
       letter-spacing: -0.01em;
+    }
+
+    .settings-section {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .settings-section:first-of-type {
+      margin-top: 0;
+      padding-top: 0;
+      border-top: none;
+    }
+
+    .settings-section h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+      color: #F1F1F1;
     }
 
     .settings-panel label {
@@ -108,7 +130,8 @@
     .settings-panel label:first-of-type { margin-top: 0; }
 
     .settings-panel input[type="text"],
-    .settings-panel input[type="password"] {
+    .settings-panel input[type="password"],
+    .settings-panel input[type="number"] {
       width: 100%;
       padding: 8px 12px;
       background: rgba(255,255,255,0.06);
@@ -137,6 +160,39 @@
       gap: 8px;
       margin-top: 24px;
       justify-content: flex-end;
+    }
+
+    /* Threshold row: status label + dot + days input */
+    .threshold-row {
+      display: grid;
+      grid-template-columns: 16px 1fr 72px auto;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+    }
+
+    .threshold-row .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .threshold-row .label {
+      font-size: 13px;
+      color: #F1F1F1;
+    }
+
+    .threshold-row input[type="number"] {
+      width: 72px;
+      padding: 6px 8px;
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .threshold-row .unit {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .btn-secondary {
@@ -269,11 +325,88 @@
       letter-spacing: 0.02em;
     }
 
+    /* ── Stagnant Queue Section ──
+       Lives at the top of the board when any account exceeds its threshold. */
+    .stagnant-section {
+      margin-bottom: 20px;
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(245,158,11,0.06) 0%, rgba(245,158,11,0.02) 100%);
+      overflow: hidden;
+    }
+
+    .stagnant-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+
+    .stagnant-header:hover {
+      background: rgba(245, 158, 11, 0.05);
+    }
+
+    .stagnant-header .title {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #F59E0B;
+    }
+
+    .stagnant-header .count-badge {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(245, 158, 11, 0.8);
+      background: rgba(245, 158, 11, 0.12);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    .stagnant-header .caret {
+      margin-left: auto;
+      font-size: 11px;
+      color: rgba(245, 158, 11, 0.6);
+      transition: transform 0.2s;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .stagnant-header.collapsed .caret {
+      transform: rotate(-90deg);
+    }
+
+    .stagnant-body {
+      padding: 0 12px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .stagnant-body.collapsed {
+      display: none;
+    }
+
+    /* Small "stagnant Xd" badge shown inside each stagnant row */
+    .stagnant-badge {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #F59E0B;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 6px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+
     /* ── Column Headers ── */
     .col-headers {
       display: grid;
-      /* rank | logo | name | solutions | stage | lights | next-step | delete */
-      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 36px;
+      /* rank | logo | name | solutions | stage | lights | note(+nextAction) | details | delete */
+      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 28px 36px;
       gap: 12px;
       padding: 0 16px 8px;
       font-size: 10px;
@@ -289,7 +422,7 @@
     .account-row {
       display: grid;
       /* Must match .col-headers grid-template-columns above */
-      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 36px;
+      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 28px 36px;
       align-items: center;
       gap: 12px;
       padding: 10px 16px;
@@ -320,7 +453,6 @@
       object-fit: contain;
     }
 
-    /* Placeholder icon when no logo is set */
     .logo-placeholder {
       font-size: 12px;
       color: rgba(255,255,255,0.2);
@@ -329,7 +461,6 @@
 
     .logo-wrap:hover .logo-placeholder { color: rgba(255,255,255,0.5); }
 
-    /* Hidden file input for logo upload */
     .logo-file-input { display: none; }
 
     .account-name {
@@ -357,9 +488,7 @@
 
     .lights { display: flex; gap: 6px; align-items: center; }
 
-    /* ── Priority Rank Badge ──
-       Small editable number at the far left of each row.
-       Clicking it swaps to a tiny number input so the user can retype the rank. */
+    /* ── Priority Rank Badge ── */
     .rank-badge {
       display: flex;
       align-items: center;
@@ -378,9 +507,7 @@
       transition: all 0.15s;
     }
 
-    .rank-badge.empty {
-      color: rgba(255,255,255,0.2);
-    }
+    .rank-badge.empty { color: rgba(255,255,255,0.2); }
 
     .rank-badge:hover {
       border-color: rgba(255,255,255,0.25);
@@ -401,7 +528,6 @@
       font-weight: 600;
       text-align: center;
       outline: none;
-      /* Hide the browser's number spinners — the rank is entered by typing */
       -moz-appearance: textfield;
     }
     .rank-input::-webkit-outer-spin-button,
@@ -410,8 +536,7 @@
       margin: 0;
     }
 
-    /* ── Sales Stage Dropdown ──
-       Native <select> styled to match the dark theme. */
+    /* ── Sales Stage Dropdown ── */
     .stage-select {
       width: 100%;
       height: 26px;
@@ -424,14 +549,11 @@
       font-family: 'JetBrains Mono', monospace;
       outline: none;
       cursor: pointer;
-      /* Let the left border color communicate which stage is selected */
       border-left-width: 3px;
     }
 
     .stage-select:hover { border-color: rgba(255,255,255,0.25); }
     .stage-select:focus { border-color: rgba(255,255,255,0.4); }
-
-    /* Dropdown options need an explicit dark background on most browsers */
     .stage-select option { background: #1A1F2E; color: #F1F1F1; }
 
     .light {
@@ -445,7 +567,30 @@
       padding: 0;
     }
 
-    .next-step {
+    /* ── Note cell ──
+       Wrapper allowing optional nextAction line above the inline note input. */
+    .note-cell {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .next-action-line {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.55);
+      padding: 0 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .next-action-line.overdue {
+      color: #F87171; /* muted red */
+    }
+
+    .note-input {
       background: transparent;
       border: 1px solid transparent;
       border-radius: 4px;
@@ -458,8 +603,33 @@
       transition: border-color 0.2s;
     }
 
-    .next-step:hover { border-color: rgba(255,255,255,0.08); }
-    .next-step:focus { border-color: rgba(255,255,255,0.15); }
+    .note-input:hover { border-color: rgba(255,255,255,0.08); }
+    .note-input:focus { border-color: rgba(255,255,255,0.15); }
+
+    /* ── Details (›) button ── */
+    .details-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      font-size: 16px;
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      padding: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .details-btn:hover {
+      color: #F1F1F1;
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.05);
+    }
 
     .delete-btn {
       background: transparent;
@@ -509,7 +679,7 @@
       display: inline-block;
     }
 
-    /* ── Logo Popup (domain entry for auto-fetch) ── */
+    /* ── Logo Popup ── */
     .logo-popup {
       position: fixed;
       inset: 0;
@@ -581,21 +751,207 @@
       align-self: center;
     }
 
+    /* ── Side Panel (Account Detail) ──
+       Slides in from the right when the user clicks the › button on a row. */
+    .side-panel-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 90;
+      backdrop-filter: blur(2px);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .side-panel-backdrop.open { opacity: 1; }
+
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 90%;
+      max-width: 460px;
+      background: #131826;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      z-index: 91;
+      padding: 24px 28px;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .side-panel.open { transform: translateX(0); }
+
+    .side-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .side-panel-header .logo-mini {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .side-panel-header .logo-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .side-panel-header h2 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .side-panel-close {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.5);
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      line-height: 1;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .side-panel-close:hover {
+      color: #F1F1F1;
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .panel-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .panel-section .panel-label {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* Next action row: date + label side by side */
+    .next-action-row {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 8px;
+    }
+
+    .panel-input,
+    .panel-textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: #F1F1F1;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+    }
+
+    .panel-input { font-family: 'JetBrains Mono', monospace; }
+
+    .panel-input:focus,
+    .panel-textarea:focus { border-color: rgba(255,255,255,0.3); }
+
+    .panel-textarea {
+      min-height: 140px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    /* Read-only timestamps grid (last status / stage / touched) */
+    .timestamps {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      padding: 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .timestamps .ts {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .timestamps .ts-label {
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.35);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .timestamps .ts-value {
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      color: #F1F1F1;
+    }
+
+    .timestamps .ts-value.muted {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .next-action-clear {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      align-self: flex-start;
+      padding: 0;
+      text-decoration: underline;
+    }
+
+    .next-action-clear:hover { color: #EF4444; }
+
     /* ── Mobile ── */
     @media (max-width: 768px) {
       body { padding: 16px; }
       .col-headers { display: none; }
       .account-row {
-        /* rank + logo on top row, name takes the rest; everything else stacks below */
-        grid-template-columns: 40px 32px 1fr;
+        grid-template-columns: 40px 32px 1fr 28px;
         gap: 8px;
         padding: 14px 16px;
       }
       .stage-select { grid-column: 1 / -1; }
       .lights { grid-column: 1 / -1; }
       .solution-tags { grid-column: 1 / -1; }
-      .next-step { grid-column: 1 / -1; }
+      .note-cell { grid-column: 1 / -1; }
       .delete-btn { grid-column: 1 / -1; justify-self: end; }
+      .side-panel { width: 100%; max-width: 100%; padding: 20px; }
+      .next-action-row { grid-template-columns: 1fr; }
+      .timestamps { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -619,19 +975,48 @@
   const STATUS_PRIORITY = ["critical", "on_me", "on_colleague", "on_customer", "stalled", "cruising"];
 
   // ──────────────────────────────────────────────
+  // STAGNANT THRESHOLDS (in days, per status)
+  // Used to compute the stagnant queue at the top of the board.
+  // User can override these in the Settings modal.
+  // ──────────────────────────────────────────────
+  const DEFAULT_THRESHOLDS = {
+    critical: 1,
+    on_me: 3,
+    on_colleague: 5,
+    on_customer: 10,
+    stalled: 7,
+    cruising: 30,
+  };
+
+  const LS_THRESHOLDS = "sb-thresholds";
+
+  function loadThresholds() {
+    try {
+      const raw = localStorage.getItem(LS_THRESHOLDS);
+      if (!raw) return { ...DEFAULT_THRESHOLDS };
+      const parsed = JSON.parse(raw);
+      // Merge with defaults so any newly-added status gets a sensible default
+      return { ...DEFAULT_THRESHOLDS, ...parsed };
+    } catch {
+      return { ...DEFAULT_THRESHOLDS };
+    }
+  }
+
+  function saveThresholds(t) {
+    localStorage.setItem(LS_THRESHOLDS, JSON.stringify(t));
+  }
+
+  // ──────────────────────────────────────────────
   // SOLUTION DEFINITIONS
-  // Each solution gets a distinct color for its tag badge.
   // ──────────────────────────────────────────────
   const SOLUTIONS = [
-    { id: "qms",    label: "QMS",    color: "#06B6D4" },  // cyan
-    { id: "evolve", label: "Evolve", color: "#A78BFA" },  // violet
-    { id: "iforms", label: "iForms", color: "#FB923C" },  // orange
+    { id: "qms",    label: "QMS",    color: "#06B6D4" },
+    { id: "evolve", label: "Evolve", color: "#A78BFA" },
+    { id: "iforms", label: "iForms", color: "#FB923C" },
   ];
 
   // ──────────────────────────────────────────────
   // SALES STAGE DEFINITIONS
-  // Stages 1–8 with short labels shown in dropdown and filter pills.
-  // Adjust labels to match your actual pipeline vocabulary.
   // ──────────────────────────────────────────────
   const SALES_STAGES = [
     { id: 1, label: "1 — Qualification",     color: "#e8eaed" },
@@ -646,13 +1031,13 @@
 
   // ──────────────────────────────────────────────
   // SEED DATA
-  // priority = manual rank within the status group (lower number = higher priority).
-  // stage = sales pipeline stage (1–8), or null if not set.
+  // Note (formerly nextStep) is a freeform quick note shown inline on the row.
+  // nextActionDate + nextActionLabel are the dated commitment shown above the note.
   // ──────────────────────────────────────────────
   const SEED = [
-    { id: "1", name: "Acme Corp",    status: "on_me",        nextStep: "Send revised proposal by Friday", solutions: ["qms"],            stage: 5, priority: 1, logo: "", createdAt: Date.now() },
-    { id: "2", name: "GlobalTech",   status: "on_customer",  nextStep: "Waiting on signed SOW",           solutions: ["evolve","iforms"], stage: 7, priority: 1, logo: "", createdAt: Date.now() },
-    { id: "3", name: "Pinnacle Inc", status: "cruising",     nextStep: "",                                solutions: ["qms","evolve"],    stage: 3, priority: 1, logo: "", createdAt: Date.now() },
+    { id: "1", name: "Acme Corp",    status: "on_me",        note: "Send revised proposal by Friday", solutions: ["qms"],            stage: 5, priority: 1, logo: "", createdAt: Date.now(), nextActionDate: "", nextActionLabel: "", lastStatusChange: Date.now(), lastStageChange: Date.now(), lastTouched: Date.now() },
+    { id: "2", name: "GlobalTech",   status: "on_customer",  note: "Waiting on signed SOW",           solutions: ["evolve","iforms"], stage: 7, priority: 1, logo: "", createdAt: Date.now(), nextActionDate: "", nextActionLabel: "", lastStatusChange: Date.now(), lastStageChange: Date.now(), lastTouched: Date.now() },
+    { id: "3", name: "Pinnacle Inc", status: "cruising",     note: "",                                solutions: ["qms","evolve"],    stage: 3, priority: 1, logo: "", createdAt: Date.now(), nextActionDate: "", nextActionLabel: "", lastStatusChange: Date.now(), lastStageChange: Date.now(), lastTouched: Date.now() },
   ];
 
   // ──────────────────────────────────────────────
@@ -733,8 +1118,6 @@
     }
   }
 
-  // Update only the sync indicator dot and label without rebuilding the whole DOM.
-  // This prevents the name input from being destroyed while the user is typing.
   function updateSyncIndicator() {
     const syncInfo = {
       synced:  { dot: "#10B981", text: "Synced" },
@@ -745,9 +1128,8 @@
     }[state.syncStatus];
 
     const btn = document.getElementById("syncBtn");
-    if (!btn || !syncInfo) return; // bail if the button isn't rendered yet
+    if (!btn || !syncInfo) return;
 
-    // Patch just the dot color and label text in place
     const dot = btn.querySelector(".sync-dot");
     if (dot) dot.style.background = syncInfo.dot;
     const label = btn.querySelector(".sync-label");
@@ -757,14 +1139,11 @@
   function debouncedGithubSave(accounts) {
     clearTimeout(saveTimer);
     state.syncStatus = "saving";
-    // Only touch the sync indicator — do NOT call render() here,
-    // as that would rebuild app.innerHTML and destroy any active input.
     updateSyncIndicator();
     saveTimer = setTimeout(async () => {
       const ok = await githubSave(accounts);
       state.syncStatus = ok ? "synced" : "error";
       state.lastSync = ok ? new Date() : state.lastSync;
-      // Same here — update the indicator only, not the full DOM.
       updateSyncIndicator();
     }, 1500);
   }
@@ -774,21 +1153,38 @@
   // ──────────────────────────────────────────────
   const LS_ACCOUNTS = "signal-board-accounts";
 
+  // Migrate an account record to include any newly-introduced fields.
+  // Old data may have `nextStep` (now renamed `note`) and may be missing all
+  // the new fields (notes, nextActionDate/Label, timestamps).
+  function migrateAccount(a) {
+    const now = Date.now();
+    return {
+      ...a,
+      solutions: a.solutions || [],
+      logo: a.logo || "",
+      stage: a.stage ?? null,
+      priority: a.priority ?? null,
+      // Rename: prefer existing `note`, fall back to legacy `nextStep`, then empty string.
+      note: a.note ?? a.nextStep ?? "",
+      // New fields
+      nextActionDate: a.nextActionDate ?? "",
+      nextActionLabel: a.nextActionLabel ?? "",
+      // Default timestamps to "now" so existing accounts don't immediately
+      // appear stagnant just because they predate this feature.
+      lastStatusChange: a.lastStatusChange ?? now,
+      lastStageChange: a.lastStageChange ?? now,
+      lastTouched: a.lastTouched ?? now,
+    };
+  }
+
+  function migrateAll(list) {
+    return list.map(migrateAccount);
+  }
+
   function localLoad() {
     try {
       const raw = localStorage.getItem(LS_ACCOUNTS);
-      // Migrate old data: ensure every account has the expected fields.
-      // Missing `stage` → null; missing `priority` → null (will be assigned on first render).
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        return parsed.map(a => ({
-          ...a,
-          solutions: a.solutions || [],
-          logo: a.logo || "",
-          stage: a.stage ?? null,
-          priority: a.priority ?? null,
-        }));
-      }
+      if (raw) return migrateAll(JSON.parse(raw));
       return null;
     } catch { return null; }
   }
@@ -802,22 +1198,67 @@
   // ──────────────────────────────────────────────
   let state = {
     accounts: localLoad() || SEED,
-    filter: "all",             // status filter
-    solutionFilter: "all",     // solution filter
-    stageFilter: "all",        // sales stage filter (1–8 or "all")
+    filter: "all",
+    solutionFilter: "all",
+    stageFilter: "all",
     sortBy: "status",
     editingId: null,
-    editingRankId: null,       // which account's rank badge is currently in input mode
+    editingRankId: null,
     showSettings: false,
     syncStatus: "unknown",
     lastSync: null,
     settingsError: "",
     loading: true,
-    // Logo popup state
-    logoPopup: null,           // account ID being edited, or null
+    logoPopup: null,
     logoPreviewUrl: "",
     logoDomain: "",
+    // Side panel state
+    detailPanelId: null,        // account ID whose detail panel is open, or null
+    // Stagnant queue
+    thresholds: loadThresholds(),
+    stagnantCollapsed: false,   // user can collapse the stagnant section
   };
+
+  // ──────────────────────────────────────────────
+  // TIMESTAMP HELPERS
+  // ──────────────────────────────────────────────
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+
+  // Returns a human-friendly relative time, e.g. "3d ago", "2h ago", "just now".
+  function relativeTime(ts) {
+    if (!ts) return "—";
+    const diff = Date.now() - ts;
+    if (diff < 60 * 1000) return "just now";
+    if (diff < 60 * 60 * 1000) return Math.floor(diff / (60 * 1000)) + "m ago";
+    if (diff < MS_PER_DAY) return Math.floor(diff / (60 * 60 * 1000)) + "h ago";
+    const days = Math.floor(diff / MS_PER_DAY);
+    if (days < 30) return days + "d ago";
+    const months = Math.floor(days / 30);
+    if (months < 12) return months + "mo ago";
+    return Math.floor(months / 12) + "y ago";
+  }
+
+  // Returns days elapsed since timestamp (float), or null if no timestamp.
+  function daysSince(ts) {
+    if (!ts) return null;
+    return (Date.now() - ts) / MS_PER_DAY;
+  }
+
+  // Format a YYYY-MM-DD date string as "Nov 18" or similar for compact display.
+  function formatActionDate(isoDate) {
+    if (!isoDate) return "";
+    // Parse as local date by appending T00:00, otherwise it can shift a day in some zones.
+    const d = new Date(isoDate + "T00:00:00");
+    if (isNaN(d.getTime())) return isoDate;
+    return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+  }
+
+  // Is the given ISO date string in the past (relative to today, local time)?
+  function isOverdue(isoDate) {
+    if (!isoDate) return false;
+    const d = new Date(isoDate + "T23:59:59"); // end of that day in local time
+    return d.getTime() < Date.now();
+  }
 
   // ──────────────────────────────────────────────
   // PERSISTENCE
@@ -839,14 +1280,7 @@
       render();
       const remote = await githubLoad();
       if (remote) {
-        // Migrate remote data to include new fields (stage, priority, solutions, logo)
-        state.accounts = remote.map(a => ({
-          ...a,
-          solutions: a.solutions || [],
-          logo: a.logo || "",
-          stage: a.stage ?? null,
-          priority: a.priority ?? null,
-        }));
+        state.accounts = migrateAll(remote);
         localSave(state.accounts);
         state.syncStatus = "synced";
         state.lastSync = new Date();
@@ -883,7 +1317,6 @@
     }, {});
   }
 
-  // Count of accounts at each sales stage (for filter pill badges)
   function getStageCounts() {
     return SALES_STAGES.reduce((acc, s) => {
       acc[s.id] = state.accounts.filter(a => a.stage === s.id).length;
@@ -893,31 +1326,19 @@
 
   function getFiltered() {
     let list = state.accounts;
-    // Apply status filter
-    if (state.filter !== "all") {
-      list = list.filter(a => a.status === state.filter);
-    }
-    // Apply solution filter
-    if (state.solutionFilter !== "all") {
-      list = list.filter(a => (a.solutions || []).includes(state.solutionFilter));
-    }
-    // Apply stage filter (stageFilter is a number when active, or "all")
-    if (state.stageFilter !== "all") {
-      list = list.filter(a => a.stage === state.stageFilter);
-    }
+    if (state.filter !== "all") list = list.filter(a => a.status === state.filter);
+    if (state.solutionFilter !== "all") list = list.filter(a => (a.solutions || []).includes(state.solutionFilter));
+    if (state.stageFilter !== "all") list = list.filter(a => a.stage === state.stageFilter);
     return list;
   }
 
   function getSorted(filtered) {
     return [...filtered].sort((a, b) => {
       if (state.sortBy === "status") {
-        // Primary sort: status priority (critical first, cruising last).
         const ai = STATUS_PRIORITY.indexOf(a.status);
         const bi = STATUS_PRIORITY.indexOf(b.status);
         const statusDiff = (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
         if (statusDiff !== 0) return statusDiff;
-        // Secondary sort: manual priority rank within the same status group.
-        // Lower rank number = higher priority. Unranked (null) accounts sink to the bottom.
         const ap = a.priority ?? Infinity;
         const bp = b.priority ?? Infinity;
         return ap - bp;
@@ -927,66 +1348,77 @@
     });
   }
 
+  // Stagnant queue: any account whose `lastTouched` is older than its
+  // status-specific threshold. Accounts with no status are excluded
+  // (no status = no threshold applies). Returns the list sorted by
+  // stagnant-ness (most overdue first).
+  function getStagnantAccounts() {
+    const list = state.accounts.filter(a => {
+      if (!a.status) return false;
+      const threshold = state.thresholds[a.status];
+      if (!threshold || threshold <= 0) return false;
+      const days = daysSince(a.lastTouched);
+      return days !== null && days >= threshold;
+    });
+    // Sort by how far past the threshold each one is (most stagnant first)
+    list.sort((a, b) => {
+      const aOver = daysSince(a.lastTouched) - state.thresholds[a.status];
+      const bOver = daysSince(b.lastTouched) - state.thresholds[b.status];
+      return bOver - aOver;
+    });
+    return list;
+  }
+
+  // ──────────────────────────────────────────────
+  // TOUCH TRACKING
+  // Call touch(acct) any time a meaningful edit happens — this is what
+  // resets the stagnant timer. We deliberately do NOT touch on: name edits,
+  // logo changes, solution toggles (those are administrative).
+  // ──────────────────────────────────────────────
+  function touch(acct) {
+    if (!acct) return;
+    acct.lastTouched = Date.now();
+  }
+
   // ──────────────────────────────────────────────
   // PRIORITY RANK MANAGEMENT
-  // Ranks are scoped per status group: accounts in "on_me" have their own
-  // 1..N sequence, accounts in "on_customer" have their own, etc.
-  // Any time we mutate a rank, we normalize the affected group so the
-  // sequence is always a contiguous 1..N with no gaps and no duplicates.
   // ──────────────────────────────────────────────
-
-  // Normalize the priority sequence within a given status group.
-  // After this runs, accounts in that group are numbered 1..N in the order
-  // dictated by their current priority (nulls go to the end).
   function normalizeGroup(statusId) {
-    if (!statusId) return; // skip accounts without a status — they don't participate in ranking
+    if (!statusId) return;
     const group = state.accounts.filter(a => a.status === statusId);
-    // Sort by current priority; unranked (null) drop to the bottom.
     group.sort((a, b) => (a.priority ?? Infinity) - (b.priority ?? Infinity));
-    // Reassign priorities as a clean 1..N sequence.
     group.forEach((acct, i) => { acct.priority = i + 1; });
   }
 
-  // Set an account's priority to a specific target rank within its status group.
-  // Other accounts in the same group shift to accommodate, like inserting
-  // a row in a spreadsheet. Clamps the target to the valid 1..N range.
   function setPriority(id, targetRank) {
     const acct = state.accounts.find(a => a.id === id);
     if (!acct || !acct.status) return;
 
-    // Coerce to integer; ignore invalid input.
     const target = parseInt(targetRank, 10);
     if (isNaN(target) || target < 1) return;
 
-    // Make sure the group is clean before we start shuffling.
     normalizeGroup(acct.status);
 
-    // Clamp the requested rank to the size of the group.
     const group = state.accounts.filter(a => a.status === acct.status);
     const clamped = Math.min(target, group.length);
 
-    // Temporarily park the target account outside the sequence so it doesn't
-    // collide with itself during renumbering.
     acct.priority = 0;
 
-    // Walk the group in priority order (excluding the target account) and
-    // rebuild the sequence, inserting the target at the clamped position.
     const others = group
       .filter(a => a.id !== acct.id)
       .sort((a, b) => a.priority - b.priority);
 
     let rank = 1;
     others.forEach(other => {
-      if (rank === clamped) rank++;      // leave a gap for the target
+      if (rank === clamped) rank++;
       other.priority = rank++;
     });
     acct.priority = clamped;
 
+    touch(acct);  // rank change counts as a meaningful edit
     update({});
   }
 
-  // Assign a fresh priority to an account when it joins a new status group.
-  // New arrivals go to the bottom of the group.
   function assignRankToBottom(acct) {
     if (!acct.status) { acct.priority = null; return; }
     const group = state.accounts.filter(a => a.status === acct.status && a.id !== acct.id);
@@ -997,28 +1429,34 @@
   // ACCOUNT ACTIONS
   // ──────────────────────────────────────────────
   function addAccount() {
+    const now = Date.now();
     state.accounts.unshift({
-      id: Date.now().toString(),
+      id: now.toString(),
       name: "New Account",
       status: null,
-      nextStep: "",
+      note: "",
       solutions: [],
       stage: null,
-      priority: null,   // assigned when the account gets a status
+      priority: null,
       logo: "",
-      createdAt: Date.now(),
+      createdAt: now,
+      nextActionDate: "",
+      nextActionLabel: "",
+      lastStatusChange: now,
+      lastStageChange: now,
+      lastTouched: now,
     });
     state.editingId = state.accounts[0].id;
     update({});
   }
 
   function deleteAccount(id) {
-    // Remember the deleted account's status so we can renumber its old group.
     const acct = state.accounts.find(a => a.id === id);
     const oldStatus = acct?.status;
     state.accounts = state.accounts.filter(a => a.id !== id);
-    // Close the gap left behind in the old status group.
     if (oldStatus) normalizeGroup(oldStatus);
+    // If the detail panel for this account is open, close it.
+    if (state.detailPanelId === id) state.detailPanelId = null;
     update({});
   }
 
@@ -1026,52 +1464,91 @@
     const acct = state.accounts.find(a => a.id === id);
     if (!acct) return;
     const oldStatus = acct.status;
-    // Clicking the currently active light again clears the status (toggle-off behavior).
     const newStatus = acct.status === statusId ? null : statusId;
 
     acct.status = newStatus;
 
-    // Close up the old group so its ranks stay 1..N with no gap.
     if (oldStatus && oldStatus !== newStatus) {
-      acct.priority = null;           // leaving the old group — drop old rank
+      acct.priority = null;
       normalizeGroup(oldStatus);
     }
-    // Give the account a fresh rank at the bottom of its new group.
     if (newStatus && newStatus !== oldStatus) {
       assignRankToBottom(acct);
     }
-    // If status was cleared entirely, wipe the priority so it won't interfere later.
     if (!newStatus) acct.priority = null;
+
+    // Track timestamps: status changed, and this counts as a touch.
+    if (oldStatus !== newStatus) {
+      acct.lastStatusChange = Date.now();
+      touch(acct);
+    }
 
     update({});
   }
 
-  // Set an account's sales stage. Null clears the stage.
   function setStage(id, stageId) {
     const acct = state.accounts.find(a => a.id === id);
     if (!acct) return;
-    // Empty-string or "null" from the dropdown means "no stage set".
-    acct.stage = (stageId === "" || stageId === null) ? null : parseInt(stageId, 10);
+    const newStage = (stageId === "" || stageId === null) ? null : parseInt(stageId, 10);
+    if (acct.stage !== newStage) {
+      acct.stage = newStage;
+      acct.lastStageChange = Date.now();
+      touch(acct);
+    }
     update({});
   }
 
-  // Toggle a solution tag on/off for an account
   function toggleSolution(id, solId) {
     const acct = state.accounts.find(a => a.id === id);
     if (!acct) return;
     if (!acct.solutions) acct.solutions = [];
     const idx = acct.solutions.indexOf(solId);
-    if (idx >= 0) {
-      acct.solutions.splice(idx, 1);  // remove
-    } else {
-      acct.solutions.push(solId);      // add
+    if (idx >= 0) acct.solutions.splice(idx, 1);
+    else acct.solutions.push(solId);
+    // Solution toggle is administrative — does NOT touch (per design decision).
+    update({});
+  }
+
+  // Note edits (the freeform note field, both inline and in the side panel).
+  // This DOES reset the stagnant timer per the user's requirement.
+  function setNote(id, value) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct) return;
+    if (acct.note !== value) {
+      acct.note = value;
+      touch(acct);
+    }
+    persistAccounts();
+  }
+
+  // Next-action date/label edits. Setting either to a non-empty value counts
+  // as a touch; clearing both does NOT touch (you're removing intent).
+  function setNextActionDate(id, value) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct) return;
+    if (acct.nextActionDate !== value) {
+      acct.nextActionDate = value;
+      if (value) touch(acct);
     }
     update({});
   }
 
-  function setNextStep(id, value) {
+  function setNextActionLabel(id, value) {
     const acct = state.accounts.find(a => a.id === id);
-    if (acct) { acct.nextStep = value; persistAccounts(); }
+    if (!acct) return;
+    if (acct.nextActionLabel !== value) {
+      acct.nextActionLabel = value;
+      if (value) touch(acct);
+    }
+    persistAccounts();
+  }
+
+  function clearNextAction(id) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct) return;
+    acct.nextActionDate = "";
+    acct.nextActionLabel = "";
+    update({});
   }
 
   function setName(id, value) {
@@ -1091,11 +1568,7 @@
 
   // ──────────────────────────────────────────────
   // LOGO HANDLING
-  // Uses logo.clearbit.com for auto-fetch by domain.
-  // Falls back to manual file upload.
-  // Stores the URL (not base64) to keep data small.
   // ──────────────────────────────────────────────
-
   function openLogoPopup(id) {
     const acct = state.accounts.find(a => a.id === id);
     state.logoPopup = id;
@@ -1109,9 +1582,7 @@
     render();
   }
 
-  // Build logo URL from a domain string
   function logoUrlFromDomain(domain) {
-    // Clean up: remove protocol, www, trailing slashes
     domain = domain.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/.*$/, "").trim();
     if (!domain) return "";
     return `https://logo.clearbit.com/${domain}`;
@@ -1130,14 +1601,24 @@
     saveLogo(id, "");
   }
 
-  // Handle manual file upload: convert to base64 data URL
   function handleLogoUpload(id, file) {
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = () => {
-      saveLogo(id, reader.result);
-    };
+    reader.onload = () => { saveLogo(id, reader.result); };
     reader.readAsDataURL(file);
+  }
+
+  // ──────────────────────────────────────────────
+  // DETAIL SIDE PANEL
+  // ──────────────────────────────────────────────
+  function openDetailPanel(id) {
+    state.detailPanelId = id;
+    render();
+  }
+
+  function closeDetailPanel() {
+    state.detailPanelId = null;
+    render();
   }
 
   // ──────────────────────────────────────────────
@@ -1154,7 +1635,6 @@
       if (!res.ok) return `GitHub returned an error (${res.status}).`;
 
       saveGitHubConfig(token, user, repo);
-      state.showSettings = false;
       state.settingsError = "";
       render();
 
@@ -1174,7 +1654,26 @@
     localStorage.removeItem(LS_REPO);
     fileSha = null;
     state.syncStatus = "offline";
-    state.showSettings = false;
+    render();
+  }
+
+  // Save the per-status thresholds entered in the Settings modal.
+  // Reads the value from each input by status id.
+  function saveThresholdsFromInputs() {
+    const next = { ...state.thresholds };
+    STATUSES.forEach(s => {
+      const input = document.getElementById(`threshold-${s.id}`);
+      if (!input) return;
+      const v = parseInt(input.value, 10);
+      if (!isNaN(v) && v > 0) next[s.id] = v;
+    });
+    state.thresholds = next;
+    saveThresholds(next);
+  }
+
+  function resetThresholdsToDefaults() {
+    state.thresholds = { ...DEFAULT_THRESHOLDS };
+    saveThresholds(state.thresholds);
     render();
   }
 
@@ -1184,9 +1683,10 @@
   function render() {
     const counts = getCounts();
     const solCounts = getSolCounts();
-    const stageCounts = getStageCounts();  // count per sales stage for filter pills
+    const stageCounts = getStageCounts();
     const sorted = getSorted(getFiltered());
     const cfg = getGitHubConfig();
+    const stagnant = getStagnantAccounts();
 
     const syncInfo = {
       synced:  { dot: "#10B981", text: "Synced" },
@@ -1199,7 +1699,7 @@
     const app = document.getElementById("app");
     let html = "";
 
-    // ── Logo Popup Modal ──
+    // ── Logo Popup ──
     if (state.logoPopup) {
       html += `
         <div class="logo-popup" id="logoOverlay">
@@ -1227,44 +1727,136 @@
         </div>`;
     }
 
-    // ── Settings Modal ──
+    // ── Settings Modal (now with thresholds section) ──
     if (state.showSettings) {
       html += `
         <div class="settings-overlay" id="settingsOverlay">
           <div class="settings-panel">
-            <h2>${isConfigured() ? "Sync Settings" : "Set Up Cross-Device Sync"}</h2>
-            ${isConfigured() ? `
-              <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;line-height:1.6">
-                Currently syncing to <strong style="color:#F1F1F1">${cfg.user}/${cfg.repo}</strong>
-              </p>
-              <div class="settings-buttons">
-                <button class="btn-secondary" id="settingsCancel">Close</button>
+            <h2>Settings</h2>
+
+            <!-- GitHub Sync Section -->
+            <div class="settings-section">
+              <h3>Cross-Device Sync</h3>
+              ${isConfigured() ? `
+                <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;line-height:1.6">
+                  Currently syncing to <strong style="color:#F1F1F1">${cfg.user}/${cfg.repo}</strong>
+                </p>
                 <button class="btn-secondary" id="disconnectBtn" style="border-color:#EF4444;color:#EF4444">Disconnect</button>
-              </div>
-            ` : `
-              <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.6">
-                Connect your GitHub repo so your board syncs across all your devices.
+              ` : `
+                <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.6">
+                  Connect your GitHub repo so your board syncs across all your devices.
+                </p>
+                <label>GitHub Username</label>
+                <input type="text" id="inputUser" value="${cfg.user}" placeholder="chizzyhat" />
+                <label>Repository Name</label>
+                <input type="text" id="inputRepo" value="${cfg.repo}" placeholder="signal-board" />
+                <label>Personal Access Token</label>
+                <input type="password" id="inputToken" value="" placeholder="ghp_xxxxxxxxxxxx" />
+                <div class="settings-hint">
+                  Create one at
+                  <a href="https://github.com/settings/tokens/new?scopes=repo&description=Signal+Board" target="_blank">github.com/settings/tokens</a>
+                  — select the <strong>repo</strong> scope.
+                </div>
+                ${state.settingsError ? `<div class="settings-error">${state.settingsError}</div>` : ""}
+                <div style="margin-top:12px">
+                  <button class="btn-primary" id="settingsSave">Connect</button>
+                </div>
+              `}
+            </div>
+
+            <!-- Stagnant Thresholds Section -->
+            <div class="settings-section">
+              <h3>Stagnant Thresholds</h3>
+              <p style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:14px;line-height:1.5">
+                An account is flagged as stagnant when its status hasn't changed and nothing has been touched within these limits.
               </p>
-              <label>GitHub Username</label>
-              <input type="text" id="inputUser" value="${cfg.user}" placeholder="chizzyhat" />
-              <label>Repository Name</label>
-              <input type="text" id="inputRepo" value="${cfg.repo}" placeholder="signal-board" />
-              <label>Personal Access Token</label>
-              <input type="password" id="inputToken" value="" placeholder="ghp_xxxxxxxxxxxx" />
-              <div class="settings-hint">
-                Create one at
-                <a href="https://github.com/settings/tokens/new?scopes=repo&description=Signal+Board" target="_blank">
-                  github.com/settings/tokens
-                </a> — select the <strong>repo</strong> scope.
+              ${STATUSES.map(s => `
+                <div class="threshold-row">
+                  <span class="dot" style="background:${s.color};box-shadow:0 0 6px ${s.color}66"></span>
+                  <span class="label">${s.label}</span>
+                  <input type="number" id="threshold-${s.id}" min="1" max="365" value="${state.thresholds[s.id] ?? DEFAULT_THRESHOLDS[s.id]}" />
+                  <span class="unit">days</span>
+                </div>
+              `).join("")}
+              <div style="margin-top:12px;display:flex;gap:8px">
+                <button class="btn-secondary" id="resetThresholdsBtn">Reset to defaults</button>
               </div>
-              ${state.settingsError ? `<div class="settings-error">${state.settingsError}</div>` : ""}
-              <div class="settings-buttons">
-                <button class="btn-secondary" id="settingsCancel">Cancel</button>
-                <button class="btn-primary" id="settingsSave">Connect</button>
-              </div>
-            `}
+            </div>
+
+            <div class="settings-buttons">
+              <button class="btn-primary" id="settingsClose">Done</button>
+            </div>
           </div>
         </div>`;
+    }
+
+    // ── Side Detail Panel ──
+    if (state.detailPanelId) {
+      const acct = state.accounts.find(a => a.id === state.detailPanelId);
+      if (acct) {
+        const active = STATUSES.find(s => s.id === acct.status);
+        const stageRec = acct.stage ? SALES_STAGES.find(s => s.id === acct.stage) : null;
+        const overdue = isOverdue(acct.nextActionDate);
+
+        html += `
+          <div class="side-panel-backdrop open" id="panelBackdrop"></div>
+          <div class="side-panel open">
+            <div class="side-panel-header">
+              <div class="logo-mini">
+                ${acct.logo ? `<img src="${acct.logo}" onerror="this.style.display='none'" />` : `<span style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'JetBrains Mono',monospace">${acct.name.charAt(0).toUpperCase()}</span>`}
+              </div>
+              <h2 title="${acct.name.replace(/"/g, '&quot;')}">${acct.name}</h2>
+              <button class="side-panel-close" id="panelCloseBtn" title="Close (Esc)">×</button>
+            </div>
+
+            <!-- Status + stage summary -->
+            <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11px;font-family:'JetBrains Mono',monospace">
+              ${active ? `<span style="color:${active.color};border:1px solid ${active.color}66;padding:3px 10px;border-radius:12px">${active.label}</span>` : `<span style="color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.1);padding:3px 10px;border-radius:12px">No status</span>`}
+              ${stageRec ? `<span style="color:${stageRec.color};border:1px solid ${stageRec.color}66;padding:3px 10px;border-radius:12px">${stageRec.label}</span>` : ""}
+              ${acct.priority ? `<span style="color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.15);padding:3px 10px;border-radius:12px">Rank #${acct.priority}</span>` : ""}
+            </div>
+
+            <!-- Next Action -->
+            <div class="panel-section">
+              <span class="panel-label">Next Action</span>
+              <div class="next-action-row">
+                <input type="date" class="panel-input" id="panelActionDate" value="${acct.nextActionDate || ''}" />
+                <input type="text" class="panel-input" id="panelActionLabel" value="${(acct.nextActionLabel || '').replace(/"/g, '&quot;')}" placeholder="e.g. send revised quote" />
+              </div>
+              ${(acct.nextActionDate || acct.nextActionLabel) ? `
+                <button class="next-action-clear" id="panelActionClear">Clear next action</button>
+              ` : ""}
+              ${overdue ? `<div style="font-size:11px;color:#F87171;font-family:'JetBrains Mono',monospace">⚠ Overdue</div>` : ""}
+            </div>
+
+            <!-- Notes -->
+            <div class="panel-section">
+              <span class="panel-label">Notes</span>
+              <textarea class="panel-textarea" id="panelNote" placeholder="Add context, history, anything useful for next time you open this account…">${acct.note || ''}</textarea>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'JetBrains Mono',monospace">First line shows on the board.</div>
+            </div>
+
+            <!-- Timestamps (read-only) -->
+            <div class="panel-section">
+              <span class="panel-label">Activity</span>
+              <div class="timestamps">
+                <div class="ts">
+                  <span class="ts-label">Last status</span>
+                  <span class="ts-value ${acct.lastStatusChange ? '' : 'muted'}">${relativeTime(acct.lastStatusChange)}</span>
+                </div>
+                <div class="ts">
+                  <span class="ts-label">Last stage</span>
+                  <span class="ts-value ${acct.lastStageChange ? '' : 'muted'}">${relativeTime(acct.lastStageChange)}</span>
+                </div>
+                <div class="ts">
+                  <span class="ts-label">Last touched</span>
+                  <span class="ts-value ${acct.lastTouched ? '' : 'muted'}">${relativeTime(acct.lastTouched)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
     }
 
     // ── Main Board ──
@@ -1284,7 +1876,6 @@
             </button>
           </div>
 
-          <!-- Status filter pills -->
           <div class="filters">
             <button class="filter-pill" data-filter="all"
               style="${state.filter === 'all' ? 'border-color:rgba(255,255,255,0.3);background:rgba(255,255,255,0.1)' : ''}">
@@ -1299,11 +1890,7 @@
                 ${s.label.toUpperCase()} ${counts[s.id]}
               </button>
             `).join("")}
-
-            <!-- Separator between status and solution filters -->
             <div class="filter-sep"></div>
-
-            <!-- Solution filter pills -->
             ${SOLUTIONS.map(s => `
               <button class="filter-pill" data-sol-filter="${s.id}" style="
                 border-color:${state.solutionFilter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
@@ -1313,11 +1900,7 @@
                 ${s.label.toUpperCase()} ${solCounts[s.id]}
               </button>
             `).join("")}
-
-            <!-- Separator between solution and stage filters -->
             <div class="filter-sep"></div>
-
-            <!-- Sales Stage filter pills: compact, show stage number + count -->
             ${SALES_STAGES.map(s => `
               <button class="filter-pill" data-stage-filter="${s.id}" title="${s.label}" style="
                 border-color:${state.stageFilter === s.id ? s.color : 'rgba(255,255,255,0.08)'};
@@ -1330,7 +1913,20 @@
           </div>
         </div>
 
-        <!-- Toolbar -->
+        <!-- Stagnant Queue Section -->
+        ${stagnant.length > 0 ? `
+          <div class="stagnant-section">
+            <div class="stagnant-header ${state.stagnantCollapsed ? 'collapsed' : ''}" id="stagnantHeader">
+              <span class="title">⚠ Needs Attention</span>
+              <span class="count-badge">${stagnant.length}</span>
+              <span class="caret">▾</span>
+            </div>
+            <div class="stagnant-body ${state.stagnantCollapsed ? 'collapsed' : ''}">
+              ${stagnant.map(acct => renderAccountRow(acct, true)).join("")}
+            </div>
+          </div>
+        ` : ""}
+
         <div class="toolbar">
           <div class="sort-btns">
             ${[{key:"status",label:"By Priority"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o => `
@@ -1343,96 +1939,16 @@
           </div>
         </div>
 
-        <!-- Column headers -->
         <div class="col-headers">
-          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Stage</div><div>Status</div><div>Next Step</div><div></div>
+          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Stage</div><div>Status</div><div>Note</div><div></div><div></div>
         </div>
 
-        <!-- Account rows -->
         <div class="accounts">
           ${sorted.length === 0 ? `
-            <div class="empty">${state.filter === 'all' && state.solutionFilter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts match these filters.'}</div>
-          ` : sorted.map(acct => {
-            const active = STATUSES.find(s => s.id === acct.status);
-            const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
-            const isEditing = state.editingId === acct.id;
-            const isEditingRank = state.editingRankId === acct.id;
-            const sols = acct.solutions || [];
-            // Find the stage record (for color) if one is set
-            const stageRec = acct.stage ? SALES_STAGES.find(s => s.id === acct.stage) : null;
-            return `
-              <div class="account-row" style="border-left-color:${borderColor}">
-                <!-- Rank badge: click to edit; shows #N within status group, or "—" if unranked -->
-                ${isEditingRank ? `
-                  <input class="rank-input" type="number" min="1" data-rank-input="${acct.id}" value="${acct.priority || ''}" />
-                ` : `
-                  <div class="rank-badge ${acct.priority ? '' : 'empty'}" data-edit-rank="${acct.id}"
-                       title="${acct.status ? 'Click to change priority within ' + (active?.label || '') + ' group' : 'Set a status to enable priority ranking'}">
-                    ${acct.priority ? '#' + acct.priority : '—'}
-                  </div>
-                `}
-
-                <!-- Logo thumbnail -->
-                <div class="logo-wrap" data-logo="${acct.id}" title="Click to set logo">
-                  ${acct.logo
-                    ? `<img src="${acct.logo}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span class="logo-placeholder" style="display:none">+</span>`
-                    : `<span class="logo-placeholder">+</span>`}
-                </div>
-
-                <!-- Account name -->
-                ${isEditing ? `
-                  <input class="name-input" data-name-input="${acct.id}" value="${acct.name}" />
-                ` : `
-                  <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">${acct.name}</div>
-                `}
-
-                <!-- Solution tags: click to toggle -->
-                <div class="solution-tags">
-                  ${SOLUTIONS.map(s => {
-                    const on = sols.includes(s.id);
-                    return `<span class="sol-tag" data-sol="${acct.id}:${s.id}" style="
-                      background:${on ? s.color + '22' : 'transparent'};
-                      color:${on ? s.color : 'rgba(255,255,255,0.15)'};
-                      border-color:${on ? s.color + '66' : 'rgba(255,255,255,0.06)'};
-                    ">${s.label}</span>`;
-                  }).join("")}
-                </div>
-
-                <!-- Sales Stage dropdown -->
-                <select class="stage-select" data-stage="${acct.id}" style="
-                  border-left-color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.1)'};
-                  color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.4)'};
-                ">
-                  <option value="" ${!acct.stage ? 'selected' : ''}>— Stage —</option>
-                  ${SALES_STAGES.map(s => `
-                    <option value="${s.id}" ${acct.stage === s.id ? 'selected' : ''}>${s.label}</option>
-                  `).join("")}
-                </select>
-
-                <!-- Signal lights -->
-                <div class="lights">
-                  ${STATUSES.map(s => {
-                    const on = acct.status === s.id;
-                    return `<button class="light" data-light="${acct.id}:${s.id}"
-                      title="${s.label}: ${s.description}"
-                      style="
-                        border-color:${on ? s.color : 'rgba(255,255,255,0.12)'};
-                        background:${on ? `radial-gradient(circle at 40% 35%, rgba(255,255,255,0.4) 0%, transparent 60%), ${s.color}` : 'transparent'};
-                        box-shadow:${on ? `0 0 12px ${s.color}88, 0 0 24px ${s.color}44, inset 0 -2px 4px rgba(0,0,0,0.3)` : 'none'};
-                      "></button>`;
-                  }).join("")}
-                </div>
-
-                <!-- Next step -->
-                <input class="next-step" data-nextstep="${acct.id}" value="${(acct.nextStep || '').replace(/"/g, '&quot;')}" placeholder="Next step..." />
-
-                <!-- Delete -->
-                <button class="delete-btn" data-delete="${acct.id}" title="Remove account">&times;</button>
-              </div>`;
-          }).join("")}
+            <div class="empty">${state.filter === 'all' && state.solutionFilter === 'all' && state.stageFilter === 'all' ? 'No accounts yet. Click + ADD ACCOUNT to get started.' : 'No accounts match these filters.'}</div>
+          ` : sorted.map(acct => renderAccountRow(acct, false)).join("")}
         </div>
 
-        <!-- Legend -->
         <div class="legend">
           ${STATUSES.map(s => `
             <div class="legend-item">
@@ -1445,7 +1961,112 @@
 
     app.innerHTML = html;
 
-    // ── Event Listeners ──
+    attachEventListeners();
+  }
+
+  // Extracted so we can render account rows in two places (main list + stagnant section).
+  // `inStagnantSection` lets us add the small "stagnant Xd" badge when relevant.
+  function renderAccountRow(acct, inStagnantSection) {
+    const active = STATUSES.find(s => s.id === acct.status);
+    const borderColor = active ? active.color : 'rgba(255,255,255,0.06)';
+    const isEditing = state.editingId === acct.id;
+    const isEditingRank = state.editingRankId === acct.id;
+    const sols = acct.solutions || [];
+    const stageRec = acct.stage ? SALES_STAGES.find(s => s.id === acct.stage) : null;
+
+    // Stagnant badge: only shown inside the stagnant section, showing days over threshold
+    let stagnantBadge = "";
+    if (inStagnantSection && acct.status) {
+      const days = Math.floor(daysSince(acct.lastTouched));
+      stagnantBadge = `<span class="stagnant-badge" title="No activity for ${days} day(s)">${days}d</span>`;
+    }
+
+    // Next action inline display: only shown when a date or label is set.
+    // Format: "→ Nov 18 · send revised quote" — gracefully degrades if either is missing.
+    let nextActionLine = "";
+    if (acct.nextActionDate || acct.nextActionLabel) {
+      const overdue = isOverdue(acct.nextActionDate);
+      const datePart = acct.nextActionDate ? formatActionDate(acct.nextActionDate) : "";
+      const labelPart = acct.nextActionLabel || "";
+      const joined = [datePart, labelPart].filter(Boolean).join(" · ");
+      nextActionLine = `<div class="next-action-line ${overdue ? 'overdue' : ''}" title="Next action${overdue ? ' (overdue)' : ''}">→ ${joined}</div>`;
+    }
+
+    // The inline note shows only the first line (the "glance" view).
+    // Full note is edited in the side panel. We escape quotes for the input value.
+    const noteFirstLine = (acct.note || "").split("\n")[0];
+
+    return `
+      <div class="account-row" data-account-id="${acct.id}" style="border-left-color:${borderColor}">
+        ${isEditingRank ? `
+          <input class="rank-input" type="number" min="1" data-rank-input="${acct.id}" value="${acct.priority || ''}" />
+        ` : `
+          <div class="rank-badge ${acct.priority ? '' : 'empty'}" data-edit-rank="${acct.id}"
+               title="${acct.status ? 'Click to change priority within ' + (active?.label || '') + ' group' : 'Set a status to enable priority ranking'}">
+            ${acct.priority ? '#' + acct.priority : '—'}
+          </div>
+        `}
+
+        <div class="logo-wrap" data-logo="${acct.id}" title="Click to set logo">
+          ${acct.logo
+            ? `<img src="${acct.logo}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'" /><span class="logo-placeholder" style="display:none">+</span>`
+            : `<span class="logo-placeholder">+</span>`}
+        </div>
+
+        ${isEditing ? `
+          <input class="name-input" data-name-input="${acct.id}" value="${acct.name.replace(/"/g, '&quot;')}" />
+        ` : `
+          <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">
+            ${acct.name}${stagnantBadge ? ' ' + stagnantBadge : ''}
+          </div>
+        `}
+
+        <div class="solution-tags">
+          ${SOLUTIONS.map(s => {
+            const on = sols.includes(s.id);
+            return `<span class="sol-tag" data-sol="${acct.id}:${s.id}" style="
+              background:${on ? s.color + '22' : 'transparent'};
+              color:${on ? s.color : 'rgba(255,255,255,0.15)'};
+              border-color:${on ? s.color + '66' : 'rgba(255,255,255,0.06)'};
+            ">${s.label}</span>`;
+          }).join("")}
+        </div>
+
+        <select class="stage-select" data-stage="${acct.id}" style="
+          border-left-color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.1)'};
+          color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.4)'};
+        ">
+          <option value="" ${!acct.stage ? 'selected' : ''}>— Stage —</option>
+          ${SALES_STAGES.map(s => `
+            <option value="${s.id}" ${acct.stage === s.id ? 'selected' : ''}>${s.label}</option>
+          `).join("")}
+        </select>
+
+        <div class="lights">
+          ${STATUSES.map(s => {
+            const on = acct.status === s.id;
+            return `<button class="light" data-light="${acct.id}:${s.id}"
+              title="${s.label}: ${s.description}"
+              style="
+                border-color:${on ? s.color : 'rgba(255,255,255,0.12)'};
+                background:${on ? `radial-gradient(circle at 40% 35%, rgba(255,255,255,0.4) 0%, transparent 60%), ${s.color}` : 'transparent'};
+                box-shadow:${on ? `0 0 12px ${s.color}88, 0 0 24px ${s.color}44, inset 0 -2px 4px rgba(0,0,0,0.3)` : 'none'};
+              "></button>`;
+          }).join("")}
+        </div>
+
+        <div class="note-cell">
+          ${nextActionLine}
+          <input class="note-input" data-note="${acct.id}" value="${(noteFirstLine || '').replace(/"/g, '&quot;')}" placeholder="Quick note..." />
+        </div>
+
+        <button class="details-btn" data-details="${acct.id}" title="Open details">›</button>
+        <button class="delete-btn" data-delete="${acct.id}" title="Remove account">&times;</button>
+      </div>`;
+  }
+
+  function attachEventListeners() {
+    const app = document.getElementById("app");
 
     // Logo popup
     app.querySelectorAll("[data-logo]").forEach(el => {
@@ -1460,7 +2081,6 @@
 
     const logoDomainInput = document.getElementById("logoDomainInput");
     if (logoDomainInput) {
-      // As the user types a domain, show a live preview of the fetched logo
       const updatePreview = () => {
         const url = logoUrlFromDomain(logoDomainInput.value);
         state.logoDomain = logoDomainInput.value;
@@ -1468,7 +2088,6 @@
         const area = document.getElementById("logoPreviewArea");
         if (area && url) {
           area.innerHTML = `<img src="${url}" onerror="this.style.display='none'" style="width:40px;height:40px;border-radius:6px;background:rgba(255,255,255,0.06);object-fit:contain" /><span style="font-size:11px;color:rgba(255,255,255,0.3)">Preview</span>`;
-          // Enable save button once we have a URL
           const saveBtn = document.getElementById("logoSaveBtn");
           if (saveBtn) saveBtn.disabled = false;
         }
@@ -1495,14 +2114,30 @@
     const syncBtn = document.getElementById("syncBtn");
     if (syncBtn) syncBtn.addEventListener("click", () => { state.showSettings = true; state.settingsError = ""; render(); });
 
-    const settingsCancel = document.getElementById("settingsCancel");
-    if (settingsCancel) settingsCancel.addEventListener("click", () => { state.showSettings = false; render(); });
+    // Settings: "Done" closes and persists thresholds
+    const settingsClose = document.getElementById("settingsClose");
+    if (settingsClose) {
+      settingsClose.addEventListener("click", () => {
+        saveThresholdsFromInputs();
+        state.showSettings = false;
+        update({});  // re-render board so stagnant queue reflects new thresholds
+      });
+    }
+
+    const resetThresholdsBtn = document.getElementById("resetThresholdsBtn");
+    if (resetThresholdsBtn) resetThresholdsBtn.addEventListener("click", resetThresholdsToDefaults);
 
     const disconnectBtn = document.getElementById("disconnectBtn");
     if (disconnectBtn) disconnectBtn.addEventListener("click", disconnectGitHub);
 
     const overlay = document.getElementById("settingsOverlay");
-    if (overlay) overlay.addEventListener("click", e => { if (e.target === overlay) { state.showSettings = false; render(); } });
+    if (overlay) overlay.addEventListener("click", e => {
+      if (e.target === overlay) {
+        saveThresholdsFromInputs();
+        state.showSettings = false;
+        update({});
+      }
+    });
 
     const settingsSave = document.getElementById("settingsSave");
     if (settingsSave) {
@@ -1518,7 +2153,16 @@
       });
     }
 
-    // Status filters
+    // ── Stagnant section collapse toggle ──
+    const stagnantHeader = document.getElementById("stagnantHeader");
+    if (stagnantHeader) {
+      stagnantHeader.addEventListener("click", () => {
+        state.stagnantCollapsed = !state.stagnantCollapsed;
+        render();
+      });
+    }
+
+    // Filters
     app.querySelectorAll("[data-filter]").forEach(btn => {
       btn.addEventListener("click", () => {
         const f = btn.dataset.filter;
@@ -1526,7 +2170,6 @@
       });
     });
 
-    // Solution filters
     app.querySelectorAll("[data-sol-filter]").forEach(btn => {
       btn.addEventListener("click", () => {
         const f = btn.dataset.solFilter;
@@ -1534,8 +2177,6 @@
       });
     });
 
-    // Sales Stage filters: click to filter by stage; click again to clear.
-    // Note: dataset values are strings, so we parseInt before storing.
     app.querySelectorAll("[data-stage-filter]").forEach(btn => {
       btn.addEventListener("click", () => {
         const f = parseInt(btn.dataset.stageFilter, 10);
@@ -1543,42 +2184,34 @@
       });
     });
 
-    // Sales Stage dropdowns on each row
     app.querySelectorAll("[data-stage]").forEach(sel => {
       sel.addEventListener("change", () => setStage(sel.dataset.stage, sel.value));
     });
 
-    // Rank badge: click to switch to input mode
+    // Rank
     app.querySelectorAll("[data-edit-rank]").forEach(el => {
       el.addEventListener("click", () => {
         const id = el.dataset.editRank;
         const acct = state.accounts.find(a => a.id === id);
-        // Only allow rank editing when the account has a status (otherwise ranking is meaningless).
         if (!acct || !acct.status) return;
         state.editingRankId = id;
         render();
       });
     });
 
-    // Rank input: on blur or Enter, commit the new rank and re-sort the group
     app.querySelectorAll("[data-rank-input]").forEach(input => {
       const commit = () => {
         const id = input.dataset.rankInput;
         const val = input.value.trim();
         state.editingRankId = null;
-        if (val === "") {
-          // Empty = cancel edit, no change
-          render();
-          return;
-        }
-        setPriority(id, val);  // setPriority calls update() which re-renders
+        if (val === "") { render(); return; }
+        setPriority(id, val);
       };
       input.addEventListener("blur", commit);
       input.addEventListener("keydown", e => {
         if (e.key === "Enter") input.blur();
         if (e.key === "Escape") { state.editingRankId = null; render(); }
       });
-      // Auto-focus and select the value when the input appears
       input.focus();
       input.select();
     });
@@ -1604,7 +2237,6 @@
       });
     });
 
-    // Name input commit
     app.querySelectorAll("[data-name-input]").forEach(input => {
       const id = input.dataset.nameInput;
       input.addEventListener("blur", () => setName(id, input.value));
@@ -1619,7 +2251,7 @@
       });
     });
 
-    // Solution tags — click to toggle
+    // Solution tags
     app.querySelectorAll("[data-sol]").forEach(el => {
       el.addEventListener("click", () => {
         const [id, solId] = el.dataset.sol.split(":");
@@ -1627,9 +2259,22 @@
       });
     });
 
-    // Next step
-    app.querySelectorAll("[data-nextstep]").forEach(input => {
-      input.addEventListener("blur", () => setNextStep(input.dataset.nextstep, input.value));
+    // Inline note input (formerly nextStep).
+    // Saves on blur. Since this is the "first line" view, typing here
+    // replaces the first line of the note while preserving any subsequent
+    // lines the user may have entered in the side-panel textarea.
+    app.querySelectorAll("[data-note]").forEach(input => {
+      input.addEventListener("blur", () => {
+        const id = input.dataset.note;
+        const acct = state.accounts.find(a => a.id === id);
+        if (!acct) return;
+        const newFirstLine = input.value;
+        const existingLines = (acct.note || "").split("\n");
+        existingLines[0] = newFirstLine;
+        const combined = existingLines.join("\n");
+        // Trim trailing empty lines so a single-line note stays single-line
+        setNote(id, combined.replace(/\n+$/, ""));
+      });
       input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
     });
 
@@ -1638,12 +2283,69 @@
       btn.addEventListener("click", () => deleteAccount(btn.dataset.delete));
     });
 
+    // ── Details (›) → open side panel ──
+    app.querySelectorAll("[data-details]").forEach(btn => {
+      btn.addEventListener("click", () => openDetailPanel(btn.dataset.details));
+    });
+
+    // ── Side panel: close handlers ──
+    const panelClose = document.getElementById("panelCloseBtn");
+    if (panelClose) panelClose.addEventListener("click", closeDetailPanel);
+
+    const panelBackdrop = document.getElementById("panelBackdrop");
+    if (panelBackdrop) panelBackdrop.addEventListener("click", closeDetailPanel);
+
+    // ── Side panel: note textarea ──
+    // Saves on blur. Full multi-line note lives here; first line shows on the row.
+    const panelNote = document.getElementById("panelNote");
+    if (panelNote && state.detailPanelId) {
+      panelNote.addEventListener("blur", () => {
+        setNote(state.detailPanelId, panelNote.value);
+        render();  // re-render so the inline row note reflects the new first line
+      });
+    }
+
+    // ── Side panel: next action date & label ──
+    const panelActionDate = document.getElementById("panelActionDate");
+    if (panelActionDate && state.detailPanelId) {
+      panelActionDate.addEventListener("change", () => {
+        setNextActionDate(state.detailPanelId, panelActionDate.value);
+      });
+    }
+
+    const panelActionLabel = document.getElementById("panelActionLabel");
+    if (panelActionLabel && state.detailPanelId) {
+      panelActionLabel.addEventListener("blur", () => {
+        setNextActionLabel(state.detailPanelId, panelActionLabel.value);
+        render();  // re-render so the row reflects the new label
+      });
+      panelActionLabel.addEventListener("keydown", e => { if (e.key === "Enter") panelActionLabel.blur(); });
+    }
+
+    const panelActionClear = document.getElementById("panelActionClear");
+    if (panelActionClear && state.detailPanelId) {
+      panelActionClear.addEventListener("click", () => clearNextAction(state.detailPanelId));
+    }
+
     // Auto-focus name input
     if (state.editingId) {
       const input = app.querySelector(`[data-name-input="${state.editingId}"]`);
       if (input) { input.focus(); input.select(); }
     }
   }
+
+  // ── Global Esc handler: close whichever overlay is on top ──
+  document.addEventListener("keydown", e => {
+    if (e.key !== "Escape") return;
+    if (state.logoPopup) { closeLogoPopup(); return; }
+    if (state.showSettings) {
+      saveThresholdsFromInputs();
+      state.showSettings = false;
+      update({});
+      return;
+    }
+    if (state.detailPanelId) { closeDetailPanel(); return; }
+  });
 
   // ── Boot ──
   render();
