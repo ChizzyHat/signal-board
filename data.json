@@ -471,12 +471,12 @@
     "createdAt": 1774025914478,
     "stage": 2,
     "priority": 2,
-    "note": "QMS Presentation Thursday 5/11. - Send RTO details to CVS - Clear up iForms requirements. Get final response from Roman on RTO - Get forms from Aetna and dedicated environment",
+    "note": "QMS Presentation Thursday 5/11.\nSend RTO details to CVS\nClear up iForms requirements.\nGet final response from Roman on RTO\nGet forms from Aetna and dedicated environment",
     "nextActionDate": "",
     "nextActionLabel": "",
     "lastStatusChange": 1779135548438,
     "lastStageChange": 1779135548438,
-    "lastTouched": 1779135548438
+    "lastTouched": 1779135640788
   },
   {
     "id": "1773955587777",
