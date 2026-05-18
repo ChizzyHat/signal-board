@@ -11,7 +11,7 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(145deg, #111827  0%, #1F2937  50%, #2A3340 100%);
+      background: linear-gradient(145deg, #111827 0%, #1F2937 50%, #2A3340 100%);
       color: #F1F1F1;
       font-family: 'DM Sans', sans-serif;
       padding: 24px 28px;
@@ -278,6 +278,8 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
       margin-bottom: 12px;
     }
 
@@ -297,6 +299,64 @@
     .sort-btn.active {
       background: rgba(255,255,255,0.1);
       color: #F1F1F1;
+    }
+
+    /* ── Show Closed toggle ──
+       Small pill-style toggle in the toolbar that hides/shows status="closed" accounts.
+       Persisted to localStorage; off by default so daily view stays focused. */
+    .show-closed-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.02em;
+      user-select: none;
+    }
+
+    .show-closed-toggle:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.75);
+    }
+
+    .show-closed-toggle.active {
+      border-color: #6B7280;
+      background: rgba(107, 114, 128, 0.18);
+      color: #D1D5DB;
+    }
+
+    .show-closed-toggle .checkbox {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      border: 1px solid rgba(255,255,255,0.3);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      line-height: 1;
+    }
+
+    .show-closed-toggle.active .checkbox {
+      background: #6B7280;
+      border-color: #6B7280;
+      color: #FFF;
+    }
+
+    .show-closed-toggle .count {
+      color: rgba(255,255,255,0.4);
+      font-size: 10px;
+    }
+
+    .show-closed-toggle.active .count {
+      color: rgba(255,255,255,0.6);
     }
 
     .action-btns { display: flex; gap: 8px; }
@@ -970,9 +1030,16 @@
     { id: "on_customer", label: "On Customer", color: "#3B82F6", description: "Waiting on them" },
     { id: "stalled", label: "Stalled", color: "#FFFFFF", description: "Stuck / escalate" },
     { id: "cruising", label: "Cruising", color: "#10B981", description: "Active, no action needed" },
+    // Closed: archived/done. Hidden by default via the "Show closed" toolbar toggle.
+    // Auto-set as a one-time nudge when stage moves to 6, 7, or 8 (Won / Lost / Disqualified),
+    // but the status is never auto-cleared when stage moves away.
+    { id: "closed", label: "Closed", color: "#6B7280", description: "Deal closed, archived" },
   ];
 
-  const STATUS_PRIORITY = ["critical", "on_me", "on_colleague", "on_customer", "stalled", "cruising"];
+  const STATUS_PRIORITY = ["critical", "on_me", "on_colleague", "on_customer", "stalled", "cruising", "closed"];
+
+  // Sales stages that should one-time-nudge the status to "closed" when assigned.
+  const CLOSING_STAGES = [6, 7, 8];
 
   // ──────────────────────────────────────────────
   // STAGNANT THRESHOLDS (in days, per status)
@@ -986,6 +1053,9 @@
     on_customer: 10,
     stalled: 7,
     cruising: 30,
+    // Closed accounts are skipped from the stagnant check in code,
+    // but we keep a value here so the threshold UI doesn't show a blank.
+    closed: 365,
   };
 
   const LS_THRESHOLDS = "sb-thresholds";
@@ -1004,6 +1074,19 @@
 
   function saveThresholds(t) {
     localStorage.setItem(LS_THRESHOLDS, JSON.stringify(t));
+  }
+
+  // ── Show-closed toggle persistence ──
+  // Whether the user wants Closed-status accounts to appear in the main list.
+  // Defaults to false (hidden) so closed deals don't clutter the daily view.
+  const LS_SHOW_CLOSED = "sb-show-closed";
+
+  function loadShowClosed() {
+    return localStorage.getItem(LS_SHOW_CLOSED) === "true";
+  }
+
+  function saveShowClosed(v) {
+    localStorage.setItem(LS_SHOW_CLOSED, v ? "true" : "false");
   }
 
   // ──────────────────────────────────────────────
@@ -1217,6 +1300,9 @@
     // Stagnant queue
     thresholds: loadThresholds(),
     stagnantCollapsed: false,   // user can collapse the stagnant section
+    // Show-closed toggle (persisted): when false, accounts with status="closed"
+    // are hidden from the main list, the stagnant queue, and the visible counts.
+    showClosed: loadShowClosed(),
   };
 
   // ──────────────────────────────────────────────
@@ -1303,29 +1389,55 @@
   // ──────────────────────────────────────────────
   // HELPERS
   // ──────────────────────────────────────────────
+
+  // Base list respecting the Show-Closed toggle.
+  // When showClosed is false, accounts with status === "closed" are filtered out
+  // of every visible surface: main list, counts, stagnant queue. They remain in
+  // state.accounts so the data is preserved.
+  // Exception: when the user explicitly filters to status === "closed", we let
+  // those accounts through regardless — otherwise the Closed filter pill would
+  // do nothing when Show Closed is off.
+  function visibleAccounts() {
+    if (state.showClosed) return state.accounts;
+    if (state.filter === "closed") return state.accounts;
+    return state.accounts.filter(a => a.status !== "closed");
+  }
+
   function getCounts() {
-    return STATUSES.reduce((acc, s) => {
-      acc[s.id] = state.accounts.filter(a => a.status === s.id).length;
-      return acc;
-    }, {});
+    // Status pill counts: each status uses the appropriate base list so the
+    // numbers match what's actually visible. The "closed" count always reflects
+    // the true count of closed accounts (so you can see how many are archived).
+    const counts = {};
+    const base = visibleAccounts();
+    STATUSES.forEach(s => {
+      if (s.id === "closed") {
+        // Always show the true count of closed accounts
+        counts[s.id] = state.accounts.filter(a => a.status === s.id).length;
+      } else {
+        counts[s.id] = base.filter(a => a.status === s.id).length;
+      }
+    });
+    return counts;
   }
 
   function getSolCounts() {
+    const base = visibleAccounts();
     return SOLUTIONS.reduce((acc, s) => {
-      acc[s.id] = state.accounts.filter(a => (a.solutions || []).includes(s.id)).length;
+      acc[s.id] = base.filter(a => (a.solutions || []).includes(s.id)).length;
       return acc;
     }, {});
   }
 
   function getStageCounts() {
+    const base = visibleAccounts();
     return SALES_STAGES.reduce((acc, s) => {
-      acc[s.id] = state.accounts.filter(a => a.stage === s.id).length;
+      acc[s.id] = base.filter(a => a.stage === s.id).length;
       return acc;
     }, {});
   }
 
   function getFiltered() {
-    let list = state.accounts;
+    let list = visibleAccounts();
     if (state.filter !== "all") list = list.filter(a => a.status === state.filter);
     if (state.solutionFilter !== "all") list = list.filter(a => (a.solutions || []).includes(state.solutionFilter));
     if (state.stageFilter !== "all") list = list.filter(a => a.stage === state.stageFilter);
@@ -1350,11 +1462,13 @@
 
   // Stagnant queue: any account whose `lastTouched` is older than its
   // status-specific threshold. Accounts with no status are excluded
-  // (no status = no threshold applies). Returns the list sorted by
-  // stagnant-ness (most overdue first).
+  // (no status = no threshold applies). Closed accounts are skipped
+  // unconditionally — archived deals should never be flagged stagnant.
+  // Returns the list sorted by stagnant-ness (most overdue first).
   function getStagnantAccounts() {
     const list = state.accounts.filter(a => {
       if (!a.status) return false;
+      if (a.status === "closed") return false;   // never flag closed deals
       const threshold = state.thresholds[a.status];
       if (!threshold || threshold <= 0) return false;
       const days = daysSince(a.lastTouched);
@@ -1491,9 +1605,29 @@
     if (!acct) return;
     const newStage = (stageId === "" || stageId === null) ? null : parseInt(stageId, 10);
     if (acct.stage !== newStage) {
+      const wasClosing = CLOSING_STAGES.includes(acct.stage);
+      const isClosing = CLOSING_STAGES.includes(newStage);
+
       acct.stage = newStage;
       acct.lastStageChange = Date.now();
       touch(acct);
+
+      // Auto-set status to "closed" as a one-time nudge when entering a closing
+      // stage (6 Won / 7 Lost / 8 Disqualified) from a non-closing stage.
+      // This fires only on the transition, not while the account is already in
+      // a closing stage. The reverse direction (moving away from 6/7/8) does
+      // NOT clear the closed status — that's left to manual control.
+      if (isClosing && !wasClosing && acct.status !== "closed") {
+        const oldStatus = acct.status;
+        acct.status = "closed";
+        acct.lastStatusChange = Date.now();
+        // Re-rank: leaving old group cleanly, joining the closed group at bottom.
+        if (oldStatus) {
+          acct.priority = null;
+          normalizeGroup(oldStatus);
+        }
+        assignRankToBottom(acct);
+      }
     }
     update({});
   }
@@ -1933,6 +2067,12 @@
               <button class="sort-btn ${state.sortBy === o.key ? 'active' : ''}" data-sort="${o.key}">${o.label}</button>
             `).join("")}
           </div>
+          <button class="show-closed-toggle ${state.showClosed ? 'active' : ''}" id="showClosedToggle"
+                  title="${state.showClosed ? 'Hide closed accounts from the main list' : 'Show closed accounts in the main list'}">
+            <span class="checkbox">${state.showClosed ? '✓' : ''}</span>
+            <span>SHOW CLOSED</span>
+            <span class="count">${state.accounts.filter(a => a.status === 'closed').length}</span>
+          </button>
           <div class="action-btns">
             <button class="btn-reset" id="resetBtn">RESET</button>
             <button class="btn-add" id="addBtn">+ ADD ACCOUNT</button>
@@ -2158,6 +2298,18 @@
     if (stagnantHeader) {
       stagnantHeader.addEventListener("click", () => {
         state.stagnantCollapsed = !state.stagnantCollapsed;
+        render();
+      });
+    }
+
+    // ── Show Closed toggle ──
+    // Flips the showClosed flag, persists it to localStorage so it survives
+    // reloads, and re-renders so the main list, counts, and filter pills update.
+    const showClosedToggle = document.getElementById("showClosedToggle");
+    if (showClosedToggle) {
+      showClosedToggle.addEventListener("click", () => {
+        state.showClosed = !state.showClosed;
+        saveShowClosed(state.showClosed);
         render();
       });
     }
