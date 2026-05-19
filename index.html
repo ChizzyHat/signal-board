@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Signal Board</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
   <style>
     /* ── Reset & Base ── */
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -13,13 +15,13 @@
       min-height: 100vh;
       background: linear-gradient(145deg, #0A0E17 0%, #111827 50%, #0D1321 100%);
       color: #F1F1F1;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       padding: 24px 28px;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
     }
 
-    .mono { font-family: 'JetBrains Mono', monospace; }
+    .mono { font-family: 'Ubuntu Mono', monospace; }
 
     /* ── Header ── */
     .header { margin-bottom: 28px; }
@@ -44,7 +46,7 @@
       align-items: center;
       gap: 6px;
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.35);
       cursor: pointer;
       padding: 4px 10px;
@@ -119,7 +121,7 @@
     .settings-panel label {
       display: block;
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.5);
       letter-spacing: 0.05em;
       text-transform: uppercase;
@@ -139,7 +141,7 @@
       border-radius: 6px;
       color: #F1F1F1;
       font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       outline: none;
     }
 
@@ -192,7 +194,7 @@
     .threshold-row .unit {
       font-size: 11px;
       color: rgba(255,255,255,0.4);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     /* ── Settings Tabs ──
@@ -212,7 +214,7 @@
       border: none;
       color: rgba(255,255,255,0.4);
       font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       letter-spacing: 0.04em;
       cursor: pointer;
       border-bottom: 2px solid transparent;
@@ -264,7 +266,7 @@
       border-radius: 4px;
       color: #F1F1F1;
       font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       outline: none;
     }
 
@@ -305,7 +307,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     .config-item .reorder-btn:hover:not(:disabled) {
@@ -320,7 +322,7 @@
 
     .config-item .usage-count {
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.4);
       text-align: center;
     }
@@ -375,7 +377,7 @@
 
     .system-badge {
       font-size: 9px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.4);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -391,7 +393,7 @@
       gap: 8px;
       padding: 0 8px 6px;
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.3);
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -408,7 +410,7 @@
       background: transparent;
       color: rgba(255,255,255,0.5);
       font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       cursor: pointer;
       width: 100%;
       margin-top: 8px;
@@ -468,7 +470,7 @@
       background: transparent;
       color: rgba(255,255,255,0.5);
       font-size: 12px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       cursor: pointer;
     }
 
@@ -480,7 +482,7 @@
       color: #FFF;
       font-size: 12px;
       font-weight: 600;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       cursor: pointer;
     }
 
@@ -490,7 +492,7 @@
       color: #EF4444;
       font-size: 12px;
       margin-top: 12px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     /* ── Filter Pills (status + solutions) ── */
@@ -508,7 +510,7 @@
       background: transparent;
       color: rgba(255,255,255,0.6);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       cursor: pointer;
       transition: all 0.2s;
       display: flex;
@@ -530,7 +532,7 @@
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       font-weight: 500;
       letter-spacing: 0.03em;
       cursor: pointer;
@@ -558,7 +560,7 @@
       background: transparent;
       color: rgba(255,255,255,0.35);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       cursor: pointer;
     }
 
@@ -580,7 +582,7 @@
       background: transparent;
       color: rgba(255,255,255,0.5);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       cursor: pointer;
       transition: all 0.15s;
       letter-spacing: 0.02em;
@@ -634,7 +636,7 @@
       background: transparent;
       color: rgba(255,255,255,0.3);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       cursor: pointer;
     }
 
@@ -646,7 +648,7 @@
       color: #F1F1F1;
       font-size: 12px;
       font-weight: 600;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       cursor: pointer;
       letter-spacing: 0.02em;
     }
@@ -678,7 +680,7 @@
     .stagnant-header .title {
       font-size: 12px;
       font-weight: 700;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #F59E0B;
@@ -686,7 +688,7 @@
 
     .stagnant-header .count-badge {
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(245, 158, 11, 0.8);
       background: rgba(245, 158, 11, 0.12);
       padding: 2px 8px;
@@ -698,7 +700,7 @@
       font-size: 11px;
       color: rgba(245, 158, 11, 0.6);
       transition: transform 0.2s;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     .stagnant-header.collapsed .caret {
@@ -719,7 +721,7 @@
     /* Small "stagnant Xd" badge shown inside each stagnant row */
     .stagnant-badge {
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: #F59E0B;
       background: rgba(245, 158, 11, 0.12);
       border: 1px solid rgba(245, 158, 11, 0.3);
@@ -736,7 +738,7 @@
       gap: 12px;
       padding: 0 16px 8px;
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.25);
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -782,7 +784,7 @@
     .logo-placeholder {
       font-size: 12px;
       color: rgba(255,255,255,0.2);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     .logo-wrap:hover .logo-placeholder { color: rgba(255,255,255,0.5); }
@@ -807,7 +809,7 @@
       color: #F1F1F1;
       padding: 4px 8px;
       font-size: 14px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       outline: none;
       width: 100%;
     }
@@ -825,7 +827,7 @@
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
       color: rgba(255,255,255,0.55);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
@@ -850,7 +852,7 @@
       border-radius: 6px;
       color: #F1F1F1;
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       font-weight: 600;
       text-align: center;
       outline: none;
@@ -872,7 +874,7 @@
       border-radius: 6px;
       color: rgba(255,255,255,0.7);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       outline: none;
       cursor: pointer;
       border-left-width: 3px;
@@ -904,7 +906,7 @@
 
     .next-action-line {
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.55);
       padding: 0 8px;
       white-space: nowrap;
@@ -923,7 +925,7 @@
       color: rgba(255,255,255,0.6);
       padding: 4px 8px;
       font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       outline: none;
       width: 100%;
       transition: border-color 0.2s;
@@ -948,7 +950,7 @@
       justify-content: center;
       transition: all 0.15s;
       padding: 0;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     .details-btn:hover {
@@ -976,7 +978,7 @@
       padding: 40px;
       color: rgba(255,255,255,0.25);
       font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     /* ── Legend ── */
@@ -995,7 +997,7 @@
       gap: 8px;
       font-size: 11px;
       color: rgba(255,255,255,0.4);
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     .legend-dot {
@@ -1040,7 +1042,7 @@
       border-radius: 6px;
       color: #F1F1F1;
       font-size: 13px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       outline: none;
       margin-bottom: 8px;
     }
@@ -1159,7 +1161,7 @@
       cursor: pointer;
       font-size: 16px;
       line-height: 1;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
     }
 
     .side-panel-close:hover {
@@ -1175,7 +1177,7 @@
 
     .panel-section .panel-label {
       font-size: 10px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.4);
       text-transform: uppercase;
       letter-spacing: 0.08em;
@@ -1197,11 +1199,11 @@
       color: #F1F1F1;
       padding: 8px 10px;
       font-size: 13px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Ubuntu', sans-serif;
       outline: none;
     }
 
-    .panel-input { font-family: 'JetBrains Mono', monospace; }
+    .panel-input { font-family: 'Ubuntu Mono', monospace; }
 
     .panel-input:focus,
     .panel-textarea:focus { border-color: rgba(255,255,255,0.3); }
@@ -1231,7 +1233,7 @@
 
     .timestamps .ts-label {
       font-size: 9px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: rgba(255,255,255,0.35);
       text-transform: uppercase;
       letter-spacing: 0.06em;
@@ -1239,7 +1241,7 @@
 
     .timestamps .ts-value {
       font-size: 12px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       color: #F1F1F1;
     }
 
@@ -1252,7 +1254,7 @@
       border: none;
       color: rgba(255,255,255,0.4);
       font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Ubuntu Mono', monospace;
       cursor: pointer;
       align-self: flex-start;
       padding: 0;
@@ -2841,14 +2843,14 @@
           <div class="side-panel open">
             <div class="side-panel-header">
               <div class="logo-mini">
-                ${acct.logo ? `<img src="${acct.logo}" onerror="this.style.display='none'" />` : `<span style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'JetBrains Mono',monospace">${acct.name.charAt(0).toUpperCase()}</span>`}
+                ${acct.logo ? `<img src="${acct.logo}" onerror="this.style.display='none'" />` : `<span style="font-size:11px;color:rgba(255,255,255,0.3);font-family:'Ubuntu Mono',monospace">${acct.name.charAt(0).toUpperCase()}</span>`}
               </div>
               <h2 title="${acct.name.replace(/"/g, '&quot;')}">${acct.name}</h2>
               <button class="side-panel-close" id="panelCloseBtn" title="Close (Esc)">×</button>
             </div>
 
             <!-- Status + stage summary -->
-            <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11px;font-family:'JetBrains Mono',monospace">
+            <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:11px;font-family:'Ubuntu Mono',monospace">
               ${active ? `<span style="color:${active.color};border:1px solid ${active.color}66;padding:3px 10px;border-radius:12px">${active.label}</span>` : `<span style="color:rgba(255,255,255,0.3);border:1px solid rgba(255,255,255,0.1);padding:3px 10px;border-radius:12px">No status</span>`}
               ${stageRec ? `<span style="color:${stageRec.color};border:1px solid ${stageRec.color}66;padding:3px 10px;border-radius:12px">${stageRec.label}</span>` : ""}
               ${acct.priority ? `<span style="color:rgba(255,255,255,0.55);border:1px solid rgba(255,255,255,0.15);padding:3px 10px;border-radius:12px">Rank #${acct.priority}</span>` : ""}
@@ -2864,14 +2866,14 @@
               ${(acct.nextActionDate || acct.nextActionLabel) ? `
                 <button class="next-action-clear" id="panelActionClear">Clear next action</button>
               ` : ""}
-              ${overdue ? `<div style="font-size:11px;color:#F87171;font-family:'JetBrains Mono',monospace">⚠ Overdue</div>` : ""}
+              ${overdue ? `<div style="font-size:11px;color:#F87171;font-family:'Ubuntu Mono',monospace">⚠ Overdue</div>` : ""}
             </div>
 
             <!-- Notes -->
             <div class="panel-section">
               <span class="panel-label">Notes</span>
               <textarea class="panel-textarea" id="panelNote" placeholder="Add context, history, anything useful for next time you open this account…">${acct.note || ''}</textarea>
-              <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'JetBrains Mono',monospace">First line shows on the board.</div>
+              <div style="font-size:10px;color:rgba(255,255,255,0.3);font-family:'Ubuntu Mono',monospace">First line shows on the board.</div>
             </div>
 
             <!-- Timestamps (read-only) -->
