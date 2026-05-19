@@ -1771,9 +1771,48 @@
   // ──────────────────────────────────────────────
   // PERSISTENCE
   // ──────────────────────────────────────────────
+  // SAFETY: prevent stale-local-data overwriting fresh remote data
+  // ──────────────────────────────────────────────
+  // Until initialLoad has finished reconciling local vs remote, NO saves
+  // are allowed. This prevents the race where the page renders with stale
+  // localStorage data, the user (or even a render cycle) triggers a save,
+  // and that stale data overwrites whatever is currently on GitHub.
+  //
+  // After bootComplete is true, every save also runs a sanity check
+  // (see safeAccountsToSave) that refuses to overwrite remote with a
+  // dramatically smaller account list — a defense-in-depth check.
+  let bootComplete = false;
+
+  // Remembers the account count last successfully loaded from remote.
+  // Used by the sanity check to detect "we're about to wipe a lot of
+  // data" situations.
+  let remoteAccountCount = null;
+
   function persistAccounts() {
+    // Always keep localStorage in sync — that's a per-device cache.
     localSave(state.accounts);
+    // But hold remote saves until boot has reconciled local vs remote.
+    if (!bootComplete) {
+      console.log("[sync] suppressed save during boot");
+      return;
+    }
+    if (!safeAccountsToSave(state.accounts)) {
+      console.warn("[sync] refused to save: account count dropped suspiciously");
+      state.syncStatus = "error";
+      state.settingsError = "Save blocked: data looks incomplete (would shrink from " + remoteAccountCount + " → " + state.accounts.length + " accounts). Reload the page to refetch.";
+      updateSyncIndicator();
+      return;
+    }
     if (isConfigured()) debouncedGithubSave(state.accounts);
+  }
+
+  // Returns false if the proposed save would drop more than 50% of the
+  // accounts that were last seen on remote. The user can still delete
+  // accounts one at a time — only a SUDDEN drop is suspicious.
+  function safeAccountsToSave(accounts) {
+    if (remoteAccountCount === null) return true; // no baseline yet
+    if (accounts.length >= Math.ceil(remoteAccountCount * 0.5)) return true;
+    return false;
   }
 
   function update(changes) {
@@ -1797,21 +1836,40 @@
           syncConfigRefs();
         }
         localSave(state.accounts);
+        // Record the baseline for the safety check.
+        remoteAccountCount = state.accounts.length;
         state.syncStatus = "synced";
         state.lastSync = new Date();
+      } else if (remote && remote.accounts && remote.accounts.length === 0) {
+        // Remote file exists but is empty. Do NOT overwrite local with empty.
+        // If we have local data, treat THAT as authoritative; otherwise seed.
+        const local = localLoad();
+        if (local && local.length) {
+          state.accounts = local;
+          remoteAccountCount = 0;
+          state.syncStatus = "synced";
+        } else {
+          state.accounts = SEED;
+          remoteAccountCount = 0;
+          state.syncStatus = "synced";
+        }
       } else if (localLoad()) {
+        // Remote unreachable AND we have local data. Use local but do NOT
+        // immediately push to remote — we don't know if remote is healthy.
         state.accounts = localLoad();
-        await githubSave(state.accounts);
-        state.syncStatus = "synced";
+        state.syncStatus = "error";
+        state.settingsError = "Couldn't reach GitHub. Showing local data. Reload to retry.";
       } else {
         state.accounts = SEED;
-        state.syncStatus = "synced";
+        state.syncStatus = "error";
       }
     } else {
       state.accounts = localLoad() || SEED;
       state.syncStatus = "offline";
     }
     state.loading = false;
+    // Boot is now done — any future mutations are safe to persist.
+    bootComplete = true;
     render();
   }
 
@@ -2253,6 +2311,9 @@
   function commitConfig() {
     saveConfig(state.config);
     syncConfigRefs();
+    // Same guards as persistAccounts: never push until boot reconciled.
+    if (!bootComplete) return;
+    if (!safeAccountsToSave(state.accounts)) return;
     if (isConfigured()) debouncedGithubSave(state.accounts);
   }
 
