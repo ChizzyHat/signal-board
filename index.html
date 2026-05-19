@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -3071,9 +3070,12 @@
     const settingsClose = document.getElementById("settingsClose");
     if (settingsClose) {
       settingsClose.addEventListener("click", () => {
+        // Thresholds live in their own localStorage key, not in the GitHub
+        // data.json payload. Closing this modal should never trigger a
+        // remote save, so we just persist thresholds and re-render directly.
         saveThresholdsFromInputs();
         state.showSettings = false;
-        update({});  // re-render board so stagnant queue reflects new thresholds
+        render();
       });
     }
 
@@ -3088,7 +3090,7 @@
       if (e.target === overlay) {
         saveThresholdsFromInputs();
         state.showSettings = false;
-        update({});
+        render();
       }
     });
 
@@ -3388,7 +3390,7 @@
     if (state.showSettings) {
       saveThresholdsFromInputs();
       state.showSettings = false;
-      update({});
+      render();
       return;
     }
     if (state.detailPanelId) { closeDetailPanel(); return; }
