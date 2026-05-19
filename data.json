@@ -551,7 +551,7 @@
       "priority": 1,
       "note": "Final contracts sent on May 7th. Holding firm on pricing\nKen sent updated proposal to Matthew and Rexy\nPhil needs to finish scoping PSO\nPricing call on 3/25",
       "nextActionDate": "2026-05-19",
-      "nextActionLabel": "2PM Call with customer",
+      "nextActionLabel": "",
       "lastStatusChange": 1779135835837,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779135838877
@@ -582,7 +582,7 @@
         "id": "critical",
         "label": "Critical",
         "color": "#FF0040",
-        "description": "Urgent — drop everything"
+        "description": "Urgent â drop everything"
       },
       {
         "id": "on_me",
@@ -641,49 +641,49 @@
     "stages": [
       {
         "id": 1,
-        "label": "1 — Qualification",
+        "label": "1 â Qualification",
         "color": "#e8eaed",
         "closing": false
       },
       {
         "id": 2,
-        "label": "2 — Validation",
+        "label": "2 â Validation",
         "color": "#0EA5E9",
         "closing": false
       },
       {
         "id": 3,
-        "label": "3 — Design",
+        "label": "3 â Design",
         "color": "#14B8A6",
         "closing": false
       },
       {
         "id": 4,
-        "label": "4 — Negotiate",
+        "label": "4 â Negotiate",
         "color": "#84CC16",
         "closing": false
       },
       {
         "id": 5,
-        "label": "5 — Procurement",
+        "label": "5 â Procurement",
         "color": "#EAB308",
         "closing": false
       },
       {
         "id": 6,
-        "label": "6 — Closed - Won",
+        "label": "6 â Closed - Won",
         "color": "#F97316",
         "closing": true
       },
       {
         "id": 7,
-        "label": "7 — Closed - Lost",
+        "label": "7 â Closed - Lost",
         "color": "#EC4899",
         "closing": true
       },
       {
         "id": 8,
-        "label": "8 — Disqualified",
+        "label": "8 â Disqualified",
         "color": "#10B981",
         "closing": true
       }
