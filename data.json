@@ -636,11 +636,6 @@
         "id": "iforms",
         "label": "iForms",
         "color": "#FB923C"
-      },
-      {
-        "id": "new_solution",
-        "label": "New Solution",
-        "color": "#94A3B8"
       }
     ],
     "stages": [
