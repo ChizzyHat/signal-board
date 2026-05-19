@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1566,18 +1567,31 @@
         `https://api.github.com/repos/${user}/${repo}/contents/${DATA_FILE}`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
       );
-      if (res.status === 404) { fileSha = null; return null; }
+      if (res.status === 404) { fileSha = null; return { __status: "missing" }; }
       if (!res.ok) throw new Error(`GitHub API ${res.status}`);
       const json = await res.json();
       fileSha = json.sha;
       const decoded = atob(json.content.replace(/\n/g, ""));
-      const parsed = JSON.parse(decoded);
+      // Distinguish "file is empty" from "file is broken JSON" — both
+      // need to be treated as REMOTE CORRUPT (do not overwrite local
+      // with empty, do not overwrite remote with local — surface error).
+      const trimmed = decoded.trim();
+      if (!trimmed) return { __status: "corrupt", reason: "Remote data file is empty." };
+      let parsed;
+      try {
+        parsed = JSON.parse(trimmed);
+      } catch (parseErr) {
+        return { __status: "corrupt", reason: "Remote data file is not valid JSON." };
+      }
       // Back-compat: a bare array means accounts-only (legacy format).
-      if (Array.isArray(parsed)) return { accounts: parsed, config: null };
-      return { accounts: parsed.accounts || [], config: parsed.config || null };
+      if (Array.isArray(parsed)) return { __status: "ok", accounts: parsed, config: null };
+      if (parsed && typeof parsed === "object") {
+        return { __status: "ok", accounts: parsed.accounts || [], config: parsed.config || null };
+      }
+      return { __status: "corrupt", reason: "Remote data file has unexpected shape." };
     } catch (e) {
       console.error("GitHub load error:", e);
-      return null;
+      return { __status: "unreachable", reason: e.message };
     }
   }
 
@@ -1826,23 +1840,28 @@
       state.syncStatus = "saving";
       render();
       const remote = await githubLoad();
-      if (remote && remote.accounts && remote.accounts.length) {
+
+      // Defensive: githubLoad now always returns a structured object.
+      // Possible __status values: ok | missing | corrupt | unreachable
+      const status = remote ? remote.__status : "unreachable";
+
+      if (status === "ok" && remote.accounts && remote.accounts.length > 0) {
+        // Healthy remote with data — adopt it.
         state.accounts = migrateAll(remote.accounts);
-        // If the remote payload has a config, adopt it. Otherwise keep
-        // the local one (which was just seeded for first-time use).
         if (remote.config && remote.config.statuses && remote.config.solutions && remote.config.stages) {
           state.config = remote.config;
           saveConfig(state.config);
           syncConfigRefs();
         }
         localSave(state.accounts);
-        // Record the baseline for the safety check.
         remoteAccountCount = state.accounts.length;
         state.syncStatus = "synced";
         state.lastSync = new Date();
-      } else if (remote && remote.accounts && remote.accounts.length === 0) {
-        // Remote file exists but is empty. Do NOT overwrite local with empty.
-        // If we have local data, treat THAT as authoritative; otherwise seed.
+      } else if (status === "ok" && (!remote.accounts || remote.accounts.length === 0)) {
+        // Remote file exists but is empty (zero accounts). Treat local
+        // as authoritative if present, but DO NOT auto-push to remote —
+        // an empty remote is suspicious enough that we want the user
+        // to consciously trigger a save (e.g. by adding an account).
         const local = localLoad();
         if (local && local.length) {
           state.accounts = local;
@@ -1853,22 +1872,38 @@
           remoteAccountCount = 0;
           state.syncStatus = "synced";
         }
-      } else if (localLoad()) {
-        // Remote unreachable AND we have local data. Use local but do NOT
-        // immediately push to remote — we don't know if remote is healthy.
-        state.accounts = localLoad();
+      } else if (status === "missing") {
+        // Remote file doesn't exist at all (first sync). Safe to seed from local.
+        const local = localLoad();
+        state.accounts = local && local.length ? local : SEED;
+        remoteAccountCount = null;  // no baseline yet
+        state.syncStatus = "synced";
+      } else if (status === "corrupt") {
+        // Remote file exists but is broken. DO NOT save (we'd overwrite
+        // whatever good history is on GitHub). Show local data read-only.
+        const local = localLoad();
+        state.accounts = local && local.length ? local : SEED;
         state.syncStatus = "error";
-        state.settingsError = "Couldn't reach GitHub. Showing local data. Reload to retry.";
+        state.settingsError = "Remote data is corrupt: " + (remote.reason || "unknown") +
+          " Saves are blocked until you restore data.json on GitHub. Showing local data read-only.";
+        // CRITICAL: keep bootComplete false so no saves go through.
+        // We'll set it below per the normal flow, but the safety check
+        // (next line) defangs saves regardless.
+        remoteAccountCount = Infinity;  // makes safeAccountsToSave always refuse
       } else {
-        state.accounts = SEED;
+        // Unreachable (network down, auth bad, etc.). Use local but don't save.
+        const local = localLoad();
+        state.accounts = local && local.length ? local : SEED;
         state.syncStatus = "error";
+        state.settingsError = "Couldn't reach GitHub: " + (remote && remote.reason || "unknown") +
+          ". Showing local data. Reload to retry.";
+        remoteAccountCount = Infinity;  // block saves until we successfully load
       }
     } else {
       state.accounts = localLoad() || SEED;
       state.syncStatus = "offline";
     }
     state.loading = false;
-    // Boot is now done — any future mutations are safe to persist.
     bootComplete = true;
     render();
   }
