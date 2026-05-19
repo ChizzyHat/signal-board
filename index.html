@@ -11,7 +11,7 @@
 
     body {
       min-height: 100vh;
-      background: linear-gradient(145deg, #111827 0%, #1F2937 50%, #2A3340 100%);
+      background: linear-gradient(145deg, #000000 0%, #111827 50%, #374151 100%);
       color: #F1F1F1;
       font-family: 'DM Sans', sans-serif;
       padding: 24px 28px;
@@ -193,6 +193,272 @@
       font-size: 11px;
       color: rgba(255,255,255,0.4);
       font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── Settings Tabs ──
+       Horizontal tab strip across the top of the settings panel. */
+    .settings-tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .settings-tab {
+      padding: 8px 14px;
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .settings-tab:hover { color: rgba(255,255,255,0.7); }
+
+    .settings-tab.active {
+      color: #F1F1F1;
+      border-bottom-color: #3B82F6;
+    }
+
+    /* ── Config Item Row ──
+       Editable row for a status / solution / stage in the config editor. */
+    .config-item {
+      display: grid;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* Statuses: reorder | color | label | description | usage | delete */
+    .config-item.config-status {
+      grid-template-columns: 44px 32px 1fr 1.4fr 50px 32px;
+    }
+
+    /* Solutions: color | label | usage | delete */
+    .config-item.config-solution {
+      grid-template-columns: 32px 1fr 50px 32px;
+    }
+
+    /* Stages: reorder | color | label | closing? | usage | delete */
+    .config-item.config-stage {
+      grid-template-columns: 44px 32px 1fr 64px 50px 32px;
+    }
+
+    .config-item input[type="text"] {
+      width: 100%;
+      padding: 6px 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      color: #F1F1F1;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+    }
+
+    .config-item input[type="text"]:focus {
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .config-item input[type="color"] {
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 6px;
+      cursor: pointer;
+      background: transparent;
+    }
+    .config-item input[type="color"]::-webkit-color-swatch-wrapper { padding: 2px; }
+    .config-item input[type="color"]::-webkit-color-swatch { border: none; border-radius: 4px; }
+
+    .config-item .reorder-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .config-item .reorder-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.5);
+      width: 20px;
+      height: 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 8px;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .config-item .reorder-btn:hover:not(:disabled) {
+      color: #F1F1F1;
+      border-color: rgba(255,255,255,0.25);
+    }
+
+    .config-item .reorder-btn:disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+
+    .config-item .usage-count {
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+    }
+
+    .config-item .usage-count.in-use {
+      color: rgba(255,255,255,0.6);
+    }
+
+    .config-item .delete-config-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.3);
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      line-height: 1;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .config-item .delete-config-btn:hover {
+      color: #EF4444;
+      border-color: #EF4444;
+    }
+
+    .config-item .delete-config-btn:disabled {
+      opacity: 0.2;
+      cursor: not-allowed;
+    }
+
+    .config-item .closing-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .config-item .closing-toggle input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: #6B7280;
+    }
+
+    .config-item.system-item {
+      background: rgba(107, 114, 128, 0.08);
+      border-color: rgba(107, 114, 128, 0.2);
+    }
+
+    .system-badge {
+      font-size: 9px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 2px 6px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    .config-list-header {
+      display: grid;
+      align-items: center;
+      gap: 8px;
+      padding: 0 8px 6px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .config-list-header.for-status   { grid-template-columns: 44px 32px 1fr 1.4fr 50px 32px; }
+    .config-list-header.for-solution { grid-template-columns: 32px 1fr 50px 32px; }
+    .config-list-header.for-stage    { grid-template-columns: 44px 32px 1fr 64px 50px 32px; }
+
+    .config-add-btn {
+      padding: 8px 16px;
+      border-radius: 6px;
+      border: 1px dashed rgba(255,255,255,0.15);
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .config-add-btn:hover {
+      border-color: rgba(255,255,255,0.35);
+      color: #F1F1F1;
+    }
+
+    .config-help {
+      font-size: 11px;
+      color: rgba(255,255,255,0.4);
+      line-height: 1.5;
+      margin-bottom: 14px;
+    }
+
+    /* Blocking modal shown when user tries to delete an in-use config item */
+    .config-block-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 110;
+      backdrop-filter: blur(4px);
+    }
+
+    .config-block-inner {
+      background: #1A1F2E;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 10px;
+      padding: 20px 24px;
+      max-width: 380px;
+      width: 90%;
+    }
+
+    .config-block-inner h4 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #EF4444;
+    }
+
+    .config-block-inner p {
+      font-size: 12px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 14px;
     }
 
     .btn-secondary {
@@ -486,7 +752,7 @@
       align-items: center;
       gap: 12px;
       padding: 10px 16px;
-      background: rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.03);
       border-radius: 8px;
       border-left: 4px solid rgba(255,255,255,0.06);
       transition: all 0.2s ease;
@@ -1020,32 +1286,191 @@
 <div id="app"></div>
 
 <script>
-  // ──────────────────────────────────────────────
-  // STATUS DEFINITIONS
-  // ──────────────────────────────────────────────
-  const STATUSES = [
-    { id: "critical", label: "Critical", color: "#FF0040", description: "Urgent — drop everything" },
-    { id: "on_me", label: "On Me", color: "#F59E0B", description: "I need to act" },
+  // ══════════════════════════════════════════════════════════════════
+  // USER-EDITABLE CONFIG
+  // ──────────────────────────────────────────────────────────────────
+  // Statuses, solutions, and stages used to be hardcoded constants.
+  // They now live in a config object that the user can edit via the
+  // Configuration section of the Settings modal.
+  //
+  // The hardcoded values below serve TWO purposes:
+  //   1. Initial defaults for brand-new users (generic placeholders)
+  //   2. Migration target: existing users get their previous customizations
+  //      preserved on first load with this new code (see migrateConfig)
+  //
+  // Throughout the rest of the code, runtime references to STATUSES,
+  // SOLUTIONS, SALES_STAGES, STATUS_PRIORITY, CLOSING_STAGES are wired
+  // to read from state.config via getter functions below. This keeps
+  // the existing code shape mostly unchanged.
+  // ══════════════════════════════════════════════════════════════════
+
+  // System status IDs that cannot be deleted (but can be renamed/recolored/reordered).
+  // The "closed" ID in particular has special behavior elsewhere in the code
+  // (Show Closed toggle, auto-close from stage, skip-from-stagnant).
+  const SYSTEM_STATUS_IDS = ["closed"];
+
+  // Generic placeholder defaults — these are what NEW users see.
+  // The migration step below will replace these with the user's previous
+  // customizations if they have any.
+  const GENERIC_STATUS_DEFAULTS = [
+    { id: "critical",     label: "Critical",     color: "#FF0040", description: "Urgent — drop everything" },
+    { id: "on_me",        label: "On Me",        color: "#F59E0B", description: "I need to act" },
     { id: "on_colleague", label: "On Colleague", color: "#8B5CF6", description: "Waiting internally" },
-    { id: "on_customer", label: "On Customer", color: "#3B82F6", description: "Waiting on them" },
-    { id: "stalled", label: "Stalled", color: "#FFFFFF", description: "Stuck / escalate" },
-    { id: "cruising", label: "Cruising", color: "#10B981", description: "Active, no action needed" },
-    // Closed: archived/done. Hidden by default via the "Show closed" toolbar toggle.
-    // Auto-set as a one-time nudge when stage moves to 6, 7, or 8 (Won / Lost / Disqualified),
-    // but the status is never auto-cleared when stage moves away.
-    { id: "closed", label: "Closed", color: "#6B7280", description: "Deal closed, archived" },
+    { id: "on_customer",  label: "On Customer",  color: "#3B82F6", description: "Waiting on them" },
+    { id: "stalled",      label: "Stalled",      color: "#FFFFFF", description: "Stuck / escalate" },
+    { id: "cruising",     label: "Cruising",     color: "#10B981", description: "Active, no action needed" },
+    { id: "closed",       label: "Closed",       color: "#6B7280", description: "Deal closed, archived" },
   ];
 
-  const STATUS_PRIORITY = ["critical", "on_me", "on_colleague", "on_customer", "stalled", "cruising", "closed"];
+  const GENERIC_SOLUTION_DEFAULTS = [
+    { id: "product_a", label: "Product A", color: "#06B6D4" },
+    { id: "product_b", label: "Product B", color: "#A78BFA" },
+    { id: "product_c", label: "Product C", color: "#FB923C" },
+  ];
 
-  // Sales stages that should one-time-nudge the status to "closed" when assigned.
-  const CLOSING_STAGES = [6, 7, 8];
+  const GENERIC_STAGE_DEFAULTS = [
+    { id: 1, label: "1 — Prospect",       color: "#e8eaed", closing: false },
+    { id: 2, label: "2 — Qualification",  color: "#0EA5E9", closing: false },
+    { id: 3, label: "3 — Discovery",      color: "#14B8A6", closing: false },
+    { id: 4, label: "4 — Proposal",       color: "#84CC16", closing: false },
+    { id: 5, label: "5 — Negotiation",    color: "#EAB308", closing: false },
+    { id: 6, label: "6 — Closed - Won",   color: "#F97316", closing: true  },
+    { id: 7, label: "7 — Closed - Lost",  color: "#EC4899", closing: true  },
+    { id: 8, label: "8 — Disqualified",   color: "#10B981", closing: true  },
+  ];
+
+  // The "previous version" defaults — what the code used to ship with
+  // before this config refactor. The migration uses these to detect
+  // existing users whose data was created against the OLD defaults so
+  // we can seed their editable config with their previous customizations
+  // (your QMS/Evolve/iForms, your stage labels, etc.).
+  const LEGACY_STATUS_DEFAULTS = [
+    { id: "critical",     label: "Critical",     color: "#FF0040", description: "Urgent — drop everything" },
+    { id: "on_me",        label: "On Me",        color: "#F59E0B", description: "I need to act" },
+    { id: "on_colleague", label: "On Colleague", color: "#8B5CF6", description: "Waiting internally" },
+    { id: "on_customer",  label: "On Customer",  color: "#3B82F6", description: "Waiting on them" },
+    { id: "stalled",      label: "Stalled",      color: "#FFFFFF", description: "Stuck / escalate" },
+    { id: "cruising",     label: "Cruising",     color: "#10B981", description: "Active, no action needed" },
+    { id: "closed",       label: "Closed",       color: "#6B7280", description: "Deal closed, archived" },
+  ];
+
+  const LEGACY_SOLUTION_DEFAULTS = [
+    { id: "qms",    label: "QMS",    color: "#06B6D4" },
+    { id: "evolve", label: "Evolve", color: "#A78BFA" },
+    { id: "iforms", label: "iForms", color: "#FB923C" },
+  ];
+
+  const LEGACY_STAGE_DEFAULTS = [
+    { id: 1, label: "1 — Qualification",  color: "#e8eaed", closing: false },
+    { id: 2, label: "2 — Validation",     color: "#0EA5E9", closing: false },
+    { id: 3, label: "3 — Design",         color: "#14B8A6", closing: false },
+    { id: 4, label: "4 — Negotiate",      color: "#84CC16", closing: false },
+    { id: 5, label: "5 — Procurement",    color: "#EAB308", closing: false },
+    { id: 6, label: "6 — Closed - Won",   color: "#F97316", closing: true  },
+    { id: 7, label: "7 — Closed - Lost",  color: "#EC4899", closing: true  },
+    { id: 8, label: "8 — Disqualified",   color: "#10B981", closing: true  },
+  ];
+
+  const LS_CONFIG = "sb-config";
+
+  // Detect whether the user has existing data that uses the legacy (pre-config)
+  // hardcoded values. We look at localStorage accounts for telltale IDs.
+  // Returns true if we find any account using legacy-specific IDs.
+  function hasLegacyData() {
+    try {
+      const raw = localStorage.getItem("signal-board-accounts");
+      if (!raw) return false;
+      const accounts = JSON.parse(raw);
+      // The clearest signal: solutions IDs "qms", "evolve", "iforms" — these
+      // are unique to the legacy defaults, not the generic ones.
+      const legacySolutionIds = new Set(["qms", "evolve", "iforms"]);
+      return accounts.some(a => (a.solutions || []).some(s => legacySolutionIds.has(s)));
+    } catch {
+      return false;
+    }
+  }
+
+  // Generate a stable ID from a label. Used when the user adds a new
+  // config item. Falls back to a random suffix if the slug isn't unique.
+  function slugify(label, existingIds) {
+    const base = (label || "item")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_|_$/g, "")
+      .slice(0, 30) || "item";
+    if (!existingIds.includes(base)) return base;
+    let i = 2;
+    while (existingIds.includes(`${base}_${i}`)) i++;
+    return `${base}_${i}`;
+  }
+
+  // Generate a stable numeric ID for a new stage (max existing + 1).
+  function nextStageId(stages) {
+    if (!stages.length) return 1;
+    return Math.max(...stages.map(s => s.id)) + 1;
+  }
+
+  // Load config from localStorage, falling back to defaults appropriate
+  // for this user (legacy customizations for existing users, generic
+  // placeholders for new users).
+  function loadConfig() {
+    try {
+      const raw = localStorage.getItem(LS_CONFIG);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Defensive: ensure all three arrays exist
+        return {
+          statuses:  parsed.statuses  || GENERIC_STATUS_DEFAULTS.map(s => ({ ...s })),
+          solutions: parsed.solutions || GENERIC_SOLUTION_DEFAULTS.map(s => ({ ...s })),
+          stages:    parsed.stages    || GENERIC_STAGE_DEFAULTS.map(s => ({ ...s })),
+        };
+      }
+    } catch {}
+
+    // First load with this version: pick defaults based on whether
+    // existing data looks legacy or fresh.
+    const useLegacy = hasLegacyData();
+    const defaults = {
+      statuses:  (useLegacy ? LEGACY_STATUS_DEFAULTS  : GENERIC_STATUS_DEFAULTS).map(s => ({ ...s })),
+      solutions: (useLegacy ? LEGACY_SOLUTION_DEFAULTS : GENERIC_SOLUTION_DEFAULTS).map(s => ({ ...s })),
+      stages:    (useLegacy ? LEGACY_STAGE_DEFAULTS   : GENERIC_STAGE_DEFAULTS).map(s => ({ ...s })),
+    };
+    // Persist immediately so future loads are deterministic
+    try { localStorage.setItem(LS_CONFIG, JSON.stringify(defaults)); } catch {}
+    return defaults;
+  }
+
+  function saveConfig(cfg) {
+    try { localStorage.setItem(LS_CONFIG, JSON.stringify(cfg)); } catch {}
+  }
+
+  // ── Runtime accessors ──
+  // The rest of the code reads STATUSES, SOLUTIONS, SALES_STAGES,
+  // STATUS_PRIORITY, and CLOSING_STAGES as if they were constants.
+  // They're actually mutable references refreshed by syncConfigRefs()
+  // whenever the config changes. This keeps the existing code shape
+  // unchanged while making the config user-editable underneath.
+  let STATUSES        = [];
+  let SOLUTIONS       = [];
+  let SALES_STAGES    = [];
+  let STATUS_PRIORITY = [];
+  let CLOSING_STAGES  = [];
+
+  function syncConfigRefs() {
+    STATUSES        = state.config.statuses;
+    SOLUTIONS       = state.config.solutions;
+    SALES_STAGES    = state.config.stages;
+    STATUS_PRIORITY = state.config.statuses.map(s => s.id);
+    CLOSING_STAGES  = state.config.stages.filter(s => s.closing).map(s => s.id);
+  }
 
   // ──────────────────────────────────────────────
   // STAGNANT THRESHOLDS (in days, per status)
   // Used to compute the stagnant queue at the top of the board.
-  // User can override these in the Settings modal.
   // ──────────────────────────────────────────────
+  // Defaults shipped with the app — only used as fallback for status IDs
+  // that aren't yet in the user's thresholds map. Custom user statuses
+  // get a sensible default applied when added (7 days).
   const DEFAULT_THRESHOLDS = {
     critical: 1,
     on_me: 3,
@@ -1057,6 +1482,8 @@
     // but we keep a value here so the threshold UI doesn't show a blank.
     closed: 365,
   };
+
+  const NEW_STATUS_DEFAULT_THRESHOLD = 7;
 
   const LS_THRESHOLDS = "sb-thresholds";
 
@@ -1090,32 +1517,7 @@
   }
 
   // ──────────────────────────────────────────────
-  // SOLUTION DEFINITIONS
-  // ──────────────────────────────────────────────
-  const SOLUTIONS = [
-    { id: "qms",    label: "QMS",    color: "#06B6D4" },
-    { id: "evolve", label: "Evolve", color: "#A78BFA" },
-    { id: "iforms", label: "iForms", color: "#FB923C" },
-  ];
-
-  // ──────────────────────────────────────────────
-  // SALES STAGE DEFINITIONS
-  // ──────────────────────────────────────────────
-  const SALES_STAGES = [
-    { id: 1, label: "1 — Qualification",     color: "#e8eaed" },
-    { id: 2, label: "2 — Validation",      color: "#0EA5E9" },
-    { id: 3, label: "3 — Design",    color: "#14B8A6" },
-    { id: 4, label: "4 — Negotiate",         color: "#84CC16" },
-    { id: 5, label: "5 — Procurement",     color: "#EAB308" },
-    { id: 6, label: "6 — Closed - Won",  color: "#F97316" },
-    { id: 7, label: "7 — Closed - Lost",       color: "#EC4899" },
-    { id: 8, label: "8 — Disqualified",   color: "#10B981" },
-  ];
-
-  // ──────────────────────────────────────────────
-  // SEED DATA
-  // Note (formerly nextStep) is a freeform quick note shown inline on the row.
-  // nextActionDate + nextActionLabel are the dated commitment shown above the note.
+  // SEED DATA (only used for first-ever load on a fresh device)
   // ──────────────────────────────────────────────
   const SEED = [
     { id: "1", name: "Acme Corp",    status: "on_me",        note: "Send revised proposal by Friday", solutions: ["qms"],            stage: 5, priority: 1, logo: "", createdAt: Date.now(), nextActionDate: "", nextActionLabel: "", lastStatusChange: Date.now(), lastStageChange: Date.now(), lastTouched: Date.now() },
@@ -1153,6 +1555,10 @@
     return c.token && c.user && c.repo;
   }
 
+  // GitHub data.json shape:
+  //   Legacy (pre-config): a JSON array of account objects.
+  //   New: an object { accounts: [...], config: {...} }
+  // We detect the legacy shape on load and treat it as accounts-only.
   async function githubLoad() {
     const { token, user, repo } = getGitHubConfig();
     try {
@@ -1165,7 +1571,10 @@
       const json = await res.json();
       fileSha = json.sha;
       const decoded = atob(json.content.replace(/\n/g, ""));
-      return JSON.parse(decoded);
+      const parsed = JSON.parse(decoded);
+      // Back-compat: a bare array means accounts-only (legacy format).
+      if (Array.isArray(parsed)) return { accounts: parsed, config: null };
+      return { accounts: parsed.accounts || [], config: parsed.config || null };
     } catch (e) {
       console.error("GitHub load error:", e);
       return null;
@@ -1174,7 +1583,10 @@
 
   async function githubSave(accounts) {
     const { token, user, repo } = getGitHubConfig();
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(accounts, null, 2))));
+    // Save accounts AND config together so other devices see the same
+    // statuses/solutions/stages.
+    const payload = { accounts, config: state.config };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
     const body = { message: "Update signal board data", content };
     if (fileSha) body.sha = fileSha;
 
@@ -1303,7 +1715,17 @@
     // Show-closed toggle (persisted): when false, accounts with status="closed"
     // are hidden from the main list, the stagnant queue, and the visible counts.
     showClosed: loadShowClosed(),
+    // User-editable config: statuses, solutions, stages.
+    config: loadConfig(),
+    // Settings modal: which section is expanded (only one at a time, accordion-style)
+    settingsTab: "sync",  // one of: "sync", "thresholds", "statuses", "solutions", "stages"
+    // Confirmation dialog for blocked delete attempts in the config editor
+    configBlockMessage: "",
   };
+
+  // Initialize runtime config refs immediately so any code path below sees them.
+  syncConfigRefs();
+
 
   // ──────────────────────────────────────────────
   // TIMESTAMP HELPERS
@@ -1365,8 +1787,15 @@
       state.syncStatus = "saving";
       render();
       const remote = await githubLoad();
-      if (remote) {
-        state.accounts = migrateAll(remote);
+      if (remote && remote.accounts && remote.accounts.length) {
+        state.accounts = migrateAll(remote.accounts);
+        // If the remote payload has a config, adopt it. Otherwise keep
+        // the local one (which was just seeded for first-time use).
+        if (remote.config && remote.config.statuses && remote.config.solutions && remote.config.stages) {
+          state.config = remote.config;
+          saveConfig(state.config);
+          syncConfigRefs();
+        }
         localSave(state.accounts);
         state.syncStatus = "synced";
         state.lastSync = new Date();
@@ -1811,6 +2240,179 @@
     render();
   }
 
+  // ══════════════════════════════════════════════════════════════════
+  // CONFIG EDITOR CRUD
+  // ──────────────────────────────────────────────────────────────────
+  // Functions that mutate state.config (statuses, solutions, stages),
+  // persist the change, refresh the runtime refs, and re-render.
+  // ══════════════════════════════════════════════════════════════════
+
+  // Persist current config to localStorage and refresh runtime refs.
+  // Also pushes to GitHub (debounced) so other devices stay in sync.
+  // Does not re-render — callers do that.
+  function commitConfig() {
+    saveConfig(state.config);
+    syncConfigRefs();
+    if (isConfigured()) debouncedGithubSave(state.accounts);
+  }
+
+  // Count how many accounts reference a given config item, so the editor
+  // can show usage info and block deletes of in-use items.
+  function countUsage(type, id) {
+    if (type === "status")   return state.accounts.filter(a => a.status === id).length;
+    if (type === "solution") return state.accounts.filter(a => (a.solutions || []).includes(id)).length;
+    if (type === "stage")    return state.accounts.filter(a => a.stage === id).length;
+    return 0;
+  }
+
+  // ── STATUS CRUD ──
+  function updateStatus(id, patch) {
+    const s = state.config.statuses.find(x => x.id === id);
+    if (!s) return;
+    Object.assign(s, patch);
+    commitConfig();
+    render();
+  }
+
+  function deleteStatus(id) {
+    // System statuses can never be deleted
+    if (SYSTEM_STATUS_IDS.includes(id)) {
+      state.configBlockMessage = "This is a system status and cannot be deleted (you can rename or recolor it).";
+      render();
+      return;
+    }
+    const usage = countUsage("status", id);
+    if (usage > 0) {
+      const s = state.config.statuses.find(x => x.id === id);
+      state.configBlockMessage = `Can't delete "${s?.label || id}" — ${usage} account${usage === 1 ? ' uses' : 's use'} this status. Reassign ${usage === 1 ? 'it' : 'them'} first.`;
+      render();
+      return;
+    }
+    state.config.statuses = state.config.statuses.filter(s => s.id !== id);
+    // Also remove the threshold entry for this status so it doesn't dangle
+    delete state.thresholds[id];
+    saveThresholds(state.thresholds);
+    commitConfig();
+    render();
+  }
+
+  function addStatus() {
+    const existingIds = state.config.statuses.map(s => s.id);
+    const newId = slugify("new_status", existingIds);
+    state.config.statuses.push({
+      id: newId,
+      label: "New Status",
+      color: "#94A3B8",
+      description: "",
+    });
+    // Insert before "closed" if present, so Closed stays at the end
+    const closedIdx = state.config.statuses.findIndex(s => s.id === "closed");
+    if (closedIdx !== -1 && closedIdx !== state.config.statuses.length - 1) {
+      const added = state.config.statuses.pop();
+      state.config.statuses.splice(closedIdx, 0, added);
+    }
+    // Give the new status a default threshold so it participates in stagnant tracking
+    state.thresholds[newId] = NEW_STATUS_DEFAULT_THRESHOLD;
+    saveThresholds(state.thresholds);
+    commitConfig();
+    render();
+  }
+
+  function moveStatus(id, dir) {
+    const list = state.config.statuses;
+    const i = list.findIndex(s => s.id === id);
+    if (i === -1) return;
+    const j = i + dir;
+    if (j < 0 || j >= list.length) return;
+    [list[i], list[j]] = [list[j], list[i]];
+    commitConfig();
+    render();
+  }
+
+  // ── SOLUTION CRUD ──
+  function updateSolution(id, patch) {
+    const s = state.config.solutions.find(x => x.id === id);
+    if (!s) return;
+    Object.assign(s, patch);
+    commitConfig();
+    render();
+  }
+
+  function deleteSolution(id) {
+    const usage = countUsage("solution", id);
+    if (usage > 0) {
+      const s = state.config.solutions.find(x => x.id === id);
+      state.configBlockMessage = `Can't delete "${s?.label || id}" — ${usage} account${usage === 1 ? ' uses' : 's use'} this solution. Reassign ${usage === 1 ? 'it' : 'them'} first.`;
+      render();
+      return;
+    }
+    state.config.solutions = state.config.solutions.filter(s => s.id !== id);
+    commitConfig();
+    render();
+  }
+
+  function addSolution() {
+    const existingIds = state.config.solutions.map(s => s.id);
+    const newId = slugify("new_solution", existingIds);
+    state.config.solutions.push({
+      id: newId,
+      label: "New Solution",
+      color: "#94A3B8",
+    });
+    commitConfig();
+    render();
+  }
+
+  // ── STAGE CRUD ──
+  function updateStage(id, patch) {
+    const s = state.config.stages.find(x => x.id === id);
+    if (!s) return;
+    Object.assign(s, patch);
+    commitConfig();
+    render();
+  }
+
+  function deleteStage(id) {
+    const usage = countUsage("stage", id);
+    if (usage > 0) {
+      const s = state.config.stages.find(x => x.id === id);
+      state.configBlockMessage = `Can't delete "${s?.label || id}" — ${usage} account${usage === 1 ? ' uses' : 's use'} this stage. Reassign ${usage === 1 ? 'it' : 'them'} first.`;
+      render();
+      return;
+    }
+    state.config.stages = state.config.stages.filter(s => s.id !== id);
+    commitConfig();
+    render();
+  }
+
+  function addStage() {
+    const newId = nextStageId(state.config.stages);
+    state.config.stages.push({
+      id: newId,
+      label: `${newId} — New Stage`,
+      color: "#94A3B8",
+      closing: false,
+    });
+    commitConfig();
+    render();
+  }
+
+  function moveStage(id, dir) {
+    const list = state.config.stages;
+    const i = list.findIndex(s => s.id === id);
+    if (i === -1) return;
+    const j = i + dir;
+    if (j < 0 || j >= list.length) return;
+    [list[i], list[j]] = [list[j], list[i]];
+    commitConfig();
+    render();
+  }
+
+  function dismissConfigBlock() {
+    state.configBlockMessage = "";
+    render();
+  }
+
   // ──────────────────────────────────────────────
   // RENDER
   // ──────────────────────────────────────────────
@@ -1861,60 +2463,160 @@
         </div>`;
     }
 
-    // ── Settings Modal (now with thresholds section) ──
+    // ── Settings Modal (tabbed: sync, thresholds, statuses, solutions, stages) ──
     if (state.showSettings) {
+      const tab = state.settingsTab || "sync";
+
+      // Helper to render the GitHub Sync section
+      const syncSection = `
+        ${isConfigured() ? `
+          <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;line-height:1.6">
+            Currently syncing to <strong style="color:#F1F1F1">${cfg.user}/${cfg.repo}</strong>
+          </p>
+          <button class="btn-secondary" id="disconnectBtn" style="border-color:#EF4444;color:#EF4444">Disconnect</button>
+        ` : `
+          <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.6">
+            Connect your GitHub repo so your board syncs across all your devices.
+          </p>
+          <label>GitHub Username</label>
+          <input type="text" id="inputUser" value="${cfg.user}" placeholder="chizzyhat" />
+          <label>Repository Name</label>
+          <input type="text" id="inputRepo" value="${cfg.repo}" placeholder="signal-board" />
+          <label>Personal Access Token</label>
+          <input type="password" id="inputToken" value="" placeholder="ghp_xxxxxxxxxxxx" />
+          <div class="settings-hint">
+            Create one at
+            <a href="https://github.com/settings/tokens/new?scopes=repo&description=Signal+Board" target="_blank">github.com/settings/tokens</a>
+            — select the <strong>repo</strong> scope.
+          </div>
+          ${state.settingsError ? `<div class="settings-error">${state.settingsError}</div>` : ""}
+          <div style="margin-top:12px">
+            <button class="btn-primary" id="settingsSave">Connect</button>
+          </div>
+        `}
+      `;
+
+      const thresholdsSection = `
+        <p class="config-help">
+          An account is flagged as stagnant when its status hasn't changed and nothing has been touched within these limits.
+        </p>
+        ${STATUSES.map(s => `
+          <div class="threshold-row">
+            <span class="dot" style="background:${s.color};box-shadow:0 0 6px ${s.color}66"></span>
+            <span class="label">${s.label}</span>
+            <input type="number" id="threshold-${s.id}" min="1" max="365" value="${state.thresholds[s.id] ?? DEFAULT_THRESHOLDS[s.id] ?? NEW_STATUS_DEFAULT_THRESHOLD}" />
+            <span class="unit">days</span>
+          </div>
+        `).join("")}
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button class="btn-secondary" id="resetThresholdsBtn">Reset to defaults</button>
+        </div>
+      `;
+
+      // Statuses editor
+      const statusesSection = `
+        <p class="config-help">
+          Statuses describe where each account stands. Drag-order determines sort priority (top items appear first). The "Closed" status is reserved and can be renamed but not deleted.
+        </p>
+        <div class="config-list-header for-status">
+          <div></div><div></div><div>Label</div><div>Description</div><div>Used</div><div></div>
+        </div>
+        ${state.config.statuses.map((s, i) => {
+          const usage = countUsage("status", s.id);
+          const isSystem = SYSTEM_STATUS_IDS.includes(s.id);
+          return `
+            <div class="config-item config-status ${isSystem ? 'system-item' : ''}">
+              <div class="reorder-btns">
+                <button class="reorder-btn" data-status-move="${s.id}:-1" ${i === 0 ? 'disabled' : ''} title="Move up">▲</button>
+                <button class="reorder-btn" data-status-move="${s.id}:1"  ${i === state.config.statuses.length - 1 ? 'disabled' : ''} title="Move down">▼</button>
+              </div>
+              <input type="color" data-status-color="${s.id}" value="${s.color}" title="Pick color" />
+              <input type="text" data-status-label="${s.id}" value="${(s.label || '').replace(/"/g, '&quot;')}" placeholder="Status name" />
+              <input type="text" data-status-desc="${s.id}" value="${(s.description || '').replace(/"/g, '&quot;')}" placeholder="Tooltip / description" />
+              <span class="usage-count ${usage > 0 ? 'in-use' : ''}">${usage}</span>
+              <button class="delete-config-btn" data-status-delete="${s.id}" ${isSystem ? 'disabled title="System status — cannot delete"' : 'title="Delete status"'}>×</button>
+            </div>
+          `;
+        }).join("")}
+        <button class="config-add-btn" id="addStatusBtn">+ Add status</button>
+      `;
+
+      // Solutions editor
+      const solutionsSection = `
+        <p class="config-help">
+          Solutions are tags you can apply to each account (e.g. product lines, deal types). Order doesn't matter.
+        </p>
+        <div class="config-list-header for-solution">
+          <div></div><div>Label</div><div>Used</div><div></div>
+        </div>
+        ${state.config.solutions.map(s => {
+          const usage = countUsage("solution", s.id);
+          return `
+            <div class="config-item config-solution">
+              <input type="color" data-sol-color="${s.id}" value="${s.color}" title="Pick color" />
+              <input type="text" data-sol-label="${s.id}" value="${(s.label || '').replace(/"/g, '&quot;')}" placeholder="Solution name" />
+              <span class="usage-count ${usage > 0 ? 'in-use' : ''}">${usage}</span>
+              <button class="delete-config-btn" data-sol-delete="${s.id}" title="Delete solution">×</button>
+            </div>
+          `;
+        }).join("")}
+        <button class="config-add-btn" id="addSolutionBtn">+ Add solution</button>
+      `;
+
+      // Stages editor
+      const stagesSection = `
+        <p class="config-help">
+          Stages represent your pipeline. Check "Closing" for stages that should auto-mark an account as Closed when it reaches them.
+        </p>
+        <div class="config-list-header for-stage">
+          <div></div><div></div><div>Label</div><div>Closing</div><div>Used</div><div></div>
+        </div>
+        ${state.config.stages.map((s, i) => {
+          const usage = countUsage("stage", s.id);
+          return `
+            <div class="config-item config-stage">
+              <div class="reorder-btns">
+                <button class="reorder-btn" data-stage-move="${s.id}:-1" ${i === 0 ? 'disabled' : ''} title="Move up">▲</button>
+                <button class="reorder-btn" data-stage-move="${s.id}:1"  ${i === state.config.stages.length - 1 ? 'disabled' : ''} title="Move down">▼</button>
+              </div>
+              <input type="color" data-stage-color="${s.id}" value="${s.color}" title="Pick color" />
+              <input type="text" data-stage-label="${s.id}" value="${(s.label || '').replace(/"/g, '&quot;')}" placeholder="Stage name" />
+              <div class="closing-toggle">
+                <input type="checkbox" data-stage-closing="${s.id}" ${s.closing ? 'checked' : ''} title="Auto-close on entry" />
+              </div>
+              <span class="usage-count ${usage > 0 ? 'in-use' : ''}">${usage}</span>
+              <button class="delete-config-btn" data-stage-delete="${s.id}" title="Delete stage">×</button>
+            </div>
+          `;
+        }).join("")}
+        <button class="config-add-btn" id="addStageBtn">+ Add stage</button>
+      `;
+
+      const sections = {
+        sync: { title: "Cross-Device Sync", body: syncSection },
+        thresholds: { title: "Stagnant Thresholds", body: thresholdsSection },
+        statuses: { title: "Statuses", body: statusesSection },
+        solutions: { title: "Solutions", body: solutionsSection },
+        stages: { title: "Stages", body: stagesSection },
+      };
+
+      const current = sections[tab] || sections.sync;
+
       html += `
         <div class="settings-overlay" id="settingsOverlay">
           <div class="settings-panel">
             <h2>Settings</h2>
-
-            <!-- GitHub Sync Section -->
-            <div class="settings-section">
-              <h3>Cross-Device Sync</h3>
-              ${isConfigured() ? `
-                <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:16px;line-height:1.6">
-                  Currently syncing to <strong style="color:#F1F1F1">${cfg.user}/${cfg.repo}</strong>
-                </p>
-                <button class="btn-secondary" id="disconnectBtn" style="border-color:#EF4444;color:#EF4444">Disconnect</button>
-              ` : `
-                <p style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px;line-height:1.6">
-                  Connect your GitHub repo so your board syncs across all your devices.
-                </p>
-                <label>GitHub Username</label>
-                <input type="text" id="inputUser" value="${cfg.user}" placeholder="chizzyhat" />
-                <label>Repository Name</label>
-                <input type="text" id="inputRepo" value="${cfg.repo}" placeholder="signal-board" />
-                <label>Personal Access Token</label>
-                <input type="password" id="inputToken" value="" placeholder="ghp_xxxxxxxxxxxx" />
-                <div class="settings-hint">
-                  Create one at
-                  <a href="https://github.com/settings/tokens/new?scopes=repo&description=Signal+Board" target="_blank">github.com/settings/tokens</a>
-                  — select the <strong>repo</strong> scope.
-                </div>
-                ${state.settingsError ? `<div class="settings-error">${state.settingsError}</div>` : ""}
-                <div style="margin-top:12px">
-                  <button class="btn-primary" id="settingsSave">Connect</button>
-                </div>
-              `}
+            <div class="settings-tabs">
+              <button class="settings-tab ${tab === 'sync' ? 'active' : ''}" data-tab="sync">SYNC</button>
+              <button class="settings-tab ${tab === 'thresholds' ? 'active' : ''}" data-tab="thresholds">THRESHOLDS</button>
+              <button class="settings-tab ${tab === 'statuses' ? 'active' : ''}" data-tab="statuses">STATUSES</button>
+              <button class="settings-tab ${tab === 'solutions' ? 'active' : ''}" data-tab="solutions">SOLUTIONS</button>
+              <button class="settings-tab ${tab === 'stages' ? 'active' : ''}" data-tab="stages">STAGES</button>
             </div>
 
-            <!-- Stagnant Thresholds Section -->
-            <div class="settings-section">
-              <h3>Stagnant Thresholds</h3>
-              <p style="font-size:12px;color:rgba(255,255,255,0.45);margin-bottom:14px;line-height:1.5">
-                An account is flagged as stagnant when its status hasn't changed and nothing has been touched within these limits.
-              </p>
-              ${STATUSES.map(s => `
-                <div class="threshold-row">
-                  <span class="dot" style="background:${s.color};box-shadow:0 0 6px ${s.color}66"></span>
-                  <span class="label">${s.label}</span>
-                  <input type="number" id="threshold-${s.id}" min="1" max="365" value="${state.thresholds[s.id] ?? DEFAULT_THRESHOLDS[s.id]}" />
-                  <span class="unit">days</span>
-                </div>
-              `).join("")}
-              <div style="margin-top:12px;display:flex;gap:8px">
-                <button class="btn-secondary" id="resetThresholdsBtn">Reset to defaults</button>
-              </div>
+            <div class="settings-section" style="margin-top:0;padding-top:0;border-top:none">
+              <h3>${current.title}</h3>
+              ${current.body}
             </div>
 
             <div class="settings-buttons">
@@ -1922,7 +2624,22 @@
             </div>
           </div>
         </div>`;
+
+      // Block-deletion modal (rendered on top when set)
+      if (state.configBlockMessage) {
+        html += `
+          <div class="config-block-overlay" id="configBlockOverlay">
+            <div class="config-block-inner">
+              <h4>Can't delete</h4>
+              <p>${state.configBlockMessage}</p>
+              <div style="display:flex;justify-content:flex-end">
+                <button class="btn-primary" id="configBlockOk">OK</button>
+              </div>
+            </div>
+          </div>`;
+      }
     }
+
 
     // ── Side Detail Panel ──
     if (state.detailPanelId) {
@@ -2292,6 +3009,88 @@
         if (err) { state.settingsError = err; render(); }
       });
     }
+
+    // ── Settings tabs ──
+    // Clicking a tab swaps which section is shown. We save threshold inputs
+    // before switching away, since switching tabs would otherwise lose any
+    // in-flight edits to the thresholds form.
+    app.querySelectorAll("[data-tab]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        saveThresholdsFromInputs();
+        state.settingsTab = btn.dataset.tab;
+        render();
+      });
+    });
+
+    // ── Config editor: STATUSES ──
+    // Color picker uses 'input' for live update on drag, 'change' as a fallback.
+    app.querySelectorAll("[data-status-color]").forEach(input => {
+      input.addEventListener("change", () => updateStatus(input.dataset.statusColor, { color: input.value }));
+    });
+    app.querySelectorAll("[data-status-label]").forEach(input => {
+      input.addEventListener("blur", () => updateStatus(input.dataset.statusLabel, { label: input.value }));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+    app.querySelectorAll("[data-status-desc]").forEach(input => {
+      input.addEventListener("blur", () => updateStatus(input.dataset.statusDesc, { description: input.value }));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+    app.querySelectorAll("[data-status-move]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const [id, dir] = btn.dataset.statusMove.split(":");
+        moveStatus(id, parseInt(dir, 10));
+      });
+    });
+    app.querySelectorAll("[data-status-delete]").forEach(btn => {
+      btn.addEventListener("click", () => deleteStatus(btn.dataset.statusDelete));
+    });
+    const addStatusBtn = document.getElementById("addStatusBtn");
+    if (addStatusBtn) addStatusBtn.addEventListener("click", addStatus);
+
+    // ── Config editor: SOLUTIONS ──
+    app.querySelectorAll("[data-sol-color]").forEach(input => {
+      input.addEventListener("change", () => updateSolution(input.dataset.solColor, { color: input.value }));
+    });
+    app.querySelectorAll("[data-sol-label]").forEach(input => {
+      input.addEventListener("blur", () => updateSolution(input.dataset.solLabel, { label: input.value }));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+    app.querySelectorAll("[data-sol-delete]").forEach(btn => {
+      btn.addEventListener("click", () => deleteSolution(btn.dataset.solDelete));
+    });
+    const addSolutionBtn = document.getElementById("addSolutionBtn");
+    if (addSolutionBtn) addSolutionBtn.addEventListener("click", addSolution);
+
+    // ── Config editor: STAGES ──
+    app.querySelectorAll("[data-stage-color]").forEach(input => {
+      input.addEventListener("change", () => updateStage(parseInt(input.dataset.stageColor, 10), { color: input.value }));
+    });
+    app.querySelectorAll("[data-stage-label]").forEach(input => {
+      input.addEventListener("blur", () => updateStage(parseInt(input.dataset.stageLabel, 10), { label: input.value }));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+    app.querySelectorAll("[data-stage-closing]").forEach(input => {
+      input.addEventListener("change", () => updateStage(parseInt(input.dataset.stageClosing, 10), { closing: input.checked }));
+    });
+    app.querySelectorAll("[data-stage-move]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const [id, dir] = btn.dataset.stageMove.split(":");
+        moveStage(parseInt(id, 10), parseInt(dir, 10));
+      });
+    });
+    app.querySelectorAll("[data-stage-delete]").forEach(btn => {
+      btn.addEventListener("click", () => deleteStage(parseInt(btn.dataset.stageDelete, 10)));
+    });
+    const addStageBtn = document.getElementById("addStageBtn");
+    if (addStageBtn) addStageBtn.addEventListener("click", addStage);
+
+    // ── Block-delete confirmation modal ──
+    const configBlockOk = document.getElementById("configBlockOk");
+    if (configBlockOk) configBlockOk.addEventListener("click", dismissConfigBlock);
+    const configBlockOverlay = document.getElementById("configBlockOverlay");
+    if (configBlockOverlay) configBlockOverlay.addEventListener("click", e => {
+      if (e.target === configBlockOverlay) dismissConfigBlock();
+    });
 
     // ── Stagnant section collapse toggle ──
     const stagnantHeader = document.getElementById("stagnantHeader");
