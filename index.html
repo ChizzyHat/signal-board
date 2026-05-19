@@ -1600,11 +1600,12 @@
     // statuses/solutions/stages.
     const payload = { accounts, config: state.config };
     const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
-    const body = { message: "Update signal board data", content };
-    if (fileSha) body.sha = fileSha;
 
-    try {
-      const res = await fetch(
+    // Helper that actually performs the PUT, with the current fileSha if known.
+    const doPut = async () => {
+      const body = { message: "Update signal board data", content };
+      if (fileSha) body.sha = fileSha;
+      return fetch(
         `https://api.github.com/repos/${user}/${repo}/contents/${DATA_FILE}`,
         {
           method: "PUT",
@@ -1616,7 +1617,41 @@
           body: JSON.stringify(body),
         }
       );
-      if (!res.ok) throw new Error((await res.json()).message || `GitHub API ${res.status}`);
+    };
+
+    try {
+      let res = await doPut();
+
+      // If GitHub says we needed a sha (because the file already exists),
+      // fetch the current sha and retry once. This handles the case where
+      // we've connected to a repo with existing data.json but haven't
+      // populated fileSha through a load yet.
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        const msg = errJson.message || "";
+        const needsSha = res.status === 422 || /sha/i.test(msg);
+        if (needsSha && !fileSha) {
+          // Refresh sha and retry
+          const headRes = await fetch(
+            `https://api.github.com/repos/${user}/${repo}/contents/${DATA_FILE}`,
+            { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
+          );
+          if (headRes.ok) {
+            const headJson = await headRes.json();
+            fileSha = headJson.sha;
+            res = await doPut();
+            if (!res.ok) {
+              const e2 = await res.json().catch(() => ({}));
+              throw new Error(e2.message || `GitHub API ${res.status}`);
+            }
+          } else {
+            throw new Error(msg || `GitHub API ${res.status}`);
+          }
+        } else {
+          throw new Error(msg || `GitHub API ${res.status}`);
+        }
+      }
+
       const json = await res.json();
       fileSha = json.content.sha;
       return true;
@@ -2281,6 +2316,7 @@
   // ──────────────────────────────────────────────
   async function testAndSaveConfig(token, user, repo) {
     try {
+      // Step 1: verify the token can read the repo
       const res = await fetch(
         `https://api.github.com/repos/${user}/${repo}`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github.v3+json" } }
@@ -2289,13 +2325,53 @@
       if (res.status === 404) return `Repo "${user}/${repo}" not found. Check the name and make sure the token has access.`;
       if (!res.ok) return `GitHub returned an error (${res.status}).`;
 
+      // Step 2: persist credentials
       saveGitHubConfig(token, user, repo);
       state.settingsError = "";
       render();
 
-      await githubSave(state.accounts);
-      state.syncStatus = "synced";
-      state.lastSync = new Date();
+      // Step 3: LOAD from GitHub before doing anything destructive.
+      // Previously this jumped straight to githubSave(state.accounts), which
+      // would overwrite remote with whatever local data was on this device —
+      // a major data-loss footgun if local was stale or partial.
+      const remote = await githubLoad();
+      const status = remote ? remote.__status : "unreachable";
+      console.log("[connect] githubLoad result:", {
+        status,
+        accountsLen: remote && remote.accounts ? remote.accounts.length : "n/a",
+        hasConfig: !!(remote && remote.config),
+        reason: remote && remote.reason,
+      });
+
+      if (status === "ok" && remote.accounts && remote.accounts.length > 0) {
+        // Remote has data — adopt it. The user's local state on this device
+        // is replaced. (LocalStorage data is preserved in case they need to
+        // recover anything, but state.accounts now reflects remote truth.)
+        state.accounts = migrateAll(remote.accounts);
+        if (remote.config && remote.config.statuses && remote.config.solutions && remote.config.stages) {
+          state.config = remote.config;
+          saveConfig(state.config);
+          syncConfigRefs();
+        }
+        localSave(state.accounts);
+        remoteAccountCount = state.accounts.length;
+        state.syncStatus = "synced";
+        state.lastSync = new Date();
+      } else if (status === "ok" || status === "missing") {
+        // Remote is empty or doesn't exist yet — safe to push local up.
+        // First time setup: this is the "first sync" path.
+        await githubSave(state.accounts);
+        remoteAccountCount = state.accounts.length;
+        state.syncStatus = "synced";
+        state.lastSync = new Date();
+      } else {
+        // Corrupt or unreachable — do NOT push, surface the problem.
+        state.syncStatus = "error";
+        state.settingsError = "Connected, but remote data has a problem: " +
+          (remote && remote.reason || "unknown") +
+          ". Saves are blocked until you restore data.json manually on GitHub.";
+        remoteAccountCount = Infinity;  // block all saves
+      }
       render();
       return null;
     } catch (e) {
