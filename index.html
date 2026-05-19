@@ -1570,10 +1570,26 @@
       if (!res.ok) throw new Error(`GitHub API ${res.status}`);
       const json = await res.json();
       fileSha = json.sha;
-      const decoded = atob(json.content.replace(/\n/g, ""));
-      // Distinguish "file is empty" from "file is broken JSON" — both
-      // need to be treated as REMOTE CORRUPT (do not overwrite local
-      // with empty, do not overwrite remote with local — surface error).
+
+      // GitHub's contents API only returns inline `content` for files under
+      // ~1MB. Larger files (which can happen if there are base64-encoded
+      // logos in data.json) come back with an empty content field and a
+      // `download_url` we can fetch instead.
+      let decoded;
+      if (json.content && json.content.length > 0) {
+        decoded = atob(json.content.replace(/\n/g, ""));
+      } else if (json.download_url) {
+        console.log("[githubLoad] file >1MB, using download_url fallback. size:", json.size);
+        const rawRes = await fetch(json.download_url, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        if (!rawRes.ok) throw new Error(`download_url fetch failed: ${rawRes.status}`);
+        decoded = await rawRes.text();
+      } else {
+        return { __status: "corrupt", reason: "Remote data file is empty (no content, no download_url)." };
+      }
+
+      // Distinguish "file is empty" from "file is broken JSON".
       const trimmed = decoded.trim();
       if (!trimmed) return { __status: "corrupt", reason: "Remote data file is empty." };
       let parsed;
