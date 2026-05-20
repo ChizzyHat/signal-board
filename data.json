@@ -582,7 +582,7 @@
         "id": "critical",
         "label": "Critical",
         "color": "#FF0040",
-        "description": "Urgent ÃÂ¢ÃÂÃÂ drop everything"
+        "description": "Urgent - drop everything"
       },
       {
         "id": "on_me",
