@@ -582,7 +582,7 @@
         "id": "critical",
         "label": "Critical",
         "color": "#FF0040",
-        "description": "Urgent Ã¢ÂÂ drop everything"
+        "description": "Urgent ÃÂ¢ÃÂÃÂ drop everything"
       },
       {
         "id": "on_me",
@@ -641,49 +641,49 @@
     "stages": [
       {
         "id": 1,
-        "label": "1 Ã¢ÂÂ Qualification",
+        "label": "1 Qualification",
         "color": "#e8eaed",
         "closing": false
       },
       {
         "id": 2,
-        "label": "2 Ã¢ÂÂ Validation",
+        "label": "2 ÃÂ¢ÃÂÃÂ Validation",
         "color": "#0EA5E9",
         "closing": false
       },
       {
         "id": 3,
-        "label": "3 Ã¢ÂÂ Design",
+        "label": "3 ÃÂ¢ÃÂÃÂ Design",
         "color": "#14B8A6",
         "closing": false
       },
       {
         "id": 4,
-        "label": "4 Ã¢ÂÂ Negotiate",
+        "label": "4 ÃÂ¢ÃÂÃÂ Negotiate",
         "color": "#84CC16",
         "closing": false
       },
       {
         "id": 5,
-        "label": "5 Ã¢ÂÂ Procurement",
+        "label": "5 ÃÂ¢ÃÂÃÂ Procurement",
         "color": "#EAB308",
         "closing": false
       },
       {
         "id": 6,
-        "label": "6 Ã¢ÂÂ Closed - Won",
+        "label": "6 ÃÂ¢ÃÂÃÂ Closed - Won",
         "color": "#F97316",
         "closing": true
       },
       {
         "id": 7,
-        "label": "7 Ã¢ÂÂ Closed - Lost",
+        "label": "7 ÃÂ¢ÃÂÃÂ Closed - Lost",
         "color": "#EC4899",
         "closing": true
       },
       {
         "id": 8,
-        "label": "8 Ã¢ÂÂ Disqualified",
+        "label": "8 ÃÂ¢ÃÂÃÂ Disqualified",
         "color": "#10B981",
         "closing": true
       }
