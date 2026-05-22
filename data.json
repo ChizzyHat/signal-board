@@ -1,6 +1,22 @@
 {
   "accounts": [
     {
+      "id": "1779463328469",
+      "name": "New Account",
+      "status": null,
+      "note": "",
+      "solutions": [],
+      "stage": null,
+      "priority": null,
+      "logo": "",
+      "createdAt": 1779463328469,
+      "nextActionDate": "",
+      "nextActionLabel": "",
+      "lastStatusChange": 1779463328469,
+      "lastStageChange": 1779463328469,
+      "lastTouched": 1779463328469
+    },
+    {
       "id": "1779140794174",
       "name": "Children's Surgery Centers",
       "status": "stalled",
