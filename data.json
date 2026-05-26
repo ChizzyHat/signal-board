@@ -790,6 +790,11 @@
       },
       {
         "id": "new_manager_4",
+        "label": "Chudoba",
+        "color": "#94A3B8"
+      },
+      {
+        "id": "new_manager_5",
         "label": "New Manager",
         "color": "#94A3B8"
       }
