@@ -17,7 +17,8 @@
       "nextActionLabel": "Review Andres' deck",
       "lastStatusChange": 1779463359663,
       "lastStageChange": 1779463353506,
-      "lastTouched": 1779463397972
+      "lastTouched": 1779463397972,
+      "manager": null
     },
     {
       "id": "1779140794174",
@@ -35,7 +36,8 @@
       "nextActionLabel": "Waiting on some feedback",
       "lastStatusChange": 1779141043982,
       "lastStageChange": 1779140823994,
-      "lastTouched": 1779141043982
+      "lastTouched": 1779141043982,
+      "manager": null
     },
     {
       "id": "1778764482351",
@@ -55,7 +57,8 @@
       "nextActionLabel": "Getting samples and will setup a demo done by Nick",
       "lastStatusChange": 1779223040449,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779816513586
+      "lastTouched": 1779816513586,
+      "manager": null
     },
     {
       "id": "1778531551490",
@@ -74,7 +77,8 @@
       "nextActionLabel": "11AM DEMO",
       "lastStatusChange": 1779463451551,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779814996240
+      "lastTouched": 1779814996240,
+      "manager": null
     },
     {
       "id": "1778176574028",
@@ -93,7 +97,8 @@
       "nextActionLabel": "Presentation to W&S",
       "lastStatusChange": 1779136143000,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779817005077
+      "lastTouched": 1779817005077,
+      "manager": null
     },
     {
       "id": "1778163370496",
@@ -112,7 +117,8 @@
       "nextActionLabel": "Maybe some movement with the new guy",
       "lastStatusChange": 1779135548438,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779140985732
+      "lastTouched": 1779140985732,
+      "manager": null
     },
     {
       "id": "1777986105700",
@@ -131,7 +137,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779135856365,
       "lastStageChange": 1779135851769,
-      "lastTouched": 1779135856365
+      "lastTouched": 1779135856365,
+      "manager": null
     },
     {
       "id": "1777560503023",
@@ -148,7 +155,8 @@
       "nextActionLabel": "Need to do this",
       "lastStatusChange": 1779135548438,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779294317016
+      "lastTouched": 1779817698274,
+      "manager": null
     },
     {
       "id": "1776784923342",
@@ -167,7 +175,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779140926952,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779140926952
+      "lastTouched": 1779140926952,
+      "manager": null
     },
     {
       "id": "1776271800953",
@@ -187,7 +196,8 @@
       "nextActionLabel": "Demo",
       "lastStatusChange": 1779463446302,
       "lastStageChange": 1779138935306,
-      "lastTouched": 1779463459856
+      "lastTouched": 1779463459856,
+      "manager": null
     },
     {
       "id": "1776263767328",
@@ -207,7 +217,8 @@
       "nextActionLabel": "Follow up with Cliff",
       "lastStatusChange": 1779135548438,
       "lastStageChange": 1779138980590,
-      "lastTouched": 1779222985735
+      "lastTouched": 1779222985735,
+      "manager": null
     },
     {
       "id": "1775510919757",
@@ -226,7 +237,8 @@
       "nextActionLabel": "Need signature from Dave Reed",
       "lastStatusChange": 1779135868711,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779135994834
+      "lastTouched": 1779135994834,
+      "manager": null
     },
     {
       "id": "1775150917809",
@@ -245,7 +257,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779141039346,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779817369395
+      "lastTouched": 1779817369395,
+      "manager": null
     },
     {
       "id": "1775061086830",
@@ -264,7 +277,8 @@
       "nextActionLabel": "Get update from Sarah and Cliff",
       "lastStatusChange": 1779138881641,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779138881641
+      "lastTouched": 1779138881641,
+      "manager": null
     },
     {
       "id": "1775060536297",
@@ -283,7 +297,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779141032394,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779141032394
+      "lastTouched": 1779141032394,
+      "manager": null
     },
     {
       "id": "1775060449341",
@@ -303,7 +318,8 @@
       "nextActionLabel": "Get updated from Cliff",
       "lastStatusChange": 1779463273518,
       "lastStageChange": 1779138615517,
-      "lastTouched": 1779463273518
+      "lastTouched": 1779463273518,
+      "manager": null
     },
     {
       "id": "1774906261289",
@@ -322,7 +338,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779140955814,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779140955814
+      "lastTouched": 1779140955814,
+      "manager": null
     },
     {
       "id": "1774886609905",
@@ -343,7 +360,8 @@
       "nextActionLabel": "Provide some details on Evovle vs Flex",
       "lastStatusChange": 1779141061891,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779463216438
+      "lastTouched": 1779463216438,
+      "manager": null
     },
     {
       "id": "1774649392203",
@@ -362,7 +380,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779140924628,
       "lastStageChange": 1779140451019,
-      "lastTouched": 1779140924628
+      "lastTouched": 1779140924628,
+      "manager": null
     },
     {
       "id": "1774452509656",
@@ -381,7 +400,8 @@
       "nextActionLabel": "Cliff to have pricing call",
       "lastStatusChange": 1779136129352,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779136129352
+      "lastTouched": 1779136129352,
+      "manager": null
     },
     {
       "id": "1774452146576",
@@ -400,7 +420,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779140927988,
       "lastStageChange": 1779139530205,
-      "lastTouched": 1779140927988
+      "lastTouched": 1779140927988,
+      "manager": null
     },
     {
       "id": "1774276267735",
@@ -419,7 +440,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779140921260,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779140921260
+      "lastTouched": 1779140921260,
+      "manager": null
     },
     {
       "id": "1774036447269",
@@ -438,7 +460,8 @@
       "nextActionLabel": "Status updated from Cyndi or Steph",
       "lastStatusChange": 1779135548438,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779139442135
+      "lastTouched": 1779139442135,
+      "manager": null
     },
     {
       "id": "1774036445446",
@@ -457,7 +480,8 @@
       "nextActionLabel": "Kevin has a account review meeting",
       "lastStatusChange": 1779141046545,
       "lastStageChange": 1779817363089,
-      "lastTouched": 1779817363089
+      "lastTouched": 1779817363089,
+      "manager": null
     },
     {
       "id": "1774036443322",
@@ -476,7 +500,8 @@
       "nextActionLabel": "Waiting on feedback",
       "lastStatusChange": 1779138877420,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779138877420
+      "lastTouched": 1779138877420,
+      "manager": null
     },
     {
       "id": "1774030747139",
@@ -495,7 +520,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1779140922872,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779140922872
+      "lastTouched": 1779140922872,
+      "manager": null
     },
     {
       "id": "1774025914478",
@@ -515,7 +541,8 @@
       "nextActionLabel": "QMS Presentation to PBM",
       "lastStatusChange": 1779222877041,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779222877041
+      "lastTouched": 1779222877041,
+      "manager": null
     },
     {
       "id": "1773955587777",
@@ -534,7 +561,8 @@
       "nextActionLabel": "Waiting on Stacey",
       "lastStatusChange": 1779139283953,
       "lastStageChange": 1779139287201,
-      "lastTouched": 1779817466640
+      "lastTouched": 1779817466640,
+      "manager": null
     },
     {
       "id": "1",
@@ -553,7 +581,8 @@
       "nextActionLabel": "Oshman and Calen doing review",
       "lastStatusChange": 1779135548438,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779140437080
+      "lastTouched": 1779140437080,
+      "manager": null
     },
     {
       "id": "2",
@@ -573,7 +602,8 @@
       "nextActionLabel": "Rexy and Bh to review redlines with legal",
       "lastStatusChange": 1779222823378,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779222823378
+      "lastTouched": 1779222823378,
+      "manager": null
     },
     {
       "id": "3",
@@ -592,7 +622,8 @@
       "nextActionLabel": "10-11 or 12-1 Meeting on timing and direction forward",
       "lastStatusChange": 1779135548438,
       "lastStageChange": 1779141143919,
-      "lastTouched": 1779141143919
+      "lastTouched": 1779141143919,
+      "manager": null
     }
   ],
   "config": {
@@ -705,6 +736,23 @@
         "label": "8 Disqualified",
         "color": "#10B981",
         "closing": true
+      }
+    ],
+    "managers": [
+      {
+        "id": "manager_a",
+        "label": "Manager A",
+        "color": "#60A5FA"
+      },
+      {
+        "id": "manager_b",
+        "label": "Manager B",
+        "color": "#F472B6"
+      },
+      {
+        "id": "manager_c",
+        "label": "Manager C",
+        "color": "#34D399"
       }
     ]
   }
