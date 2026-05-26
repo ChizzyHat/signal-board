@@ -785,6 +785,11 @@
       },
       {
         "id": "new_manager_3",
+        "label": "Brown",
+        "color": "#94A3B8"
+      },
+      {
+        "id": "new_manager_4",
         "label": "New Manager",
         "color": "#94A3B8"
       }
