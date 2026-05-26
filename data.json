@@ -710,16 +710,16 @@
         "description": "Waiting on them"
       },
       {
-        "id": "stalled",
-        "label": "Stalled",
-        "color": "#FFFFFF",
-        "description": "Stuck / escalate"
-      },
-      {
         "id": "cruising",
         "label": "Cruising",
         "color": "#10B981",
         "description": "Active, no action needed"
+      },
+      {
+        "id": "stalled",
+        "label": "Stalled",
+        "color": "#FFFFFF",
+        "description": "Stuck / escalate"
       },
       {
         "id": "closed",
