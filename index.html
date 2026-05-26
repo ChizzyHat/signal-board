@@ -730,6 +730,36 @@
       white-space: nowrap;
     }
 
+    /* Clickable reset button shown next to the stagnant badge.
+       Clicking calls touch(acct), which updates lastTouched and removes
+       the row from the Needs Attention queue on the next render. */
+    .stagnant-reset {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-family: 'Ubuntu Mono', monospace;
+      color: rgba(245, 158, 11, 0.7);
+      background: transparent;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 2px 6px;
+      border-radius: 10px;
+      white-space: nowrap;
+      cursor: pointer;
+      margin-left: 4px;
+      letter-spacing: 0.05em;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .stagnant-reset:hover {
+      color: #F59E0B;
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.6);
+    }
+    .stagnant-reset:active {
+      transform: scale(0.95);
+    }
+
     /* ── Column Headers ── */
     .col-headers {
       display: grid;
@@ -3030,11 +3060,14 @@
     const sols = acct.solutions || [];
     const stageRec = acct.stage ? SALES_STAGES.find(s => s.id === acct.stage) : null;
 
-    // Stagnant badge: only shown inside the stagnant section, showing days over threshold
+    // Stagnant badge: only shown inside the stagnant section, showing days over threshold.
+    // The reset button next to it calls touch(acct), which clears the row from
+    // the Needs Attention queue by updating lastTouched to now.
     let stagnantBadge = "";
     if (inStagnantSection && acct.status) {
       const days = Math.floor(daysSince(acct.lastTouched));
-      stagnantBadge = `<span class="stagnant-badge" title="No activity for ${days} day(s)">${days}d</span>`;
+      stagnantBadge = `<span class="stagnant-badge" title="No activity for ${days} day(s)">${days}d</span>` +
+                      `<button class="stagnant-reset" data-stagnant-reset="${acct.id}" title="Mark as touched. Clears this row from Needs Attention.">RESET</button>`;
     }
 
     // Next action inline display: only shown when a date or label is set.
@@ -3387,6 +3420,20 @@
         render();
         const input = app.querySelector(`[data-name-input="${el.dataset.editName}"]`);
         if (input) { input.focus(); input.select(); }
+      });
+    });
+
+    // Stagnant reset button. Clears the row from Needs Attention by touching the account.
+    // stopPropagation is required because this button lives inside .account-name,
+    // which itself is a click target for rename.
+    app.querySelectorAll("[data-stagnant-reset]").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.stopPropagation();
+        const id = btn.dataset.stagnantReset;
+        const acct = state.accounts.find(a => a.id === id);
+        if (!acct) return;
+        touch(acct);
+        update({});
       });
     });
 
