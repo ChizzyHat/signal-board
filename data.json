@@ -5,7 +5,9 @@
       "name": "Zurich",
       "status": null,
       "note": "",
-      "solutions": [],
+      "solutions": [
+        "evolve"
+      ],
       "stage": null,
       "manager": null,
       "priority": null,
