@@ -253,6 +253,11 @@
       grid-template-columns: 32px 1fr 50px 32px;
     }
 
+    /* Managers: color | label | usage | delete (same shape as solutions) */
+    .config-item.config-manager {
+      grid-template-columns: 32px 1fr 50px 32px;
+    }
+
     /* Stages: reorder | color | label | closing? | usage | delete */
     .config-item.config-stage {
       grid-template-columns: 44px 32px 1fr 64px 50px 32px;
@@ -401,6 +406,7 @@
 
     .config-list-header.for-status   { grid-template-columns: 44px 32px 1fr 1.4fr 50px 32px; }
     .config-list-header.for-solution { grid-template-columns: 32px 1fr 50px 32px; }
+    .config-list-header.for-manager  { grid-template-columns: 32px 1fr 50px 32px; }
     .config-list-header.for-stage    { grid-template-columns: 44px 32px 1fr 64px 50px 32px; }
 
     .config-add-btn {
@@ -763,8 +769,8 @@
     /* ── Column Headers ── */
     .col-headers {
       display: grid;
-      /* rank | logo | name | solutions | stage | lights | note(+nextAction) | details | delete */
-      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 28px 36px;
+      /* rank | logo | name | solutions | manager | stage | lights | note(+nextAction) | details | delete */
+      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 28px 36px;
       gap: 12px;
       padding: 0 16px 8px;
       font-size: 10px;
@@ -780,7 +786,7 @@
     .account-row {
       display: grid;
       /* Must match .col-headers grid-template-columns above */
-      grid-template-columns: 40px 32px 160px 70px 100px auto 1fr 28px 36px;
+      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 28px 36px;
       align-items: center;
       gap: 12px;
       padding: 10px 16px;
@@ -830,6 +836,27 @@
       overflow: hidden;
       text-overflow: ellipsis;
       letter-spacing: 0.01em;
+    }
+
+    /* Wrapper that stacks the stagnant badge/reset row above the name.
+       Without this, the badge sat inline inside .account-name and got
+       clipped behind long names because .account-name uses overflow:hidden. */
+    .account-name-cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: stretch;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    /* The row of badges (xd badge + RESET button) shown above the name
+       on rows that are in the Needs Attention section. */
+    .stagnant-meta {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: nowrap;
     }
 
     .name-input {
@@ -913,6 +940,27 @@
     .stage-select:hover { border-color: rgba(255,255,255,0.25); }
     .stage-select:focus { border-color: rgba(255,255,255,0.4); }
     .stage-select option { background: #1A1F2E; color: #F1F1F1; }
+
+    /* Account Manager dropdown. Visually mirrors the stage dropdown
+       so the two read as a pair. Color-coded left border indicates
+       which manager is assigned. */
+    .manager-select {
+      width: 100%;
+      height: 26px;
+      padding: 0 6px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: rgba(255,255,255,0.7);
+      font-size: 11px;
+      font-family: 'Ubuntu Mono', monospace;
+      outline: none;
+      cursor: pointer;
+      border-left-width: 3px;
+    }
+    .manager-select:hover { border-color: rgba(255,255,255,0.25); }
+    .manager-select:focus { border-color: rgba(255,255,255,0.4); }
+    .manager-select option { background: #1A1F2E; color: #F1F1F1; }
 
     .light {
       width: 26px;
@@ -1303,6 +1351,7 @@
         padding: 14px 16px;
       }
       .stage-select { grid-column: 1 / -1; }
+      .manager-select { grid-column: 1 / -1; }
       .lights { grid-column: 1 / -1; }
       .solution-tags { grid-column: 1 / -1; }
       .note-cell { grid-column: 1 / -1; }
@@ -1369,6 +1418,14 @@
     { id: 6, label: "6 — Closed - Won",   color: "#F97316", closing: true  },
     { id: 7, label: "7 — Closed - Lost",  color: "#EC4899", closing: true  },
     { id: 8, label: "8 — Disqualified",   color: "#10B981", closing: true  },
+  ];
+
+  // Account managers (people who own opportunities). Generic placeholders;
+  // user customizes these in settings. Same schema as solutions: id, label, color.
+  const GENERIC_MANAGER_DEFAULTS = [
+    { id: "manager_a", label: "Manager A", color: "#60A5FA" },
+    { id: "manager_b", label: "Manager B", color: "#F472B6" },
+    { id: "manager_c", label: "Manager C", color: "#34D399" },
   ];
 
   // The "previous version" defaults — what the code used to ship with
@@ -1450,11 +1507,13 @@
       const raw = localStorage.getItem(LS_CONFIG);
       if (raw) {
         const parsed = JSON.parse(raw);
-        // Defensive: ensure all three arrays exist
+        // Defensive: ensure all arrays exist. managers is newer, so older
+        // saved configs may not have it. Fall back to generic defaults.
         return {
           statuses:  parsed.statuses  || GENERIC_STATUS_DEFAULTS.map(s => ({ ...s })),
           solutions: parsed.solutions || GENERIC_SOLUTION_DEFAULTS.map(s => ({ ...s })),
           stages:    parsed.stages    || GENERIC_STAGE_DEFAULTS.map(s => ({ ...s })),
+          managers:  parsed.managers  || GENERIC_MANAGER_DEFAULTS.map(s => ({ ...s })),
         };
       }
     } catch {}
@@ -1466,6 +1525,7 @@
       statuses:  (useLegacy ? LEGACY_STATUS_DEFAULTS  : GENERIC_STATUS_DEFAULTS).map(s => ({ ...s })),
       solutions: (useLegacy ? LEGACY_SOLUTION_DEFAULTS : GENERIC_SOLUTION_DEFAULTS).map(s => ({ ...s })),
       stages:    (useLegacy ? LEGACY_STAGE_DEFAULTS   : GENERIC_STAGE_DEFAULTS).map(s => ({ ...s })),
+      managers:  GENERIC_MANAGER_DEFAULTS.map(s => ({ ...s })),
     };
     // Persist immediately so future loads are deterministic
     try { localStorage.setItem(LS_CONFIG, JSON.stringify(defaults)); } catch {}
@@ -1485,6 +1545,7 @@
   let STATUSES        = [];
   let SOLUTIONS       = [];
   let SALES_STAGES    = [];
+  let MANAGERS        = [];
   let STATUS_PRIORITY = [];
   let CLOSING_STAGES  = [];
 
@@ -1492,6 +1553,7 @@
     STATUSES        = state.config.statuses;
     SOLUTIONS       = state.config.solutions;
     SALES_STAGES    = state.config.stages;
+    MANAGERS        = state.config.managers || [];
     STATUS_PRIORITY = state.config.statuses.map(s => s.id);
     CLOSING_STAGES  = state.config.stages.filter(s => s.closing).map(s => s.id);
   }
@@ -1764,6 +1826,7 @@
       solutions: a.solutions || [],
       logo: a.logo || "",
       stage: a.stage ?? null,
+      manager: a.manager ?? null,
       priority: a.priority ?? null,
       // Rename: prefer existing `note`, fall back to legacy `nextStep`, then empty string.
       note: a.note ?? a.nextStep ?? "",
@@ -1942,6 +2005,11 @@
         state.accounts = migrateAll(remote.accounts);
         if (remote.config && remote.config.statuses && remote.config.solutions && remote.config.stages) {
           state.config = remote.config;
+          // Defensive: older configs may pre-date the managers field.
+          // Seed defaults so the UI doesn't render empty manager lists.
+          if (!state.config.managers) {
+            state.config.managers = GENERIC_MANAGER_DEFAULTS.map(s => ({ ...s }));
+          }
           saveConfig(state.config);
           syncConfigRefs();
         }
@@ -2165,6 +2233,7 @@
       note: "",
       solutions: [],
       stage: null,
+      manager: null,
       priority: null,
       logo: "",
       createdAt: now,
@@ -2254,6 +2323,19 @@
     if (idx >= 0) acct.solutions.splice(idx, 1);
     else acct.solutions.push(solId);
     // Solution toggle is administrative — does NOT touch (per design decision).
+    update({});
+  }
+
+  // Assign an account manager to an opportunity. Empty string clears it.
+  // Manager change is administrative (it doesn't reflect deal momentum),
+  // so we deliberately do NOT call touch() here, matching toggleSolution.
+  function setManager(id, managerId) {
+    const acct = state.accounts.find(a => a.id === id);
+    if (!acct) return;
+    const newManager = (managerId === "" || managerId === null) ? null : managerId;
+    if (acct.manager !== newManager) {
+      acct.manager = newManager;
+    }
     update({});
   }
 
@@ -2408,6 +2490,10 @@
         state.accounts = migrateAll(remote.accounts);
         if (remote.config && remote.config.statuses && remote.config.solutions && remote.config.stages) {
           state.config = remote.config;
+          // Defensive: older configs may pre-date the managers field.
+          if (!state.config.managers) {
+            state.config.managers = GENERIC_MANAGER_DEFAULTS.map(s => ({ ...s }));
+          }
           saveConfig(state.config);
           syncConfigRefs();
         }
@@ -2491,6 +2577,7 @@
     if (type === "status")   return state.accounts.filter(a => a.status === id).length;
     if (type === "solution") return state.accounts.filter(a => (a.solutions || []).includes(id)).length;
     if (type === "stage")    return state.accounts.filter(a => a.stage === id).length;
+    if (type === "manager")  return state.accounts.filter(a => a.manager === id).length;
     return 0;
   }
 
@@ -2586,6 +2673,42 @@
     state.config.solutions.push({
       id: newId,
       label: "New Solution",
+      color: "#94A3B8",
+    });
+    commitConfig();
+    render();
+  }
+
+  // ── MANAGER CRUD ──
+  // Same shape as solutions: id, label, color. No "closing" flag and no reorder.
+  function updateManager(id, patch) {
+    const m = state.config.managers.find(x => x.id === id);
+    if (!m) return;
+    Object.assign(m, patch);
+    commitConfig();
+    render();
+  }
+
+  function deleteManager(id) {
+    const usage = countUsage("manager", id);
+    if (usage > 0) {
+      const m = state.config.managers.find(x => x.id === id);
+      state.configBlockMessage = `Can't delete "${m?.label || id}". ${usage} account${usage === 1 ? ' uses' : 's use'} this manager. Reassign ${usage === 1 ? 'it' : 'them'} first.`;
+      render();
+      return;
+    }
+    state.config.managers = state.config.managers.filter(m => m.id !== id);
+    commitConfig();
+    render();
+  }
+
+  function addManager() {
+    if (!state.config.managers) state.config.managers = [];
+    const existingIds = state.config.managers.map(m => m.id);
+    const newId = slugify("new_manager", existingIds);
+    state.config.managers.push({
+      id: newId,
+      label: "New Manager",
       color: "#94A3B8",
     });
     commitConfig();
@@ -2792,6 +2915,31 @@
         <button class="config-add-btn" id="addSolutionBtn">+ Add solution</button>
       `;
 
+      // Managers editor. Same shape as solutions: each manager has a label
+      // and a color. Pick a color so the row dropdown's left border is
+      // distinguishable at a glance.
+      const managersList = state.config.managers || [];
+      const managersSection = `
+        <p class="config-help">
+          Account managers own opportunities. Pick a color for each so the row dropdown's left border identifies them at a glance.
+        </p>
+        <div class="config-list-header for-manager">
+          <div></div><div>Label</div><div>Used</div><div></div>
+        </div>
+        ${managersList.map(m => {
+          const usage = countUsage("manager", m.id);
+          return `
+            <div class="config-item config-manager">
+              <input type="color" data-mgr-color="${m.id}" value="${m.color}" title="Pick color" />
+              <input type="text" data-mgr-label="${m.id}" value="${(m.label || '').replace(/"/g, '&quot;')}" placeholder="Manager name" />
+              <span class="usage-count ${usage > 0 ? 'in-use' : ''}">${usage}</span>
+              <button class="delete-config-btn" data-mgr-delete="${m.id}" title="Delete manager">×</button>
+            </div>
+          `;
+        }).join("")}
+        <button class="config-add-btn" id="addManagerBtn">+ Add manager</button>
+      `;
+
       // Stages editor
       const stagesSection = `
         <p class="config-help">
@@ -2826,6 +2974,7 @@
         thresholds: { title: "Stagnant Thresholds", body: thresholdsSection },
         statuses: { title: "Statuses", body: statusesSection },
         solutions: { title: "Solutions", body: solutionsSection },
+        managers: { title: "Account Managers", body: managersSection },
         stages: { title: "Stages", body: stagesSection },
       };
 
@@ -2840,6 +2989,7 @@
               <button class="settings-tab ${tab === 'thresholds' ? 'active' : ''}" data-tab="thresholds">THRESHOLDS</button>
               <button class="settings-tab ${tab === 'statuses' ? 'active' : ''}" data-tab="statuses">STATUSES</button>
               <button class="settings-tab ${tab === 'solutions' ? 'active' : ''}" data-tab="solutions">SOLUTIONS</button>
+              <button class="settings-tab ${tab === 'managers' ? 'active' : ''}" data-tab="managers">MANAGERS</button>
               <button class="settings-tab ${tab === 'stages' ? 'active' : ''}" data-tab="stages">STAGES</button>
             </div>
 
@@ -3026,7 +3176,7 @@
         </div>
 
         <div class="col-headers">
-          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Stage</div><div>Status</div><div>Note</div><div></div><div></div>
+          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Manager</div><div>Stage</div><div>Status</div><div>Note</div><div></div><div></div>
         </div>
 
         <div class="accounts">
@@ -3059,15 +3209,22 @@
     const isEditingRank = state.editingRankId === acct.id;
     const sols = acct.solutions || [];
     const stageRec = acct.stage ? SALES_STAGES.find(s => s.id === acct.stage) : null;
+    const managerRec = acct.manager ? MANAGERS.find(m => m.id === acct.manager) : null;
 
     // Stagnant badge: only shown inside the stagnant section, showing days over threshold.
     // The reset button next to it calls touch(acct), which clears the row from
     // the Needs Attention queue by updating lastTouched to now.
-    let stagnantBadge = "";
+    // Note: rendered as its own row ABOVE the account name. Earlier versions
+    // placed these inline inside .account-name, where long names with
+    // overflow:hidden would clip the badge behind ellipsis.
+    let stagnantMeta = "";
     if (inStagnantSection && acct.status) {
       const days = Math.floor(daysSince(acct.lastTouched));
-      stagnantBadge = `<span class="stagnant-badge" title="No activity for ${days} day(s)">${days}d</span>` +
-                      `<button class="stagnant-reset" data-stagnant-reset="${acct.id}" title="Mark as touched. Clears this row from Needs Attention.">RESET</button>`;
+      stagnantMeta = `
+        <div class="stagnant-meta">
+          <span class="stagnant-badge" title="No activity for ${days} day(s)">${days}d</span>
+          <button class="stagnant-reset" data-stagnant-reset="${acct.id}" title="Mark as touched. Clears this row from Needs Attention.">RESET</button>
+        </div>`;
     }
 
     // Next action inline display: only shown when a date or label is set.
@@ -3105,8 +3262,11 @@
         ${isEditing ? `
           <input class="name-input" data-name-input="${acct.id}" value="${acct.name.replace(/"/g, '&quot;')}" />
         ` : `
-          <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">
-            ${acct.name}${stagnantBadge ? ' ' + stagnantBadge : ''}
+          <div class="account-name-cell">
+            ${stagnantMeta}
+            <div class="account-name" data-edit-name="${acct.id}" title="Click to edit name">
+              ${acct.name}
+            </div>
           </div>
         `}
 
@@ -3120,6 +3280,16 @@
             ">${s.label}</span>`;
           }).join("")}
         </div>
+
+        <select class="manager-select" data-manager="${acct.id}" style="
+          border-left-color:${managerRec ? managerRec.color : 'rgba(255,255,255,0.1)'};
+          color:${managerRec ? managerRec.color : 'rgba(255,255,255,0.4)'};
+        ">
+          <option value="" ${!acct.manager ? 'selected' : ''}>— Manager —</option>
+          ${MANAGERS.map(m => `
+            <option value="${m.id}" ${acct.manager === m.id ? 'selected' : ''}>${m.label}</option>
+          `).join("")}
+        </select>
 
         <select class="stage-select" data-stage="${acct.id}" style="
           border-left-color:${stageRec ? stageRec.color : 'rgba(255,255,255,0.1)'};
@@ -3296,6 +3466,20 @@
     const addSolutionBtn = document.getElementById("addSolutionBtn");
     if (addSolutionBtn) addSolutionBtn.addEventListener("click", addSolution);
 
+    // ── Config editor: MANAGERS ──
+    app.querySelectorAll("[data-mgr-color]").forEach(input => {
+      input.addEventListener("change", () => updateManager(input.dataset.mgrColor, { color: input.value }));
+    });
+    app.querySelectorAll("[data-mgr-label]").forEach(input => {
+      input.addEventListener("blur", () => updateManager(input.dataset.mgrLabel, { label: input.value }));
+      input.addEventListener("keydown", e => { if (e.key === "Enter") input.blur(); });
+    });
+    app.querySelectorAll("[data-mgr-delete]").forEach(btn => {
+      btn.addEventListener("click", () => deleteManager(btn.dataset.mgrDelete));
+    });
+    const addManagerBtn = document.getElementById("addManagerBtn");
+    if (addManagerBtn) addManagerBtn.addEventListener("click", addManager);
+
     // ── Config editor: STAGES ──
     app.querySelectorAll("[data-stage-color]").forEach(input => {
       input.addEventListener("change", () => updateStage(parseInt(input.dataset.stageColor, 10), { color: input.value }));
@@ -3374,6 +3558,10 @@
       sel.addEventListener("change", () => setStage(sel.dataset.stage, sel.value));
     });
 
+    app.querySelectorAll("[data-manager]").forEach(sel => {
+      sel.addEventListener("change", () => setManager(sel.dataset.manager, sel.value));
+    });
+
     // Rank
     app.querySelectorAll("[data-edit-rank]").forEach(el => {
       el.addEventListener("click", () => {
@@ -3424,8 +3612,9 @@
     });
 
     // Stagnant reset button. Clears the row from Needs Attention by touching the account.
-    // stopPropagation is required because this button lives inside .account-name,
-    // which itself is a click target for rename.
+    // The button now lives outside .account-name (in a sibling row above it),
+    // so stopPropagation is no longer required for rename-click avoidance.
+    // We keep it anyway as a defensive guard if the layout ever changes again.
     app.querySelectorAll("[data-stagnant-reset]").forEach(btn => {
       btn.addEventListener("click", e => {
         e.stopPropagation();
