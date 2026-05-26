@@ -5,7 +5,9 @@
       "name": "Desjardins",
       "status": null,
       "note": "",
-      "solutions": [],
+      "solutions": [
+        "qms"
+      ],
       "stage": null,
       "manager": null,
       "priority": null,
