@@ -772,6 +772,11 @@
         "id": "manager_c",
         "label": "Westerman",
         "color": "#34D399"
+      },
+      {
+        "id": "new_manager",
+        "label": "New Manager",
+        "color": "#94A3B8"
       }
     ]
   }
