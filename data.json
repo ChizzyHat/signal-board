@@ -777,6 +777,16 @@
         "id": "new_manager",
         "label": "Park",
         "color": "#94A3B8"
+      },
+      {
+        "id": "new_manager_2",
+        "label": "McPherson",
+        "color": "#94A3B8"
+      },
+      {
+        "id": "new_manager_3",
+        "label": "New Manager",
+        "color": "#94A3B8"
       }
     ]
   }
