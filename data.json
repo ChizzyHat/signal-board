@@ -5,7 +5,9 @@
       "name": "Warrior Invictus",
       "status": null,
       "note": "",
-      "solutions": [],
+      "solutions": [
+        "iforms"
+      ],
       "stage": null,
       "manager": null,
       "priority": null,
