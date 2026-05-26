@@ -78,7 +78,7 @@
     },
     {
       "id": "1778176574028",
-      "name": "Western & Southern",
+      "name": "Western",
       "status": "on_me",
       "nextStep": "QMS presentation on June 1st!",
       "solutions": [
@@ -93,7 +93,7 @@
       "nextActionLabel": "Presentation to W&S",
       "lastStatusChange": 1779136143000,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1779463233958
+      "lastTouched": 1779817005077
     },
     {
       "id": "1778163370496",
