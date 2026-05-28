@@ -78,7 +78,7 @@
       "id": "1779825063495",
       "name": "Desjardins",
       "status": "on_colleague",
-      "note": "5/22 - Sent to Michal and Martin",
+      "note": "5/28 - Followed up with Martin and Michal\n5/22 - Sent to Michal and Martin",
       "solutions": [
         "qms"
       ],
@@ -91,7 +91,7 @@
       "nextActionLabel": "3rd party risk assessment to be completed",
       "lastStatusChange": 1779825149931,
       "lastStageChange": 1779825063495,
-      "lastTouched": 1779825163694
+      "lastTouched": 1779991379152
     },
     {
       "id": "1779463328469",
