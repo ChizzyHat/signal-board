@@ -159,7 +159,7 @@
     {
       "id": "1778176574028",
       "name": "Western & Southern",
-      "status": "on_me",
+      "status": "critical",
       "nextStep": "QMS presentation on June 1st!",
       "solutions": [
         "qms"
@@ -171,9 +171,9 @@
       "note": "6/1 Presentation moved to June 10th. ",
       "nextActionDate": "2026-06-10",
       "nextActionLabel": "Presentation to W&S",
-      "lastStatusChange": 1780080619481,
+      "lastStatusChange": 1780405742749,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1780405734572,
+      "lastTouched": 1780405742749,
       "manager": "new_manager_4"
     },
     {
