@@ -252,7 +252,7 @@
     /* ── COL HEADERS ── */
     .col-headers {
       display: grid;
-      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 28px 36px;
+      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 22px 28px 36px;
       gap: 12px; padding: 0 16px 7px;
       font-family: var(--font-mono); font-size: 9px;
       color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase;
@@ -262,7 +262,7 @@
     .accounts { display: flex; flex-direction: column; gap: 4px; }
     .account-row {
       display: grid;
-      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 28px 36px;
+      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 22px 28px 36px;
       align-items: center; gap: 12px;
       padding: 9px 16px;
       background: var(--panel);
@@ -413,6 +413,54 @@
     .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
     .empty { text-align: center; padding: 40px; color: var(--text-dim); font-family: var(--font-mono); font-size: 12px; }
+
+    /* ── ATTENTION DOTS ── */
+    .attention-dots {
+      display: flex; flex-direction: column; gap: 3px;
+      align-items: center; justify-content: center;
+      position: relative; z-index: 1;
+    }
+    .attn-dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+      padding: 0; background: rgba(0,0,0,0.35);
+    }
+    .attn-dot:hover { transform: scale(1.25); border-color: rgba(255,255,255,0.3); }
+    .attn-dot.active-high  { background: #ef4444; border-color: #ef4444; box-shadow: 0 0 6px #ef444488; }
+    .attn-dot.active-medium{ background: #f59e0b; border-color: #f59e0b; box-shadow: 0 0 6px #f59e0b88; }
+    .attn-dot.active-low   { background: #22c55e; border-color: #22c55e; box-shadow: 0 0 6px #22c55e88; }
+
+    /* ── PRIORITY GROUP HEADERS ── */
+    .priority-group-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 16px 4px;
+      font-family: var(--font-mono); font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--text-dim); margin-top: 10px;
+    }
+    .priority-group-header:first-child { margin-top: 0; }
+    .priority-group-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .priority-group-divider {
+      flex: 1; height: 1px; background: var(--border);
+    }
+
+    /* ── SORT MODE TOGGLE ── */
+    .sort-mode-toggle {
+      display: flex; border-radius: 5px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .sort-mode-btn {
+      padding: 5px 12px; border: none; background: transparent;
+      color: var(--text-dim); font-family: var(--font-mono); font-size: 10px;
+      letter-spacing: 0.08em; cursor: pointer; transition: all 0.15s;
+      border-right: 1px solid var(--border);
+    }
+    .sort-mode-btn:last-child { border-right: none; }
+    .sort-mode-btn:hover { color: var(--text-secondary); }
+    .sort-mode-btn.active { background: var(--orange); color: #000; font-weight: 600; box-shadow: 0 0 12px var(--orange-glow); }
 
     /* ── SETTINGS ── */
     .settings-overlay {
@@ -880,15 +928,20 @@
   const LS_ACCOUNTS="signal-board-accounts";
   function migrateAccount(a) {
     const now=Date.now();
-    return{...a,solutions:a.solutions||[],logo:a.logo||"",stage:a.stage??null,manager:a.manager??null,priority:a.priority??null,note:a.note??a.nextStep??"",nextActionDate:a.nextActionDate??"",nextActionLabel:a.nextActionLabel??"",lastStatusChange:a.lastStatusChange??now,lastStageChange:a.lastStageChange??now,lastTouched:a.lastTouched??now};
+    return{...a,solutions:a.solutions||[],logo:a.logo||"",stage:a.stage??null,manager:a.manager??null,priority:a.priority??null,attention:a.attention??null,note:a.note??a.nextStep??"",nextActionDate:a.nextActionDate??"",nextActionLabel:a.nextActionLabel??"",lastStatusChange:a.lastStatusChange??now,lastStageChange:a.lastStageChange??now,lastTouched:a.lastTouched??now};
   }
   function migrateAll(list){return list.map(migrateAccount);}
   function localLoad(){try{const raw=localStorage.getItem(LS_ACCOUNTS);if(raw)return migrateAll(JSON.parse(raw));return null;}catch{return null;}}
   function localSave(accounts){localStorage.setItem(LS_ACCOUNTS,JSON.stringify(accounts));}
 
+  const LS_SORT_MODE="sb-sort-mode";
+  function loadSortMode(){ return localStorage.getItem(LS_SORT_MODE)||"priority"; }
+  function saveSortMode(v){ localStorage.setItem(LS_SORT_MODE,v); }
+
   let state={
     accounts:localLoad()||SEED,
     filter:"all",solutionFilter:"all",stageFilter:"all",sortBy:"status",
+    sortMode:loadSortMode(),
     editingId:null,editingRankId:null,showSettings:false,
     syncStatus:"unknown",lastSync:null,settingsError:"",loading:true,
     logoPopup:null,logoPreviewUrl:"",logoDomain:"",
@@ -946,7 +999,23 @@
   function getSolCounts(){const base=visibleAccounts();return SOLUTIONS.reduce((acc,s)=>{acc[s.id]=base.filter(a=>(a.solutions||[]).includes(s.id)).length;return acc;},{});}
   function getStageCounts(){const base=visibleAccounts();return SALES_STAGES.reduce((acc,s)=>{acc[s.id]=base.filter(a=>a.stage===s.id).length;return acc;},{});}
   function getFiltered(){let list=visibleAccounts();if(state.filter!=="all")list=list.filter(a=>a.status===state.filter);if(state.solutionFilter!=="all")list=list.filter(a=>(a.solutions||[]).includes(state.solutionFilter));if(state.stageFilter!=="all")list=list.filter(a=>a.stage===state.stageFilter);return list;}
-  function getSorted(filtered){return[...filtered].sort((a,b)=>{if(state.sortBy==="status"){const ai=STATUS_PRIORITY.indexOf(a.status),bi=STATUS_PRIORITY.indexOf(b.status);const statusDiff=(ai===-1?99:ai)-(bi===-1?99:bi);if(statusDiff!==0)return statusDiff;return(a.priority??Infinity)-(b.priority??Infinity);}if(state.sortBy==="alpha")return a.name.localeCompare(b.name);return b.createdAt-a.createdAt;});}
+  function setAttention(id,level){const acct=state.accounts.find(a=>a.id===id);if(!acct)return;acct.attention=acct.attention===level?null:level;update({});}
+
+  const ATTENTION_ORDER=["high","medium","low",null];
+  function getSorted(filtered){
+    if(state.sortMode==="priority"){
+      // Top-level: attention tier order, then status order within tier, then rank
+      return[...filtered].sort((a,b)=>{
+        const ai=ATTENTION_ORDER.indexOf(a.attention??null),bi=ATTENTION_ORDER.indexOf(b.attention??null);
+        if(ai!==bi)return ai-bi;
+        const si=STATUS_PRIORITY.indexOf(a.status),sj=STATUS_PRIORITY.indexOf(b.status);
+        const statusDiff=(si===-1?99:si)-(sj===-1?99:sj);
+        if(statusDiff!==0)return statusDiff;
+        return(a.priority??Infinity)-(b.priority??Infinity);
+      });
+    }
+    return[...filtered].sort((a,b)=>{if(state.sortBy==="status"){const ai=STATUS_PRIORITY.indexOf(a.status),bi=STATUS_PRIORITY.indexOf(b.status);const statusDiff=(ai===-1?99:ai)-(bi===-1?99:bi);if(statusDiff!==0)return statusDiff;return(a.priority??Infinity)-(b.priority??Infinity);}if(state.sortBy==="alpha")return a.name.localeCompare(b.name);return b.createdAt-a.createdAt;});
+  }
   function getStagnantAccounts(){const list=state.accounts.filter(a=>{if(!a.status||a.status==="closed")return false;const threshold=state.thresholds[a.status];if(!threshold||threshold<=0)return false;const days=daysSince(a.lastTouched);return days!==null&&days>=threshold;});list.sort((a,b)=>{const aOver=daysSince(a.lastTouched)-state.thresholds[a.status],bOver=daysSince(b.lastTouched)-state.thresholds[b.status];return bOver-aOver;});return list;}
 
   function touch(acct){if(!acct)return;acct.lastTouched=Date.now();}
@@ -1072,6 +1141,9 @@
               ${active?`<span style="color:${active.color};border:1px solid ${active.color}44;padding:3px 10px;border-radius:3px;background:${active.color}11">${active.label}</span>`:`<span style="color:var(--text-dim);border:1px solid var(--border);padding:3px 10px;border-radius:3px">No status</span>`}
               ${stageRec?`<span style="color:${stageRec.color};border:1px solid ${stageRec.color}44;padding:3px 10px;border-radius:3px;background:${stageRec.color}11">${stageRec.label}</span>`:""}
               ${acct.priority?`<span style="color:var(--orange);border:1px solid var(--orange-border);padding:3px 10px;border-radius:3px;background:var(--orange-dim)">Rank #${acct.priority}</span>`:""}
+              ${acct.attention==="high"?`<span style="color:#ef4444;border:1px solid #ef444444;padding:3px 10px;border-radius:3px;background:#ef444411">🔴 High Priority</span>`:""}
+              ${acct.attention==="medium"?`<span style="color:#f59e0b;border:1px solid #f59e0b44;padding:3px 10px;border-radius:3px;background:#f59e0b11">🟡 Medium Priority</span>`:""}
+              ${acct.attention==="low"?`<span style="color:#22c55e;border:1px solid #22c55e44;padding:3px 10px;border-radius:3px;background:#22c55e11">🟢 Low Priority</span>`:""}
             </div>
             <div class="panel-section">
               <span class="panel-label">Next Action</span>
@@ -1147,8 +1219,12 @@
           </div>`:""}
 
         <div class="toolbar">
-          <div class="sort-btns">
-            ${[{key:"status",label:"By Priority"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o=>`<button class="sort-btn ${state.sortBy===o.key?"active":""}" data-sort="${o.key}">${o.label}</button>`).join("")}
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+            <div class="sort-mode-toggle">
+              <button class="sort-mode-btn ${state.sortMode==="priority"?"active":""}" data-sort-mode="priority">⬤ Priority</button>
+              <button class="sort-mode-btn ${state.sortMode==="status"?"active":""}" data-sort-mode="status">Status</button>
+            </div>
+            ${state.sortMode==="status"?`<div class="sort-btns">${[{key:"status",label:"By Status"},{key:"alpha",label:"A–Z"},{key:"newest",label:"Newest"}].map(o=>`<button class="sort-btn ${state.sortBy===o.key?"active":""}" data-sort="${o.key}">${o.label}</button>`).join("")}</div>`:""}
           </div>
           <button class="show-closed-toggle ${state.showClosed?"active":""}" id="showClosedToggle">
             <span class="checkbox">${state.showClosed?"✓":""}</span>
@@ -1162,11 +1238,13 @@
         </div>
 
         <div class="col-headers">
-          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Manager</div><div>Stage</div><div>Status</div><div>Note</div><div></div><div></div>
+          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Manager</div><div>Stage</div><div>Status</div><div>Note</div><div title="Attention Priority"></div><div></div><div></div>
         </div>
 
         <div class="accounts">
-          ${sorted.length===0?`<div class="empty">${state.filter==="all"&&state.solutionFilter==="all"&&state.stageFilter==="all"?"No accounts yet. Click + ADD ACCOUNT to get started.":"No accounts match these filters."}</div>`:sorted.map(acct=>renderAccountRow(acct,false)).join("")}
+          ${sorted.length===0?`<div class="empty">${state.filter==="all"&&state.solutionFilter==="all"&&state.stageFilter==="all"?"No accounts yet. Click + ADD ACCOUNT to get started.":"No accounts match these filters."}</div>`:
+            state.sortMode==="priority"?renderPriorityGroups(sorted):
+            sorted.map(acct=>renderAccountRow(acct,false)).join("")}
         </div>
 
         <div class="legend">
@@ -1176,6 +1254,23 @@
 
     app.innerHTML=html;
     attachEventListeners();
+  }
+
+  function renderPriorityGroups(sorted){
+    const groups=[
+      {key:"high",  label:"High Priority",   color:"#ef4444"},
+      {key:"medium",label:"Medium Priority",  color:"#f59e0b"},
+      {key:"low",   label:"Low Priority",     color:"#22c55e"},
+      {key:null,    label:"Unset",            color:"rgba(255,255,255,0.15)"},
+    ];
+    let html="";
+    groups.forEach(g=>{
+      const accts=sorted.filter(a=>(a.attention??null)===g.key);
+      if(!accts.length)return;
+      html+=`<div class="priority-group-header"><span class="priority-group-dot" style="background:${g.color};box-shadow:0 0 5px ${g.color}66"></span>${g.label}<span class="priority-group-divider"></span><span style="font-size:9px;opacity:0.5">${accts.length}</span></div>`;
+      html+=accts.map(acct=>renderAccountRow(acct,false)).join("");
+    });
+    return html;
   }
 
   function renderAccountRow(acct, inStagnantSection) {
@@ -1228,6 +1323,11 @@
       <div class="note-cell">
         ${nextActionLine}
         <input class="note-input" data-note="${acct.id}" value="${(noteFirstLine||"").replace(/"/g,"&quot;")}" placeholder="Quick note..." />
+      </div>
+      <div class="attention-dots" title="Attention priority">
+        <button class="attn-dot ${acct.attention==="high"?"active-high":""}" data-attn="${acct.id}:high" title="High priority"></button>
+        <button class="attn-dot ${acct.attention==="medium"?"active-medium":""}" data-attn="${acct.id}:medium" title="Medium priority"></button>
+        <button class="attn-dot ${acct.attention==="low"?"active-low":""}" data-attn="${acct.id}:low" title="Low priority"></button>
       </div>
       <button class="details-btn" data-details="${acct.id}" title="Open details">›</button>
       <button class="delete-btn" data-delete="${acct.id}">&times;</button>
@@ -1285,6 +1385,8 @@
     app.querySelectorAll("[data-manager]").forEach(sel=>sel.addEventListener("change",()=>setManager(sel.dataset.manager,sel.value)));
     app.querySelectorAll("[data-edit-rank]").forEach(el=>el.addEventListener("click",()=>{const id=el.dataset.editRank;const acct=state.accounts.find(a=>a.id===id);if(!acct||!acct.status)return;state.editingRankId=id;render();}));
     app.querySelectorAll("[data-rank-input]").forEach(input=>{const commit=()=>{const id=input.dataset.rankInput;const val=input.value.trim();state.editingRankId=null;if(val===""){render();return;}setPriority(id,val);};input.addEventListener("blur",commit);input.addEventListener("keydown",e=>{if(e.key==="Enter")input.blur();if(e.key==="Escape"){state.editingRankId=null;render();}});input.focus();input.select();});
+    app.querySelectorAll("[data-attn]").forEach(btn=>btn.addEventListener("click",()=>{const[id,level]=btn.dataset.attn.split(":");setAttention(id,level);}));
+    app.querySelectorAll("[data-sort-mode]").forEach(btn=>btn.addEventListener("click",()=>{const m=btn.dataset.sortMode;state.sortMode=m;saveSortMode(m);render();}));
     app.querySelectorAll("[data-sort]").forEach(btn=>btn.addEventListener("click",()=>update({sortBy:btn.dataset.sort})));
     const addBtn=document.getElementById("addBtn"); if(addBtn)addBtn.addEventListener("click",addAccount);
     const resetBtn=document.getElementById("resetBtn"); if(resetBtn)resetBtn.addEventListener("click",resetBoard);
