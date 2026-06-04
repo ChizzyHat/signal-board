@@ -252,7 +252,7 @@
     /* ── COL HEADERS ── */
     .col-headers {
       display: grid;
-      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 22px 28px 36px;
+      grid-template-columns: 40px 32px 160px 70px 100px 100px 200px 26px 1fr 28px 36px;
       gap: 12px; padding: 0 16px 7px;
       font-family: var(--font-mono); font-size: 9px;
       color: var(--text-dim); letter-spacing: 0.12em; text-transform: uppercase;
@@ -262,7 +262,7 @@
     .accounts { display: flex; flex-direction: column; gap: 4px; }
     .account-row {
       display: grid;
-      grid-template-columns: 40px 32px 160px 70px 100px 100px auto 1fr 22px 28px 36px;
+      grid-template-columns: 40px 32px 160px 70px 100px 100px 200px 26px 1fr 28px 36px;
       align-items: center; gap: 12px;
       padding: 9px 16px;
       background: var(--panel);
@@ -416,15 +416,17 @@
 
     /* ── ATTENTION DOTS ── */
     .attention-dots {
-      display: flex; flex-direction: column; gap: 3px;
+      display: flex; flex-direction: column; gap: 4px;
       align-items: center; justify-content: center;
       position: relative; z-index: 1;
+      width: 26px; min-width: 26px;
     }
     .attn-dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.12);
+      width: 11px; height: 11px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
       cursor: pointer; transition: all 0.15s; flex-shrink: 0;
-      padding: 0; background: rgba(0,0,0,0.35);
+      padding: 0; background: rgba(255,255,255,0.06);
+      display: block;
     }
     .attn-dot:hover { transform: scale(1.25); border-color: rgba(255,255,255,0.3); }
     .attn-dot.active-high  { background: #ef4444; border-color: #ef4444; box-shadow: 0 0 6px #ef444488; }
@@ -1238,7 +1240,7 @@
         </div>
 
         <div class="col-headers">
-          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Manager</div><div>Stage</div><div>Status</div><div>Note</div><div title="Attention Priority"></div><div></div><div></div>
+          <div>Rank</div><div></div><div>Account</div><div>Solutions</div><div>Manager</div><div>Stage</div><div>Status</div><div title="Attention Priority">Attn</div><div>Note</div><div></div><div></div>
         </div>
 
         <div class="accounts">
@@ -1320,14 +1322,14 @@
       <div class="lights">
         ${STATUSES.map(s=>{const on=acct.status===s.id;return`<button class="light" data-light="${acct.id}:${s.id}" title="${s.label}: ${s.description}" style="border-color:${on?s.color:"rgba(255,255,255,0.08)"};background:${on?`radial-gradient(circle at 40% 35%, rgba(255,255,255,0.35) 0%, transparent 60%), ${s.color}`:"rgba(0,0,0,0.4)"};box-shadow:${on?`0 0 10px ${s.color}99, 0 0 22px ${s.color}44`:"none"}"></button>`;}).join("")}
       </div>
-      <div class="note-cell">
-        ${nextActionLine}
-        <input class="note-input" data-note="${acct.id}" value="${(noteFirstLine||"").replace(/"/g,"&quot;")}" placeholder="Quick note..." />
-      </div>
-      <div class="attention-dots" title="Attention priority">
+      <div class="attention-dots" title="Attention priority: red=high, yellow=medium, green=low">
         <button class="attn-dot ${acct.attention==="high"?"active-high":""}" data-attn="${acct.id}:high" title="High priority"></button>
         <button class="attn-dot ${acct.attention==="medium"?"active-medium":""}" data-attn="${acct.id}:medium" title="Medium priority"></button>
         <button class="attn-dot ${acct.attention==="low"?"active-low":""}" data-attn="${acct.id}:low" title="Low priority"></button>
+      </div>
+      <div class="note-cell">
+        ${nextActionLine}
+        <input class="note-input" data-note="${acct.id}" value="${(noteFirstLine||"").replace(/"/g,"&quot;")}" placeholder="Quick note..." />
       </div>
       <button class="details-btn" data-details="${acct.id}" title="Open details">›</button>
       <button class="delete-btn" data-delete="${acct.id}">&times;</button>
