@@ -38,7 +38,7 @@
       "lastStatusChange": 1779829422669,
       "lastStageChange": 1779829430459,
       "lastTouched": 1779829477020,
-      "attention": null
+      "attention": "low"
     },
     {
       "id": "1779826480600",
@@ -311,7 +311,7 @@
       "lastStageChange": 1779138980590,
       "lastTouched": 1780587236938,
       "manager": "new_manager",
-      "attention": null
+      "attention": "low"
     },
     {
       "id": "1775510919757",
