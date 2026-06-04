@@ -17,7 +17,8 @@
       "nextActionLabel": "Ken to provide PSO pricing",
       "lastStatusChange": 1779917465674,
       "lastStageChange": 1779917413174,
-      "lastTouched": 1780405790740
+      "lastTouched": 1780405790740,
+      "attention": null
     },
     {
       "id": "1779829393615",
@@ -36,7 +37,8 @@
       "nextActionLabel": "Wait on next step from Cliff",
       "lastStatusChange": 1779829422669,
       "lastStageChange": 1779829430459,
-      "lastTouched": 1779829477020
+      "lastTouched": 1779829477020,
+      "attention": null
     },
     {
       "id": "1779826480600",
@@ -55,7 +57,8 @@
       "nextActionLabel": "Presales demo scheduled",
       "lastStatusChange": 1779917488653,
       "lastStageChange": 1779826509691,
-      "lastTouched": 1779917488653
+      "lastTouched": 1779917488653,
+      "attention": null
     },
     {
       "id": "1779825063495",
@@ -74,7 +77,8 @@
       "nextActionLabel": "No actions",
       "lastStatusChange": 1780491090192,
       "lastStageChange": 1780491090192,
-      "lastTouched": 1780491090192
+      "lastTouched": 1780491090192,
+      "attention": null
     },
     {
       "id": "1779463328469",
@@ -94,7 +98,8 @@
       "lastStatusChange": 1780491246408,
       "lastStageChange": 1780491243499,
       "lastTouched": 1780491246408,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1779140794174",
@@ -113,7 +118,8 @@
       "lastStatusChange": 1779141043982,
       "lastStageChange": 1779140823994,
       "lastTouched": 1779897003577,
-      "manager": "manager_c"
+      "manager": "manager_c",
+      "attention": null
     },
     {
       "id": "1778764482351",
@@ -134,7 +140,8 @@
       "lastStatusChange": 1780588064726,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780588064726,
-      "manager": "manager_c"
+      "manager": "manager_c",
+      "attention": null
     },
     {
       "id": "1778531551490",
@@ -154,7 +161,8 @@
       "lastStatusChange": 1780068168943,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780068168943,
-      "manager": "manager_c"
+      "manager": "manager_c",
+      "attention": null
     },
     {
       "id": "1778176574028",
@@ -174,7 +182,8 @@
       "lastStatusChange": 1780490668848,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780491202639,
-      "manager": "new_manager_4"
+      "manager": "new_manager_4",
+      "attention": null
     },
     {
       "id": "1778163370496",
@@ -194,7 +203,8 @@
       "lastStatusChange": 1779829663118,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779829663118,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1777986105700",
@@ -214,7 +224,8 @@
       "lastStatusChange": 1780491083134,
       "lastStageChange": 1779916970417,
       "lastTouched": 1780491083134,
-      "manager": "manager_b"
+      "manager": "manager_b",
+      "attention": null
     },
     {
       "id": "1777560503023",
@@ -234,7 +245,8 @@
       "lastStatusChange": 1780583671923,
       "lastStageChange": 1780583667379,
       "lastTouched": 1780583671923,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1776784923342",
@@ -254,7 +266,8 @@
       "lastStatusChange": 1779140926952,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779140926952,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1776271800953",
@@ -275,7 +288,8 @@
       "lastStatusChange": 1780583567264,
       "lastStageChange": 1780583567264,
       "lastTouched": 1780583567264,
-      "manager": "manager_a"
+      "manager": "manager_a",
+      "attention": null
     },
     {
       "id": "1776263767328",
@@ -296,7 +310,8 @@
       "lastStatusChange": 1780587236938,
       "lastStageChange": 1779138980590,
       "lastTouched": 1780587236938,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1775510919757",
@@ -316,7 +331,8 @@
       "lastStatusChange": 1779829657440,
       "lastStageChange": 1779829657440,
       "lastTouched": 1779829657440,
-      "manager": "new_manager_5"
+      "manager": "new_manager_5",
+      "attention": null
     },
     {
       "id": "1775150917809",
@@ -336,7 +352,8 @@
       "lastStatusChange": 1779141039346,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779817369395,
-      "manager": "new_manager_2"
+      "manager": "new_manager_2",
+      "attention": null
     },
     {
       "id": "1775061086830",
@@ -356,7 +373,8 @@
       "lastStatusChange": 1779138881641,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780587172896,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1775060536297",
@@ -376,7 +394,8 @@
       "lastStatusChange": 1779141032394,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779897000354,
-      "manager": "manager_c"
+      "manager": "manager_c",
+      "attention": null
     },
     {
       "id": "1775060449341",
@@ -397,7 +416,8 @@
       "lastStatusChange": 1780490637406,
       "lastStageChange": 1779138615517,
       "lastTouched": 1780587057038,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1774906261289",
@@ -417,7 +437,8 @@
       "lastStatusChange": 1779140955814,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779140955814,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1774886609905",
@@ -439,7 +460,8 @@
       "lastStatusChange": 1779818307024,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780587029179,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1774649392203",
@@ -459,7 +481,8 @@
       "lastStatusChange": 1779140924628,
       "lastStageChange": 1779140451019,
       "lastTouched": 1779140924628,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1774452509656",
@@ -479,7 +502,8 @@
       "lastStatusChange": 1780587218629,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780587218629,
-      "manager": "new_manager"
+      "manager": "new_manager",
+      "attention": null
     },
     {
       "id": "1774452146576",
@@ -499,7 +523,8 @@
       "lastStatusChange": 1779140927988,
       "lastStageChange": 1779139530205,
       "lastTouched": 1779140927988,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1774276267735",
@@ -519,7 +544,8 @@
       "lastStatusChange": 1779140921260,
       "lastStageChange": 1780490205547,
       "lastTouched": 1780490205547,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1774036447269",
@@ -539,7 +565,8 @@
       "lastStatusChange": 1779829667092,
       "lastStageChange": 1779135548438,
       "lastTouched": 1779829667092,
-      "manager": "new_manager_5"
+      "manager": "new_manager_5",
+      "attention": null
     },
     {
       "id": "1774036445446",
@@ -559,7 +586,8 @@
       "lastStatusChange": 1779141046545,
       "lastStageChange": 1779817363089,
       "lastTouched": 1779907887818,
-      "manager": "new_manager_2"
+      "manager": "new_manager_2",
+      "attention": null
     },
     {
       "id": "1774036443322",
@@ -579,7 +607,8 @@
       "lastStatusChange": 1779917493957,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780588446654,
-      "manager": "manager_b"
+      "manager": "manager_b",
+      "attention": null
     },
     {
       "id": "1774030747139",
@@ -599,7 +628,8 @@
       "lastStatusChange": 1779140922872,
       "lastStageChange": 1780490207677,
       "lastTouched": 1780490207677,
-      "manager": null
+      "manager": null,
+      "attention": null
     },
     {
       "id": "1774025914478",
@@ -620,7 +650,8 @@
       "lastStatusChange": 1780583655011,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780583655011,
-      "manager": "new_manager_5"
+      "manager": "new_manager_5",
+      "attention": "high"
     },
     {
       "id": "1773955587777",
@@ -640,7 +671,8 @@
       "lastStatusChange": 1779139283953,
       "lastStageChange": 1779139287201,
       "lastTouched": 1780490626574,
-      "manager": "new_manager_4"
+      "manager": "new_manager_4",
+      "attention": null
     },
     {
       "id": "1",
@@ -660,7 +692,8 @@
       "lastStatusChange": 1780587233510,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780587233510,
-      "manager": "new_manager_5"
+      "manager": "new_manager_5",
+      "attention": null
     },
     {
       "id": "2",
@@ -681,7 +714,8 @@
       "lastStatusChange": 1780491196003,
       "lastStageChange": 1779135548438,
       "lastTouched": 1780586823529,
-      "manager": "new_manager_4"
+      "manager": "new_manager_4",
+      "attention": "high"
     },
     {
       "id": "3",
@@ -701,7 +735,8 @@
       "lastStatusChange": 1780490173754,
       "lastStageChange": 1780490214779,
       "lastTouched": 1780490214779,
-      "manager": "manager_b"
+      "manager": "manager_b",
+      "attention": null
     }
   ],
   "config": {
