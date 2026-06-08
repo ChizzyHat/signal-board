@@ -1,6 +1,23 @@
 {
   "accounts": [
     {
+      "id": "1780927032006",
+      "name": "New Account",
+      "status": null,
+      "note": "",
+      "solutions": [],
+      "stage": null,
+      "manager": null,
+      "priority": null,
+      "logo": "",
+      "createdAt": 1780927032006,
+      "nextActionDate": "",
+      "nextActionLabel": "",
+      "lastStatusChange": 1780927032006,
+      "lastStageChange": 1780927032006,
+      "lastTouched": 1780927032006
+    },
+    {
       "id": "1779917384225",
       "name": "Plymouth Rock",
       "status": "on_colleague",
