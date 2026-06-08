@@ -4,7 +4,7 @@
       "id": "1780927032006",
       "name": "Me",
       "status": "on_me",
-      "note": "",
+      "note": "Need to respond to Mark",
       "solutions": [],
       "stage": null,
       "manager": null,
@@ -15,7 +15,8 @@
       "nextActionLabel": "",
       "lastStatusChange": 1780927159842,
       "lastStageChange": 1780927032006,
-      "lastTouched": 1780927159842
+      "lastTouched": 1780927174119,
+      "attention": "high"
     },
     {
       "id": "1779917384225",
