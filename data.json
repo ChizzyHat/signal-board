@@ -42,7 +42,7 @@
       "id": "1779829393615",
       "name": "Zurich",
       "status": "on_colleague",
-      "note": "May 26 - Cliff had call with Zurich - we are in the lead. timing unknown",
+      "note": "June 16 - We were selected.\nMay 26 - Cliff had call with Zurich - we are in the lead. timing unknown",
       "solutions": [
         "evolve"
       ],
@@ -55,7 +55,7 @@
       "nextActionLabel": "Wait on next step from Cliff",
       "lastStatusChange": 1781716666170,
       "lastStageChange": 1779829430459,
-      "lastTouched": 1781716676708,
+      "lastTouched": 1781716686734,
       "attention": "low"
     },
     {
