@@ -22,7 +22,7 @@
       "id": "1779917384225",
       "name": "Plymouth Rock",
       "status": "on_colleague",
-      "note": "6/10 - Call with Joe Barretto (xPression owner)\n5/30 - Ken's call went good - gathering pricing from Phil to present\n5/27 - Ken sent rough proposal and deployment options deck",
+      "note": "6/20 - Provided additional responses to Plymouth re Evolve\n6/10 - Call with Joe Barretto (xPression owner)\n5/30 - Ken's call went good - gathering pricing from Phil to present\n5/27 - Ken sent rough proposal and deployment options deck",
       "solutions": [
         "evolve"
       ],
@@ -35,7 +35,7 @@
       "nextActionLabel": "Get with Ken",
       "lastStatusChange": 1779917465674,
       "lastStageChange": 1779917413174,
-      "lastTouched": 1781703970539,
+      "lastTouched": 1782396322700,
       "attention": "low"
     },
     {
@@ -688,7 +688,7 @@
       "nextActionLabel": "Start POC",
       "lastStatusChange": 1779139283953,
       "lastStageChange": 1779139287201,
-      "lastTouched": 1781703961461,
+      "lastTouched": 1782396300363,
       "manager": "new_manager_4",
       "attention": "medium"
     },
