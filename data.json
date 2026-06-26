@@ -9,7 +9,7 @@
         "evolve"
       ],
       "stage": null,
-      "manager": null,
+      "manager": "manager_c",
       "priority": null,
       "logo": "",
       "createdAt": 1782505514487,
