@@ -8,7 +8,7 @@
       "solutions": [
         "evolve"
       ],
-      "stage": null,
+      "stage": 2,
       "manager": "manager_c",
       "priority": null,
       "logo": "",
@@ -16,8 +16,8 @@
       "nextActionDate": "",
       "nextActionLabel": "",
       "lastStatusChange": 1782505514487,
-      "lastStageChange": 1782505514487,
-      "lastTouched": 1782505514487
+      "lastStageChange": 1782505527676,
+      "lastTouched": 1782505527676
     },
     {
       "id": "1780927032006",
