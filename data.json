@@ -4,7 +4,7 @@
       "id": "1782930763987",
       "name": "Prudential",
       "status": "critical",
-      "note": "",
+      "note": "I need to get details on storage expansion from the QMS team",
       "solutions": [],
       "stage": 2,
       "manager": "new_manager_4",
@@ -15,7 +15,7 @@
       "nextActionLabel": "",
       "lastStatusChange": 1782930832281,
       "lastStageChange": 1782930829658,
-      "lastTouched": 1782930832281,
+      "lastTouched": 1782930850395,
       "attention": "high"
     },
     {
