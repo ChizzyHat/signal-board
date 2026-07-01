@@ -22,7 +22,7 @@
       "id": "1782505514487",
       "name": "Highmark/Forge",
       "status": "critical",
-      "note": "Need to get Evolve Sandbox",
+      "note": "7/1 - Sent activation email to DK, Jason U, and \n6/29 - Sandbox live\n6/26 - Need to get Evolve Sandbox",
       "solutions": [
         "evolve"
       ],
@@ -35,7 +35,7 @@
       "nextActionLabel": "",
       "lastStatusChange": 1782505530128,
       "lastStageChange": 1782505527676,
-      "lastTouched": 1782505541218,
+      "lastTouched": 1782931093960,
       "attention": "high"
     },
     {
