@@ -1,6 +1,23 @@
 {
   "accounts": [
     {
+      "id": "1782930763987",
+      "name": "New Account",
+      "status": null,
+      "note": "",
+      "solutions": [],
+      "stage": null,
+      "manager": null,
+      "priority": null,
+      "logo": "",
+      "createdAt": 1782930763987,
+      "nextActionDate": "",
+      "nextActionLabel": "",
+      "lastStatusChange": 1782930763987,
+      "lastStageChange": 1782930763987,
+      "lastTouched": 1782930763987
+    },
+    {
       "id": "1782505514487",
       "name": "Highmark/Forge",
       "status": "critical",
