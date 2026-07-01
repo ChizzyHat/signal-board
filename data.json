@@ -161,7 +161,7 @@
       "id": "1779140794174",
       "name": "Children's Surgery Centers",
       "status": "stalled",
-      "note": "3/12 - POC delivered",
+      "note": "7/1 - Followed up internally again\n5/18 - Asked Cyndi and Chris if they heard anything\n3/12 - POC delivered",
       "solutions": [
         "iforms"
       ],
@@ -173,7 +173,7 @@
       "nextActionLabel": "Waiting on some feedback",
       "lastStatusChange": 1779141043982,
       "lastStageChange": 1779140823994,
-      "lastTouched": 1779897003577,
+      "lastTouched": 1782931301925,
       "manager": "manager_c",
       "attention": "low"
     },
