@@ -6,16 +6,16 @@
       "status": null,
       "note": "",
       "solutions": [],
-      "stage": null,
-      "manager": null,
+      "stage": 2,
+      "manager": "new_manager_5",
       "priority": null,
       "logo": "",
       "createdAt": 1783438650783,
       "nextActionDate": "",
       "nextActionLabel": "",
       "lastStatusChange": 1783438650783,
-      "lastStageChange": 1783438650783,
-      "lastTouched": 1783438650783
+      "lastStageChange": 1783438663119,
+      "lastTouched": 1783438663119
     },
     {
       "id": "1782930763987",
