@@ -17,7 +17,8 @@
       "nextActionLabel": "Send QMS information to GS team AND Fedramp details",
       "lastStatusChange": 1783438650783,
       "lastStageChange": 1783438663119,
-      "lastTouched": 1783438693807
+      "lastTouched": 1783438693807,
+      "attention": "high"
     },
     {
       "id": "1782930763987",
