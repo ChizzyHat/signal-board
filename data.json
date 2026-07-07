@@ -5,7 +5,9 @@
       "name": "Guidewell Source",
       "status": null,
       "note": "Completed initial presentation on July 7",
-      "solutions": [],
+      "solutions": [
+        "qms"
+      ],
       "stage": 2,
       "manager": "new_manager_5",
       "priority": null,
