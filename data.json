@@ -5,7 +5,11 @@
       "name": "Cigna",
       "status": null,
       "note": "CBA: welcome-form-fiwxLA8sSC",
-      "solutions": [],
+      "solutions": [
+        "qms",
+        "evolve",
+        "iforms"
+      ],
       "stage": null,
       "manager": "manager_c",
       "priority": null,
