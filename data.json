@@ -19,7 +19,8 @@
       "nextActionLabel": "Onsite",
       "lastStatusChange": 1783706643768,
       "lastStageChange": 1783706641145,
-      "lastTouched": 1783706643768
+      "lastTouched": 1783706643768,
+      "attention": "high"
     },
     {
       "id": "1783438650783",
