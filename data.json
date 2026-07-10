@@ -26,7 +26,7 @@
       "id": "1783438650783",
       "name": "Guidewell Source",
       "status": "critical",
-      "note": "Completed initial presentation on July 7",
+      "note": "7/10 - Sent presentation to Guidewell team\nCompleted initial presentation on July 7",
       "solutions": [
         "qms"
       ],
@@ -39,7 +39,7 @@
       "nextActionLabel": "Send QMS information to GS team AND Fedramp details",
       "lastStatusChange": 1783438773997,
       "lastStageChange": 1783438663119,
-      "lastTouched": 1783438773997,
+      "lastTouched": 1783706896472,
       "attention": "high"
     },
     {
