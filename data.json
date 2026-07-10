@@ -5,17 +5,19 @@
       "name": "Loblaws",
       "status": null,
       "note": "",
-      "solutions": [],
-      "stage": null,
-      "manager": null,
+      "solutions": [
+        "iforms"
+      ],
+      "stage": 2,
+      "manager": "new_manager_2",
       "priority": null,
       "logo": "",
       "createdAt": 1783712696013,
       "nextActionDate": "",
       "nextActionLabel": "",
       "lastStatusChange": 1783712696013,
-      "lastStageChange": 1783712696013,
-      "lastTouched": 1783712696013
+      "lastStageChange": 1783712704736,
+      "lastTouched": 1783712704736
     },
     {
       "id": "1783706482958",
