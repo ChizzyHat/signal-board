@@ -1,6 +1,23 @@
 {
   "accounts": [
     {
+      "id": "1784294234768",
+      "name": "New Account",
+      "status": null,
+      "note": "",
+      "solutions": [],
+      "stage": null,
+      "manager": null,
+      "priority": null,
+      "logo": "",
+      "createdAt": 1784294234768,
+      "nextActionDate": "",
+      "nextActionLabel": "",
+      "lastStatusChange": 1784294234768,
+      "lastStageChange": 1784294234768,
+      "lastTouched": 1784294234768
+    },
+    {
       "id": "1783713068521",
       "name": "DCM - DATA Communications Management Corp.",
       "status": "on_colleague",
