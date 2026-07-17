@@ -5,7 +5,9 @@
       "name": "HCSC",
       "status": null,
       "note": "",
-      "solutions": [],
+      "solutions": [
+        "iforms"
+      ],
       "stage": null,
       "manager": "new_manager_5",
       "priority": null,
