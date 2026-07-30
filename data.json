@@ -5,7 +5,9 @@
       "name": "Nationwide",
       "status": null,
       "note": "",
-      "solutions": [],
+      "solutions": [
+        "qms"
+      ],
       "stage": null,
       "manager": null,
       "priority": null,
