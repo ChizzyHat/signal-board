@@ -64,7 +64,7 @@
       "id": "1783706482958",
       "name": "Cigna",
       "status": "critical",
-      "note": "CBA: welcome-form-fiwxLA8sSC",
+      "note": "Sent slides, CBA example and readme to Cigna. Next will be ROI assessment",
       "solutions": [
         "evolve",
         "iforms"
@@ -78,7 +78,7 @@
       "nextActionLabel": "Onsite",
       "lastStatusChange": 1783706643768,
       "lastStageChange": 1783706641145,
-      "lastTouched": 1783706643768,
+      "lastTouched": 1785425498568,
       "attention": "high"
     },
     {
