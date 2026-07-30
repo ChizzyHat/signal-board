@@ -4,7 +4,7 @@
       "id": "1785428360382",
       "name": "Liberty Mutual",
       "status": null,
-      "note": "",
+      "note": "7/30 - Sent QMS questionnaire - will need to price the solution ASAP once received.\n",
       "solutions": [
         "qms"
       ],
@@ -17,7 +17,7 @@
       "nextActionLabel": "Price QMS",
       "lastStatusChange": 1785428360382,
       "lastStageChange": 1785428393594,
-      "lastTouched": 1785428408037
+      "lastTouched": 1785428429775
     },
     {
       "id": "1784294234768",
