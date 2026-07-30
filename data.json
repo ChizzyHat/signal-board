@@ -17,7 +17,8 @@
       "nextActionLabel": "Price QMS",
       "lastStatusChange": 1785428360382,
       "lastStageChange": 1785428393594,
-      "lastTouched": 1785428429775
+      "lastTouched": 1785428429775,
+      "attention": "high"
     },
     {
       "id": "1784294234768",
