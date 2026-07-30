@@ -4,7 +4,7 @@
       "id": "1784294234768",
       "name": "HCSC",
       "status": "on_colleague",
-      "note": "Cyndi and team to complete the RFI",
+      "note": "Presented iForms to customer on 7/25\nCyndi and team to complete the RFI",
       "solutions": [
         "iforms"
       ],
@@ -17,7 +17,7 @@
       "nextActionLabel": "RFI due",
       "lastStatusChange": 1785425582909,
       "lastStageChange": 1784294266493,
-      "lastTouched": 1785425610100,
+      "lastTouched": 1785425629361,
       "attention": "high"
     },
     {
