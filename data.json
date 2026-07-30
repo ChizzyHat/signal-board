@@ -105,7 +105,7 @@
       "id": "1782930763987",
       "name": "Prudential",
       "status": "on_colleague",
-      "note": "7/10 Heidi and Michal to scope the solution and address storage needs then. It appears all contract tickets will be stored on Prudential infrastructure in \n7/10 - Followed up with Martin and Michal - they spoke to Heidi - next step is to scope the solution\nI need to get details on storage expansion from the QMS team",
+      "note": "7/10 Heidi and Michal to scope the solution and address storage needs then. It appears all contract tickets will be stored on Prudential infrastructure in EDM - No need for extended storage for contract tickets\n7/10 - Followed up with Martin and Michal - they spoke to Heidi - next step is to scope the solution\nI need to get details on storage expansion from the QMS team",
       "solutions": [],
       "stage": 2,
       "manager": "new_manager_4",
@@ -116,7 +116,7 @@
       "nextActionLabel": "",
       "lastStatusChange": 1783706661475,
       "lastStageChange": 1782930829658,
-      "lastTouched": 1785425847506,
+      "lastTouched": 1785425866028,
       "attention": "low"
     },
     {
