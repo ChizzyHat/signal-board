@@ -906,11 +906,11 @@
       "stage": 5,
       "priority": 4,
       "note": "7/31 - MSLA Signed!\n7/30 - Waiting on approval in salesforce\n7/15 - Told Bhushan we will need an NFR\n7/12 - Moving forward\n6/15 - Need an update\n6/4 - With GG\n5/26 - Final redlines sent from Stacey\n5/21 - Call with Rexy and Legal\n2PM Call with customer \nFinal contracts sent on May 7th. Holding firm on pricing\nKen sent updated proposal to Matthew and Rexy\nPhil needs to finish scoping PSO\nPricing call on 3/25",
-      "nextActionDate": "2026-07-31",
+      "nextActionDate": "2026-08-20",
       "nextActionLabel": "Need signed order document",
       "lastStatusChange": 1782917564286,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1786984062809,
+      "lastTouched": 1786984067897,
       "manager": "new_manager_4",
       "attention": "high"
     },
