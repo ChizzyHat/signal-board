@@ -201,7 +201,7 @@
       "id": "1779917384225",
       "name": "Plymouth Rock",
       "status": "on_colleague",
-      "note": "7/30 - Waiting on next steps from PR\n7/8 - Sent Evolve demo to PR\n7/1 - Shortlisted\n6/20 - Provided additional responses to Plymouth re Evolve\n6/10 - Call with Joe Barretto (xPression owner)\n5/30 - Ken's call went good - gathering pricing from Phil to present\n5/27 - Ken sent rough proposal and deployment options deck",
+      "note": "8/14 - From Phil's friend Brooke: \"From what I hear you are the “chosen” partner but when we speced out cost of implementation (not run rate costs) it was very high. I’m sure much of that has to do with some of our legacy architecture which drives up costs to implement any new system or technology because the work to pipe data and test is arduous compared to more modern architecture. I don’t actually know where this stands right now and if we’re actively trying to figure out a way to reduce the cost of implementation, but I can inquire!\n\"7/30 - Waiting on next steps from PR\n7/8 - Sent Evolve demo to PR\n7/1 - Shortlisted\n6/20 - Provided additional responses to Plymouth re Evolve\n6/10 - Call with Joe Barretto (xPression owner)\n5/30 - Ken's call went good - gathering pricing from Phil to present\n5/27 - Ken sent rough proposal and deployment options deck",
       "solutions": [
         "evolve"
       ],
@@ -214,7 +214,7 @@
       "nextActionLabel": "Start contracting",
       "lastStatusChange": 1779917465674,
       "lastStageChange": 1779917413174,
-      "lastTouched": 1785428139576,
+      "lastTouched": 1786984128637,
       "attention": "medium"
     },
     {
