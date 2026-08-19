@@ -24,7 +24,7 @@
       "id": "1785428360382",
       "name": "Liberty Mutual",
       "status": "critical",
-      "note": "8/17 - Provided writeup. \n7/30 - Sent QMS questionnaire - will need to price the solution ASAP once received.",
+      "note": "8/19 - \n8/17 - Provided writeup. \n7/30 - Sent QMS questionnaire - will need to price the solution ASAP once received.",
       "solutions": [
         "qms"
       ],
@@ -37,7 +37,7 @@
       "nextActionLabel": "Tentative meeting - Need to complete questions and price POC",
       "lastStatusChange": 1785428436567,
       "lastStageChange": 1785428393594,
-      "lastTouched": 1787174682502,
+      "lastTouched": 1787174700789,
       "attention": "high"
     },
     {
