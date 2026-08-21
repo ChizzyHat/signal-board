@@ -1,6 +1,23 @@
 {
   "accounts": [
     {
+      "id": "1787335723562",
+      "name": "New Account",
+      "status": null,
+      "note": "",
+      "solutions": [],
+      "stage": null,
+      "manager": null,
+      "priority": null,
+      "logo": "",
+      "createdAt": 1787335723562,
+      "nextActionDate": "",
+      "nextActionLabel": "",
+      "lastStatusChange": 1787335723562,
+      "lastStageChange": 1787335723562,
+      "lastTouched": 1787335723562
+    },
+    {
       "id": "1785428509690",
       "name": "Nationwide",
       "status": "on_customer",
