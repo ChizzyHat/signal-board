@@ -4,7 +4,7 @@
       "id": "1787335723562",
       "name": "Delta Dental of California",
       "status": null,
-      "note": "8/11 - \n8/5 - DD piloting the included QMS SFTP service vs the Azure sftp service to determine which is needed.\nThe requirement is to setup up to 100 accounts with granular user management. This requires Azure SFTP Service",
+      "note": "8/11 - \n8/7 - Communicated to Michael Cruz  the annual cost for the service ($1470/mo)\n8/5 - DD piloting the included QMS SFTP service vs the Azure sftp service to determine which is needed.\nThe requirement is to setup up to 100 accounts with granular user management. This requires Azure SFTP Service",
       "solutions": [
         "qms"
       ],
@@ -17,7 +17,7 @@
       "nextActionLabel": "Signed order",
       "lastStatusChange": 1787335723562,
       "lastStageChange": 1787335743654,
-      "lastTouched": 1787335851173,
+      "lastTouched": 1787335924038,
       "attention": "high"
     },
     {
