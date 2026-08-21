@@ -8,7 +8,7 @@
       "solutions": [
         "qms"
       ],
-      "stage": null,
+      "stage": 4,
       "manager": "manager_c",
       "priority": null,
       "logo": "",
@@ -16,8 +16,9 @@
       "nextActionDate": "",
       "nextActionLabel": "",
       "lastStatusChange": 1787335723562,
-      "lastStageChange": 1787335723562,
-      "lastTouched": 1787335723562
+      "lastStageChange": 1787335743654,
+      "lastTouched": 1787335743654,
+      "attention": "high"
     },
     {
       "id": "1785428509690",
