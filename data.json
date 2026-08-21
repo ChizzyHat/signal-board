@@ -183,7 +183,7 @@
       "id": "1782505514487",
       "name": "Highmark/Forge",
       "status": "critical",
-      "note": "8/17 - POC progressing - Need to explain tenants better. Gave Chris pricing information for the tenants.\n7/31 - Meeting to discuss pilot. Highmark has been creating templates. Q's on FO\n7/1 - Sent activation email to DK, Jason U, and Carrie Fink\n7/1 - Nick completed demo\n6/29 - Sandbox live\n6/26 - Need to get Evolve Sandbox",
+      "note": "8/19 - Email into Fontbin regarding performance with large documents. 8/17 - POC progressing - Need to explain tenants better. Gave Chris pricing information for the tenants.\n7/31 - Meeting to discuss pilot. Highmark has been creating templates. Q's on FO\n7/1 - Sent activation email to DK, Jason U, and Carrie Fink\n7/1 - Nick completed demo\n6/29 - Sandbox live\n6/26 - Need to get Evolve Sandbox",
       "solutions": [
         "evolve"
       ],
@@ -196,7 +196,7 @@
       "nextActionLabel": "Prepare demo of tenants for Forge",
       "lastStatusChange": 1786298625090,
       "lastStageChange": 1782505527676,
-      "lastTouched": 1786984677021,
+      "lastTouched": 1787336067399,
       "attention": "high"
     },
     {
