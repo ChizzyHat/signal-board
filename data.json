@@ -4,7 +4,7 @@
       "id": "1787768669557",
       "name": "Desjardins",
       "status": "on_colleague",
-      "note": "They are forecasting 5 year growth. There should not be any need to add capacity for the additional volume, but additional users will require the following expansion\nTo support the user increase over the 5 years, that would require the following uplift on the QMS side\n \n Year 2\tYear 3\tYear 4\tYear 5\nTotal\t$8,177 \t$8,463 \t$17,518 \t$27,196 ",
+      "note": "They are forecasting 5 year growth. There should not be any need to add capacity for the additional volume, but additional users will require the following expansion\nTo support the user increase over the 5 years, that would require the following uplift on the QMS side\n \n                Year 2\t   Year 3   \tYear 4   \tYear 5\nTotal\t$8,177 \t   $8,463 \t$17,518 \t$27,196 ",
       "solutions": [
         "qms"
       ],
@@ -17,7 +17,7 @@
       "nextActionLabel": "",
       "lastStatusChange": 1787768779042,
       "lastStageChange": 1787768765176,
-      "lastTouched": 1787768840072,
+      "lastTouched": 1787768864538,
       "attention": "medium"
     },
     {
