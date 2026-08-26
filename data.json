@@ -1,6 +1,23 @@
 {
   "accounts": [
     {
+      "id": "1787767932261",
+      "name": "New Account",
+      "status": null,
+      "note": "",
+      "solutions": [],
+      "stage": null,
+      "manager": null,
+      "priority": null,
+      "logo": "",
+      "createdAt": 1787767932261,
+      "nextActionDate": "",
+      "nextActionLabel": "",
+      "lastStatusChange": 1787767932261,
+      "lastStageChange": 1787767932261,
+      "lastTouched": 1787767932261
+    },
+    {
       "id": "1787335723562",
       "name": "Delta Dental of California",
       "status": null,
@@ -64,7 +81,7 @@
       "id": "1784294234768",
       "name": "HCSC",
       "status": "on_colleague",
-      "note": " 7/27/2026: Submitted the RFI. Per instructions: HCSC Review of Written Responses July 28 - August 6 andÃÂÃÂ¢ÃÂÃÂÃÂÃÂª HCSC Supplier Notification and Next Steps August 8\n7/21 - Presented iForms to customer on 7/21\nCyndi and team to complete the RFI",
+      "note": " 7/27/2026: Submitted the RFI. Per instructions: HCSC Review of Written Responses July 28 - August 6 andÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂª HCSC Supplier Notification and Next Steps August 8\n7/21 - Presented iForms to customer on 7/21\nCyndi and team to complete the RFI",
       "solutions": [
         "iforms"
       ],
@@ -713,7 +730,7 @@
       "createdAt": 1774452509656,
       "stage": 4,
       "priority": 3,
-      "note": "Aug 5: Cliff is working through some revised pricingÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¦primarily add-on costs.  Cindy appeared fine last week with the overall pricing strategy.  Working hard to get her to sign off on the add-on pricing so we can move forward.\nJuly 7, 2026: Procurement needs to get kicked off. Will have to complete security and architecture along w legal reviews.\n7/1 - MofO internal meeting for funds approval\n6/17 - Moving forward\n6/2 - Cliff presented pricing to TCS and Mutual of Omaha       Sent QMS/Flex Matrix to MofO\nCBA Documentation and matrix. \nNeed order document for QMS. Still in POC - Pricing provided. Waiting on TCS for update on next steps",
+      "note": "Aug 5: Cliff is working through some revised pricingÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¦primarily add-on costs.  Cindy appeared fine last week with the overall pricing strategy.  Working hard to get her to sign off on the add-on pricing so we can move forward.\nJuly 7, 2026: Procurement needs to get kicked off. Will have to complete security and architecture along w legal reviews.\n7/1 - MofO internal meeting for funds approval\n6/17 - Moving forward\n6/2 - Cliff presented pricing to TCS and Mutual of Omaha       Sent QMS/Flex Matrix to MofO\nCBA Documentation and matrix. \nNeed order document for QMS. Still in POC - Pricing provided. Waiting on TCS for update on next steps",
       "nextActionDate": "2026-08-06",
       "nextActionLabel": "Security Review",
       "lastStatusChange": 1783713499536,
