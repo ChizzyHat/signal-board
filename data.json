@@ -22,7 +22,7 @@
       "id": "1787768669557",
       "name": "Desjardins",
       "status": "on_colleague",
-      "note": "STATUS: Add QMS Pricing into spreadsheet from Mike\n8/30: Mike working on questionnaire\nThey are forecasting 5 year growth. There should not be any need to add capacity for the additional volume, but additional users will require the following expansion\nTo support the user increase over the 5 years, that would require the following uplift on the QMS side\n \n                Year 2\t   Year 3   \tYear 4   \tYear 5\nTotal\t$8,177 \t   $8,463 \t$17,518 \t$27,196 ",
+      "note": "STATUS: Waiting on me to put QMS data into spreadsheet\n8/30: Mike working on questionnaire\nThey are forecasting 5 year growth. There should not be any need to add capacity for the additional volume, but additional users will require the following expansion\nTo support the user increase over the 5 years, that would require the following uplift on the QMS side\n \n                Year 2\t   Year 3   \tYear 4   \tYear 5\nTotal\t$8,177 \t   $8,463 \t$17,518 \t$27,196 ",
       "solutions": [
         "qms"
       ],
@@ -35,7 +35,7 @@
       "nextActionLabel": "Mike to pull together joint pricing for Desjardins",
       "lastStatusChange": 1787768779042,
       "lastStageChange": 1787768765176,
-      "lastTouched": 1788297351934,
+      "lastTouched": 1788297366153,
       "attention": "medium"
     },
     {
