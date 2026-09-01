@@ -84,7 +84,7 @@
       "id": "1785428360382",
       "name": "Liberty Mutual",
       "status": "critical",
-      "note": "8/19 - Katie Shuler requested meeting\n8/17 - Provided writeup. \n7/30 - Sent QMS questionnaire - will need to price the solution ASAP once received.",
+      "note": "STATUS: In good shape - need to review pricing with Ken - graduated future pricing.\n8/30 - PSO review meeting led by Phil. I presented pricing. Bundy went over remaining questions.\n8/28 - Rick did demo\n8/27 - PSO scoping call and Bundy presented first round of requirements spreadsheet\n8/19 - Katie Shuler requested meeting\n8/17 - Provided writeup. \n7/30 - Sent QMS questionnaire - will need to price the solution ASAP once received.",
       "solutions": [
         "qms"
       ],
@@ -97,7 +97,7 @@
       "nextActionLabel": "Tentative meeting - Need to complete questions and price POC",
       "lastStatusChange": 1785428436567,
       "lastStageChange": 1785428393594,
-      "lastTouched": 1787174729788,
+      "lastTouched": 1788273487219,
       "attention": "high"
     },
     {
