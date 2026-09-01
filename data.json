@@ -162,7 +162,7 @@
       "id": "1783712696013",
       "name": "Loblaws",
       "status": "on_me",
-      "note": "8/17 - Considering partnering with AssemblyAI to do transcription.\n7/30 -Create demo and work on flow for Loblaws - Sep 8 - Need to set strategy - Rash demo\n7/10 - Call with Kevin to discuss needs for iForms demo to expand the use at Loblaws",
+      "note": "STATUS: They will proceed with iForms renewal - need to better understand AI transcription\n9/1 - Requested next steps from Sacha and Kevin\n8/17 - Considering partnering with AssemblyAI to do transcription.\n7/30 -Create demo and work on flow for Loblaws - Sep 8 - Need to set strategy - Rash demo\n7/10 - Call with Kevin to discuss needs for iForms demo to expand the use at Loblaws",
       "solutions": [
         "iforms"
       ],
@@ -175,7 +175,7 @@
       "nextActionLabel": "Meeting with Loblaws",
       "lastStatusChange": 1786979566232,
       "lastStageChange": 1783712704736,
-      "lastTouched": 1788272954846,
+      "lastTouched": 1788296876662,
       "attention": "high"
     },
     {
