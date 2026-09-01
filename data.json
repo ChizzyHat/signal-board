@@ -3,19 +3,19 @@
     {
       "id": "1788296617338",
       "name": "San Mateo Health Plan",
-      "status": null,
+      "status": "critical",
       "note": "",
       "solutions": [],
-      "stage": null,
+      "stage": 2,
       "manager": "manager_c",
-      "priority": null,
+      "priority": 3,
       "logo": "",
       "createdAt": 1788296617338,
       "nextActionDate": "",
       "nextActionLabel": "",
-      "lastStatusChange": 1788296617338,
-      "lastStageChange": 1788296617338,
-      "lastTouched": 1788296617338
+      "lastStatusChange": 1788296631203,
+      "lastStageChange": 1788296630138,
+      "lastTouched": 1788296631203
     },
     {
       "id": "1787768669557",
