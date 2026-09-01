@@ -751,11 +751,11 @@
       "stage": 5,
       "priority": 4,
       "note": "STATUS: Chris sent email to Sumit. I need to make sure internal folks take ownership\n\nOLD OP: Firewall upgrade provided at no charge. Connect with QMS team on adding a sandbox environment. Provided pricing $11,500 for Firewall Upgrade",
-      "nextActionDate": "",
+      "nextActionDate": "2026-09-03",
       "nextActionLabel": "",
       "lastStatusChange": 1788297258918,
       "lastStageChange": 1788297244701,
-      "lastTouched": 1788297288733,
+      "lastTouched": 1788297293156,
       "manager": "manager_c",
       "attention": "high"
     },
