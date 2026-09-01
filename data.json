@@ -4,7 +4,7 @@
       "id": "1788296617338",
       "name": "San Mateo Health Plan",
       "status": "critical",
-      "note": "",
+      "note": "STATUS: Need to review DRD and come up with game plan for CBA\n9/1 - Internal meeting",
       "solutions": [],
       "stage": 2,
       "manager": "manager_c",
@@ -15,7 +15,7 @@
       "nextActionLabel": "Review DRD",
       "lastStatusChange": 1788296631203,
       "lastStageChange": 1788296630138,
-      "lastTouched": 1788296675050,
+      "lastTouched": 1788296712063,
       "attention": "high"
     },
     {
