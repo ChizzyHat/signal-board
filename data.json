@@ -299,7 +299,7 @@
       "id": "1779829393615",
       "name": "Zurich",
       "status": "on_colleague",
-      "note": "8/5/26: Moving this close date out to January to be more realistic. Was told they are going for management approval mid August to move forward. We were told a few weeks ago that Quadient was the preferred vendor but we also heard from a partner that they may try to get a better price by going to RFP.\nAug 5: Was told they were going in front of Management in a week or so to get things approved.\n7/7/26: Deal likely to happen in Q4 due to timing of budget w Zurich.\nJune 16 - We were selected.\nMay 26 - Cliff had call with Zurich - we are in the lead. timing unknown",
+      "note": "STATUS: Going in front of Management in a week or so to get things approved.\n8/5/26: Moving this close date out to January to be more realistic. Was told they are going for management approval mid August to move forward. We were told a few weeks ago that Quadient was the preferred vendor but we also heard from a partner that they may try to get a better price by going to RFP.\nAug 5: Was told they were going in front of Management in a week or so to get things approved.\n7/7/26: Deal likely to happen in Q4 due to timing of budget w Zurich.\nJune 16 - We were selected.\nMay 26 - Cliff had call with Zurich - we are in the lead. timing unknown",
       "solutions": [
         "evolve"
       ],
@@ -312,7 +312,7 @@
       "nextActionLabel": "Going in front of Management in a week or so to get things approved.",
       "lastStatusChange": 1781716666170,
       "lastStageChange": 1779829430459,
-      "lastTouched": 1788443782660,
+      "lastTouched": 1788443790882,
       "attention": "low"
     },
     {
