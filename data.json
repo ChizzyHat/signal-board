@@ -4,7 +4,7 @@
       "id": "1788444194390",
       "name": "Excellus",
       "status": "on_me",
-      "note": "",
+      "note": "STATUS: Need pricing from Michal and Martin for hosting Adapt\n9/2: Excellus wants to purchase Adapt. Cyndi asked for the cost and details for QMS",
       "solutions": [],
       "stage": 3,
       "manager": "new_manager_5",
@@ -15,7 +15,7 @@
       "nextActionLabel": "Get pricing for ADAPT hosting",
       "lastStatusChange": 1788444234675,
       "lastStageChange": 1788444227242,
-      "lastTouched": 1788444253026,
+      "lastTouched": 1788444296678,
       "attention": "high"
     },
     {
