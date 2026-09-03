@@ -182,7 +182,7 @@
       "id": "1783706482958",
       "name": "Cigna",
       "status": "on_customer",
-      "note": "July 30 - Sent all files to Cigna (CBA sample, slides, readme)\nJuly 28 - Onsite complete\nSent slides, CBA example and readme to Cigna. Next will be ROI assessment",
+      "note": "STATUS: Waiting to ne engaged by Cigna to conduct ROI analysis\nJuly 30 - Sent all files to Cigna (CBA sample, slides, readme)\nJuly 28 - Onsite complete\nSent slides, CBA example and readme to Cigna. Next will be ROI assessment",
       "solutions": [
         "evolve",
         "iforms"
@@ -196,7 +196,7 @@
       "nextActionLabel": "ROI assessment",
       "lastStatusChange": 1785425550142,
       "lastStageChange": 1783706641145,
-      "lastTouched": 1786984262131,
+      "lastTouched": 1788443896034,
       "attention": "high"
     },
     {
