@@ -82,7 +82,7 @@
       "id": "1785428509690",
       "name": "Nationwide",
       "status": "on_customer",
-      "note": "8/25 - The will send us some\n8/12 - Completed iForms presentation and demo. Sent slides and video links\n7/30 Asked what they want to see. Sent policy loan video. Prepare iForms demo for Nationwide",
+      "note": "STATUS: Waiting on information for us to price iForm \n8/25 - The will send us some details for pricing\n8/12 - Completed iForms presentation and demo. Sent slides and video links\n7/30 Asked what they want to see. Sent policy loan video. Prepare iForms demo for Nationwide",
       "solutions": [
         "iforms"
       ],
@@ -95,7 +95,7 @@
       "nextActionLabel": "Follow up with Cliff",
       "lastStatusChange": 1786981997640,
       "lastStageChange": 1785428533175,
-      "lastTouched": 1788443978309,
+      "lastTouched": 1788444020121,
       "attention": "high"
     },
     {
