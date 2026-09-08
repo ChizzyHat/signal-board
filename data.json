@@ -135,7 +135,7 @@
       "nextActionLabel": "Waiting on customer to re-engage",
       "lastStatusChange": 1785425582909,
       "lastStageChange": 1784294266493,
-      "lastTouched": 1788443868569,
+      "lastTouched": 1788882986661,
       "attention": "low"
     },
     {
@@ -155,7 +155,7 @@
       "nextActionLabel": "NO NEXT STEP",
       "lastStatusChange": 1783713434699,
       "lastStageChange": 1783713428744,
-      "lastTouched": 1788443652714,
+      "lastTouched": 1788882985632,
       "attention": "low"
     },
     {
@@ -254,7 +254,7 @@
       "nextActionLabel": "NO NEXT STEP",
       "lastStatusChange": 1788296808056,
       "lastStageChange": 1788296781710,
-      "lastTouched": 1788296808056,
+      "lastTouched": 1788882984718,
       "attention": "high"
     },
     {
@@ -312,7 +312,7 @@
       "nextActionLabel": "Going in front of Management in a week or so to get things approved.",
       "lastStatusChange": 1781716666170,
       "lastStageChange": 1788443796213,
-      "lastTouched": 1788443796213,
+      "lastTouched": 1788882986089,
       "attention": "medium"
     },
     {
@@ -414,7 +414,7 @@
       "nextActionLabel": "Quadient HMA proposal",
       "lastStatusChange": 1782931525362,
       "lastStageChange": 1788443614517,
-      "lastTouched": 1788443614517,
+      "lastTouched": 1788882985182,
       "manager": "manager_c",
       "attention": "medium"
     },
@@ -776,7 +776,7 @@
       "nextActionLabel": "Security Review",
       "lastStatusChange": 1788445688982,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1788445688982,
+      "lastTouched": 1788882987169,
       "manager": "new_manager",
       "attention": "high"
     },
@@ -924,7 +924,7 @@
       "nextActionLabel": "Wait for Cyndi to get back with update",
       "lastStatusChange": 1786984374586,
       "lastStageChange": 1779135548438,
-      "lastTouched": 1788466372960,
+      "lastTouched": 1788882984193,
       "manager": "new_manager_5",
       "attention": "medium"
     },
