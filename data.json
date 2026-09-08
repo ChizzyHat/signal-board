@@ -4,7 +4,7 @@
       "id": "1788444194390",
       "name": "Excellus",
       "status": "critical",
-      "note": "STATUS: Need pricing from Michal and Martin for hosting Adapt\n9/2: Excellus wants to purchase Adapt. Cyndi asked for the cost and details for QMS",
+      "note": "STATUS: Probably going to install Adapt on the workstations\n9/4 - Need pricing from Michal and Martin for hosting Adapt\n9/2: Excellus wants to purchase Adapt. Cyndi asked for the cost and details for QMS",
       "solutions": [
         "qms"
       ],
@@ -17,7 +17,7 @@
       "nextActionLabel": "Doublecheck with Cyndi that they will install Adapt on the workstations",
       "lastStatusChange": 1788444302948,
       "lastStageChange": 1788882478259,
-      "lastTouched": 1788882495532,
+      "lastTouched": 1788882516359,
       "attention": "medium"
     },
     {
