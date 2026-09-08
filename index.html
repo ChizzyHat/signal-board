@@ -959,6 +959,9 @@
   function daysSince(ts){if(!ts)return null;return(Date.now()-ts)/MS_PER_DAY;}
   function formatActionDate(isoDate){if(!isoDate)return"";const d=new Date(isoDate+"T00:00:00");if(isNaN(d.getTime()))return isoDate;return d.toLocaleDateString(undefined,{month:"short",day:"numeric"});}
   function isOverdue(isoDate){if(!isoDate)return false;return new Date(isoDate+"T23:59:59").getTime()<Date.now();}
+  function todayISO(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
+  function isDueOrPast(isoDate){if(!isoDate)return false;return isoDate<=todayISO();}
+  function daysPastDue(isoDate){if(!isoDate)return 0;const due=new Date(isoDate+"T00:00:00").getTime(),now=new Date(todayISO()+"T00:00:00").getTime();return Math.round((now-due)/MS_PER_DAY);}
 
   let bootComplete=false,remoteAccountCount=null;
 
@@ -1020,7 +1023,7 @@
     }
     return[...filtered].sort((a,b)=>{if(state.sortBy==="status"){const ai=STATUS_PRIORITY.indexOf(a.status),bi=STATUS_PRIORITY.indexOf(b.status);const statusDiff=(ai===-1?99:ai)-(bi===-1?99:bi);if(statusDiff!==0)return statusDiff;return(a.priority??Infinity)-(b.priority??Infinity);}if(state.sortBy==="alpha")return a.name.localeCompare(b.name);return b.createdAt-a.createdAt;});
   }
-  function getStagnantAccounts(){const list=state.accounts.filter(a=>{if(!a.status||a.status==="closed")return false;const threshold=state.thresholds[a.status];if(!threshold||threshold<=0)return false;const days=daysSince(a.lastTouched);return days!==null&&days>=threshold;});list.sort((a,b)=>{const aOver=daysSince(a.lastTouched)-state.thresholds[a.status],bOver=daysSince(b.lastTouched)-state.thresholds[b.status];return bOver-aOver;});return list;}
+  function getStagnantAccounts(){const list=state.accounts.filter(a=>{if(!a.status||a.status==="closed")return false;return isDueOrPast(a.nextActionDate);});list.sort((a,b)=>a.nextActionDate<b.nextActionDate?-1:a.nextActionDate>b.nextActionDate?1:0);return list;}
 
   function touch(acct){if(!acct)return;acct.lastTouched=Date.now();}
   function normalizeGroup(statusId){if(!statusId)return;const group=state.accounts.filter(a=>a.status===statusId);group.sort((a,b)=>(a.priority??Infinity)-(b.priority??Infinity));group.forEach((acct,i)=>{acct.priority=i+1;});}
@@ -1321,9 +1324,10 @@
     const managerRec=acct.manager?MANAGERS.find(m=>m.id===acct.manager):null;
 
     let stagnantMeta="";
-    if(inStagnantSection&&acct.status){
-      const days=Math.floor(daysSince(acct.lastTouched));
-      stagnantMeta=`<div class="stagnant-meta"><span class="stagnant-badge">${days}d</span><button class="stagnant-reset" data-stagnant-reset="${acct.id}">RESET</button></div>`;
+    if(inStagnantSection&&acct.nextActionDate){
+      const late=daysPastDue(acct.nextActionDate);
+      const badge=late<=0?"DUE TODAY":`${late}d LATE`;
+      stagnantMeta=`<div class="stagnant-meta"><span class="stagnant-badge" title="Next action due ${formatActionDate(acct.nextActionDate)}">${badge}</span></div>`;
     }
 
     let nextActionLine="";
