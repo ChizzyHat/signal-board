@@ -24,7 +24,7 @@
       "id": "1788296617338",
       "name": "San Mateo Health Plan",
       "status": "critical",
-      "note": "STATUS: Reviewed DRD - There are requirements we cannot address - Are we moving forward with CBA?\n9/4 - Need to review DRD and come up with game plan for CBA\n9/1 - Internal meeting",
+      "note": "STATUS: Reviewed DRD - There are requirements we cannot address - Are we moving forward with CBA?\n9/8 - Sent message to team raising concerns. Need to address these first before diving deep into CBA\n9/4 - Need to review DRD and come up with game plan for CBA\n9/1 - Internal meeting",
       "solutions": [],
       "stage": 2,
       "manager": "manager_c",
@@ -35,7 +35,7 @@
       "nextActionLabel": "Confirm we are moving forward",
       "lastStatusChange": 1788296631203,
       "lastStageChange": 1788296630138,
-      "lastTouched": 1788986761602,
+      "lastTouched": 1788986796266,
       "attention": "high"
     },
     {
